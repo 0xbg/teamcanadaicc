@@ -15,6 +15,8 @@
       theme: {
         extend: {
           colors: {
+            red: '#cc1f2d',
+            'red-dark': '#a01824',
             cream: '#f4eedd',
             ink: '#14100a',
             olive: '#463f31',
@@ -73,6 +75,16 @@
       }
     }
 
+    /* Text selection highlight */
+    ::selection {
+      background-color: #c2a15c;
+      color: #14100a;
+    }
+    ::-moz-selection {
+      background-color: #c2a15c;
+      color: #14100a;
+    }
+
     /* Scroll-to-top */
     .scroll-top-btn {
       position: fixed; bottom: 2rem; right: 2rem; z-index: 40;
@@ -103,10 +115,6 @@
       width: 2px; flex: 1;
       background: linear-gradient(to bottom, #c2a15c, transparent);
     }
-    .tl-rail .tl-line:first-child {
-      background: linear-gradient(to bottom, transparent, #c2a15c);
-    }
-    .tl-stage:last-child .tl-rail .tl-line:last-child { display: none; }
     .tl-num {
       width: 3rem; height: 3rem; border-radius: 50%;
       border: 2px solid #c2a15c; background: #14100a;
@@ -170,9 +178,118 @@
       .tl-visual { order: -1; }
       .tl-body h3 { font-size: 1.25rem; }
     }
+
+    @media (max-width: 640px) {
+      .tl-rail { width: 2.5rem; }
+      .tl-num { width: 2.25rem; height: 2.25rem; font-size: 0.7rem; }
+      .tl-body h3 { font-size: 1.1rem; }
+      .tl-body p { font-size: 0.8rem; }
+      .tl-tag { font-size: 0.55rem; padding: 0.2rem 0.45rem; }
+      .tl-label { font-size: 0.6rem; }
+      .tl-meta { font-size: 0.55rem; }
+
+      .scroll-top-btn { bottom: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; }
+      .scroll-top-btn svg { width: 1rem; height: 1rem; }
+
+      .tier-card { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .tier-card ul li { font-size: 0.75rem; }
+
+      section { padding-top: 3rem; padding-bottom: 3rem; }
+      section[id] { padding-left: 1rem; padding-right: 1rem; }
+
+      header h1 { font-size: 2.25rem !important; }
+      section h2 { font-size: 1.75rem !important; }
+
+      .tier-card .text-3xl { font-size: 1.5rem !important; }
+      .tier-card .text-2xl { font-size: 1.25rem !important; }
+      .tier-card h3 { font-size: 1.25rem !important; }
+
+      #inquiry-form { padding: 1.25rem !important; }
+      #inquiry-form button[type="submit"] { font-size: 1rem !important; padding: 0.75rem 1rem !important; }
+      #inquiry-form input, #inquiry-form select, #inquiry-form textarea { font-size: 1rem !important; }
+
+      footer h2 { font-size: 1.5rem !important; }
+      footer .text-lg { font-size: 0.9rem !important; }
+
+      .tl-visual { aspect-ratio: 4/3; }
+
+      nav .px-6 { padding-left: 1rem; padding-right: 1rem; }
+
+      .mobile-nav-link { padding-top: 0.75rem; padding-bottom: 0.75rem; font-size: 0.95rem; }
+
+      header .text-lg { font-size: 1rem !important; }
+      header .px-8 { padding-left: 1.25rem; padding-right: 1.25rem; }
+      header .py-4 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+
+      #about img { height: 10rem; }
+      #about .grid > div:last-child { padding: 1.25rem; }
+      #about .text-body-alt { font-size: 0.9rem; }
+
+      #team .grid > div:first-child { padding: 1.25rem; text-align: center; }
+      #team .grid > div:last-child { padding: 1.25rem; }
+      #team h3 { font-size: 1.25rem !important; }
+      #team .w-24 { width: 4rem; height: 4rem; }
+
+      #support .grid { gap: 1rem; }
+      #support .p-6 { padding: 1rem; }
+      #support h3 { font-size: 0.95rem; }
+      #support p.text-muted { font-size: 0.8rem; }
+
+      #tiers .border-l-8 { border-left-width: 6px; }
+      #tiers .border-l-6 { border-left-width: 5px; }
+      #tiers .border-l-5 { border-left-width: 4px; }
+
+      #inquiry .max-w-3xl { padding-left: 0; padding-right: 0; }
+
+      .sponsor-card .w-40 { width: 8rem; }
+      .sponsor-card .h-24 { height: 5rem; }
+      .sponsor-card .w-32 { width: 6.5rem; }
+      .sponsor-card .h-20 { height: 4.5rem; }
+      .sponsor-card .w-24 { width: 5rem; }
+      .sponsor-card .h-16 { height: 3.5rem; }
+      .sponsor-card p { font-size: 0.65rem !important; }
+    }
+
+    @media (max-width: 380px) {
+      header h1 { font-size: 1.75rem !important; }
+      header .text-gold.text-xl { font-size: 1rem !important; }
+      header .text-text-muted.text-lg { font-size: 0.8rem !important; }
+      header .px-8.py-4 { padding: 0.6rem 1rem !important; font-size: 0.8rem !important; }
+      header .gap-4 { gap: 0.5rem; }
+
+      nav .flex.items-center.gap-3 { gap: 0.5rem; }
+      nav .w-8.h-8 { width: 1.75rem; height: 1.75rem; }
+      nav .text-xs { font-size: 0.6rem; }
+
+      section h2 { font-size: 1.5rem !important; }
+      section > div > p.text-gold { font-size: 0.95rem; }
+
+      #about img { height: 7rem; }
+      #about .grid > div:last-child { padding: 1rem; font-size: 0.8rem; }
+
+      #team .grid > div:first-child { padding: 1rem; }
+      #team .grid > div:last-child { padding: 1rem; }
+      #team h3 { font-size: 1.1rem !important; }
+      #team .w-24 { width: 3rem; height: 3rem; }
+
+      #support h3 { font-size: 0.85rem; }
+      #support p.text-muted { font-size: 0.7rem; }
+
+      #tiers h3 { font-size: 1.1rem !important; }
+      .tier-card .text-3xl { font-size: 1.25rem !important; }
+      .tier-card .text-2xl { font-size: 1.1rem !important; }
+
+      #inquiry-form { padding: 1rem !important; }
+      #inquiry-form input, #inquiry-form select, #inquiry-form textarea { font-size: 0.85rem !important; padding: 0.6rem 0.75rem !important; }
+      #inquiry-form button[type="submit"] { font-size: 0.9rem !important; padding: 0.6rem 0.75rem !important; }
+
+      footer h2 { font-size: 1.25rem !important; }
+      footer .text-lg { font-size: 0.8rem !important; }
+      footer .px-8.py-4 { padding: 0.6rem 1rem !important; font-size: 0.85rem !important; }
+    }
   </style>
 </head>
-<body class="bg-cream text-body font-sans antialiased">
+<body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
 
   <!-- ===== NAVBAR ===== -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-sm border-b border-border-dark transition-all duration-300">
@@ -193,6 +310,7 @@
           <a href="#team" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Team" data-lang-fr="Équipe">Team</a>
           <a href="#tiers" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Partnerships" data-lang-fr="Partenariats">Partnerships</a>
           <a href="#support" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Impact" data-lang-fr="Impact">Impact</a>
+          <a href="#sponsors" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Sponsors" data-lang-fr="Commanditaires">Sponsors</a>
           <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
         </div>
         <div class="hidden lg:flex items-center gap-2 ml-4">
@@ -212,6 +330,7 @@
           <a href="#team" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Team" data-lang-fr="Équipe">Team</a>
           <a href="#tiers" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Partnerships" data-lang-fr="Partenariats">Partnerships</a>
           <a href="#support" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Impact" data-lang-fr="Impact">Impact</a>
+          <a href="#sponsors" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Sponsors" data-lang-fr="Commanditaires">Sponsors</a>
           <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 text-center" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
           <div class="flex items-center gap-2 pt-2">
             <button class="lang-btn active text-xs px-2 py-1 border border-gold text-gold font-semibold" onclick="setLang('en')">EN</button>
@@ -281,7 +400,6 @@
         <!-- Stage 1: Preparation -->
         <li class="tl-stage">
           <div class="tl-rail">
-            <span class="tl-line"></span>
             <span class="tl-num">01</span>
             <span class="tl-line"></span>
           </div>
@@ -308,7 +426,6 @@
         <!-- Stage 2: Competition -->
         <li class="tl-stage">
           <div class="tl-rail">
-            <span class="tl-line"></span>
             <span class="tl-num">02</span>
             <span class="tl-line"></span>
           </div>
@@ -335,7 +452,6 @@
         <!-- Stage 3: Legacy -->
         <li class="tl-stage">
           <div class="tl-rail">
-            <span class="tl-line"></span>
             <span class="tl-num">03</span>
             <span class="tl-line"></span>
           </div>
@@ -589,13 +705,114 @@
 
   <hr class="section-divider">
 
+  <!-- ===== SPONSORS WALL ===== -->
+  <section id="sponsors" class="py-20 md:py-28 px-6 bg-ink text-cream">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Our Partners" data-lang-fr="Nos partenaires">Our Partners</p>
+      <h2 class="text-3xl md:text-5xl font-bold mb-6 font-display text-center" data-lang-en="Sponsors Wall" data-lang-fr="Mur des commanditaires">Sponsors Wall</h2>
+      <p class="text-text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-16 text-center" data-lang-en="The organizations, brands and individuals who are helping bring Team Canada back to the world stage." data-lang-fr="Les organisations, marques et individus qui aident à ramener Équipe Canada sur la scène mondiale.">The organizations, brands and individuals who are helping bring Team Canada back to the world stage.</p>
+
+      <!-- Lead Partners Row -->
+      <div class="mb-16">
+        <h3 class="text-gold font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Lead Partners" data-lang-fr="Partenaires majeurs">Lead Partners</h3>
+        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16">
+          <div class="sponsor-card group text-center">
+            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premier & Official Partners -->
+      <div class="mb-16">
+        <h3 class="text-gold-light font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Premier & Official Partners" data-lang-fr="Partenaires Premier & Officiels">Premier & Official Partners</h3>
+        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <div class="sponsor-card group text-center">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supporting & Community Partners -->
+      <div class="mb-12">
+        <h3 class="text-text-muted-alt font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Supporting Partners & Community" data-lang-fr="Partenaires de soutien & Communauté">Supporting Partners & Community</h3>
+        <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8">
+          <div class="sponsor-card group text-center">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Contributor</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
+          </div>
+          <div class="sponsor-card group text-center">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
+            </div>
+            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-12 pt-8 border-t border-border-dark">
+        <p class="text-text-muted text-sm mb-6 max-w-xl mx-auto" data-lang-en="Want to see your logo here? Join the team and help us make history in Lyon." data-lang-fr="Vous voulez voir votre logo ici ? Rejoignez l'équipe et aidez-nous à marquer l'histoire à Lyon.">Want to see your logo here? Join the team and help us make history in Lyon.</p>
+        <a href="#inquiry" class="inline-block bg-red hover:bg-red-dark text-white px-8 py-3 font-semibold text-sm transition-colors duration-200" data-lang-en="Become a Sponsor" data-lang-fr="Devenez commanditaire">Become a Sponsor</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== PARTNERSHIP INQUIRY FORM ===== -->
   <section id="inquiry" class="py-20 md:py-28 px-6 bg-olive text-cream">
     <div class="max-w-3xl mx-auto">
       <p class="text-gold-light font-display italic text-lg mb-3 text-center" data-lang-en="Partnership Inquiries" data-lang-fr="Demandes de partenariat">Partnership Inquiries</p>
       <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Join Team Canada" data-lang-fr="Rejoignez Équipe Canada">Join Team Canada</h2>
       <p class="text-text-muted-alt text-center mb-4" data-lang-en="Partnerships begin at $1,000, with custom cash and in-kind opportunities available." data-lang-fr="Les partenariats commencent à 1 000 $, avec des opportunités personnalisées en espèces et en nature disponibles.">Partnerships begin at $1,000, with custom cash and in-kind opportunities available.</p>
-      <p class="text-gold text-center mb-10 text-sm"><span data-lang-en="Contact:" data-lang-fr="Contact :">Contact:</span> Deisy Mariano · <a href="tel:+15145736758" class="hover:text-gold-light transition-colors">514-573-6758</a></p>
       <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10">
         <div class="grid md:grid-cols-2 gap-6">
           <div>
@@ -644,9 +861,9 @@
       <p class="text-text-muted text-lg leading-relaxed mb-10 max-w-2xl mx-auto" data-lang-en="After ten years away, Team Canada is preparing to return to Lyon. This journey is led by three chefs, supported by Bar George and powered by partners who believe Canadian culinary talent deserves to be represented on one of the world's most prestigious stages." data-lang-fr="Après dix ans d'absence, Équipe Canada se prépare à revenir à Lyon. Ce parcours est mené par trois chefs, soutenu par le Bar George et propulsé par des partenaires qui croient que le talent culinaire canadien mérite d'être représenté sur l'une des scènes les plus prestigieuses du monde.">After ten years away, Team Canada is preparing to return to Lyon. This journey is led by three chefs, supported by Bar George and powered by partners who believe Canadian culinary talent deserves to be represented on one of the world's most prestigious stages.</p>
       <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 mb-12" data-lang-en="Partner With Team Canada" data-lang-fr="Devenez partenaire d'Équipe Canada">Partner With Team Canada</a>
       <div class="border-t border-border-dark pt-8">
-        <p class="text-gold text-lg font-bold mb-1">TEAM CANADA · ICC 2027 · LYON</p>
-        <p class="text-text-muted text-sm"><span data-lang-en="Partnership Inquiries:" data-lang-fr="Demandes de partenariat :">Partnership Inquiries:</span> Deisy Mariano · <a href="tel:+15145736758" class="hover:text-gold-light transition-colors">514-573-6758</a></p>
+        <p class="text-gold text-lg font-bold mb-1">TEAM CANADA · ICC 2027 · LYON</p>        
         <p class="text-text-muted text-xs mt-4">© 2026 Team Canada ICC. <span data-lang-en="All rights reserved." data-lang-fr="Tous droits réservés.">All rights reserved.</span></p>
+        <p class="text-red/70 text-xs mt-2" data-lang-en="Made with ❤️ in Montréal 🍁" data-lang-fr="Fait avec ❤️ à Montréal 🍁">Made with ❤️ in Montréal 🍁</p>
       </div>
     </div>
   </footer>
@@ -761,6 +978,11 @@
 
     /* Scroll-to-top click */
     document.getElementById('scroll-top-btn').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    /* 🇨🇦 */
+    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c— Team Canada %c🇨🇦',
+      'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
+    console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
   </script>
 </body>
 </html>
