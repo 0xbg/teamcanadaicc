@@ -1,36 +1,5 @@
-# Cloudflare Pages Configuration — teamcanadaicc
-# Branch Strategy:
-#   prod   → Production environment (custom domain / *.pages.dev)
-#   certif → Preview environment (pre-deployment validation)
-#   dev    → Preview environment (development/testing)
-
 name = "teamcanadaicc"
-pages_build_output_dir = "dist"       # adjust to your framework's output dir
-compatibility_date = "2025-07-22"
+compatibility_date = "2026-07-22"
+pages_build_output_dir = "public"
 
-# ── Top-level: local development defaults ─────────────────────────
-[vars]
-ENVIRONMENT = "local"
-
-# ── Production environment (prod branch) ─────────────────────────
 [env.production]
-[env.production.vars]
-ENVIRONMENT = "production"
-
-# ── Preview environments (dev & certif branches) ─────────────────
-# Both dev and certif are non-production → use [env.preview]
-# Use branch‑conditional logic in your app to differentiate if needed
-[env.preview]
-[env.preview.vars]
-ENVIRONMENT = "preview"
-
-# ── Deploy commands ──────────────────────────────────────────────
-# Production deploy:
-#   git push origin prod          (auto-deploys via Cloudflare git integration)
-#   npx wrangler pages deploy --branch prod
-#
-# Preview / Certif deploy:
-#   git push origin dev           → preview deployment (dev URL)
-#   git push origin certif        → preview deployment (certif URL)
-#   npx wrangler pages deploy --branch dev
-#   npx wrangler pages deploy --branch certif

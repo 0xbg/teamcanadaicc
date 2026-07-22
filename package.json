@@ -1,0 +1,9 @@
+{
+  "name": "teamcanadaicc",
+  "private": true,
+  "description": "Team Canada — ICC · Lyon 2027",
+  "scripts": {
+    "build": ""
+  },
+  "license": "UNLICENSED"
+}
