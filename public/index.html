@@ -53,11 +53,13 @@
       margin: 0 auto;
       max-width: 200px;
     }
-    .tier-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .tier-card { border-radius: 0.375rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(20, 16, 10, 0.12); }
-    .form-input { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+    .team-card { border-radius: 0.375rem; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(20, 16, 10, 0.15); }
+    .form-input { border-radius: 0.375rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
     .form-input:focus { border-color: #c2a15c; box-shadow: 0 0 0 3px rgba(194, 161, 92, 0.15); }
-    .lang-btn { transition: all 0.2s ease; }
+    .lang-btn { border-radius: 0.125rem; transition: all 0.2s ease; }
     .lang-btn.active { background-color: #c2a15c; color: #14100a; }
 
     @keyframes saute-up {
@@ -158,9 +160,10 @@
       display: inline-block; font-family: "JetBrains Mono", monospace;
       font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.25rem 0.6rem;
       border: 1px solid rgba(194, 161, 92, 0.3); color: #c2a15c;
+      border-radius: 0.375rem;
     }
     .tl-visual {
-      border-radius: 0.5rem; overflow: hidden;
+      border-radius: 0.375rem; overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.08);
       aspect-ratio: 16 / 9; background: #1a1610;
       transition: border-color 0.3s ease;
@@ -225,8 +228,6 @@
       #about .grid > div:last-child { padding: 1.25rem; }
       #about .text-body-alt { font-size: 0.9rem; }
 
-      #team .grid > div:first-child { padding: 1.25rem; text-align: center; }
-      #team .grid > div:last-child { padding: 1.25rem; }
       #team h3 { font-size: 1.25rem !important; }
       #team .w-24 { width: 4rem; height: 4rem; }
 
@@ -267,8 +268,6 @@
       #about img { height: 7rem; }
       #about .grid > div:last-child { padding: 1rem; font-size: 0.8rem; }
 
-      #team .grid > div:first-child { padding: 1rem; }
-      #team .grid > div:last-child { padding: 1rem; }
       #team h3 { font-size: 1.1rem !important; }
       #team .w-24 { width: 3rem; height: 3rem; }
 
@@ -311,11 +310,11 @@
           <a href="#tiers" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Partnerships" data-lang-fr="Partenariats">Partnerships</a>
           <a href="#support" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Impact" data-lang-fr="Impact">Impact</a>
           <a href="#sponsors" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide" data-lang-en="Sponsors" data-lang-fr="Commanditaires">Sponsors</a>
-          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
+          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 rounded-md" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
         </div>
         <div class="hidden lg:flex items-center gap-2 ml-4">
-          <button id="lang-en" class="lang-btn active text-xs px-2 py-1 border border-gold text-gold font-semibold" onclick="setLang('en')">EN</button>
-          <button id="lang-fr" class="lang-btn text-xs px-2 py-1 border border-gold text-gold font-semibold" onclick="setLang('fr')">FR</button>
+          <button id="lang-en" class="lang-btn active text-xs px-2 py-1 border border-gold text-gold font-semibold rounded-sm" onclick="setLang('en')">EN</button>
+          <button id="lang-fr" class="lang-btn text-xs px-2 py-1 border border-gold text-gold font-semibold rounded-sm" onclick="setLang('fr')">FR</button>
         </div>
         <button id="mobile-menu-btn" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Toggle menu">
           <span class="block w-6 h-0.5 bg-cream transition-all duration-300 origin-center" id="bar1"></span>
@@ -331,10 +330,10 @@
           <a href="#tiers" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Partnerships" data-lang-fr="Partenariats">Partnerships</a>
           <a href="#support" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Impact" data-lang-fr="Impact">Impact</a>
           <a href="#sponsors" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide" data-lang-en="Sponsors" data-lang-fr="Commanditaires">Sponsors</a>
-          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 text-center" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
+          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 text-center rounded-md" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
           <div class="flex items-center gap-2 pt-2">
-            <button class="lang-btn active text-xs px-2 py-1 border border-gold text-gold font-semibold" onclick="setLang('en')">EN</button>
-            <button class="lang-btn text-xs px-2 py-1 border border-gold text-gold font-semibold" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn active text-xs px-2 py-1 border border-gold text-gold font-semibold rounded-sm" onclick="setLang('en')">EN</button>
+            <button class="lang-btn text-xs px-2 py-1 border border-gold text-gold font-semibold rounded-sm" onclick="setLang('fr')">FR</button>
           </div>
         </div>
       </div>
@@ -351,8 +350,8 @@
       <p class="text-gold text-xl md:text-2xl font-display tracking-widest uppercase mb-8">ICC · LYON 2027</p>
       <p class="text-text-muted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" data-lang-en="After a ten-year absence, Canada returns to the International Catering Cup — one of the most prestigious stages in global culinary competition." data-lang-fr="Après dix ans d'absence, le Canada revient à l'International Catering Cup — l'une des scènes les plus prestigieuses de la compétition culinaire mondiale.">After a ten-year absence, Canada returns to the International Catering Cup — one of the most prestigious stages in global culinary competition.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200" data-lang-en="Become a Partner" data-lang-fr="Devenez partenaire">Become a Partner</a>
-        <a href="#about" class="inline-block border border-gold text-gold px-8 py-4 font-semibold text-lg hover:bg-gold hover:text-ink transition-colors duration-200" data-lang-en="Learn More" data-lang-fr="En savoir plus">Learn More</a>
+        <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 rounded-md" data-lang-en="Become a Partner" data-lang-fr="Devenez partenaire">Become a Partner</a>
+        <a href="#about" class="inline-block border border-gold text-gold px-8 py-4 font-semibold text-lg hover:bg-gold hover:text-ink transition-colors duration-200 rounded-md" data-lang-en="Learn More" data-lang-fr="En savoir plus">Learn More</a>
       </div>
     </div>
     <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer" aria-label="Scroll to next section">
@@ -371,13 +370,13 @@
     <div class="max-w-4xl mx-auto">
       <p class="text-gold font-display italic text-lg mb-3" data-lang-en="About the Event" data-lang-fr="À propos de l'événement">About the Event</p>
       <h2 class="text-3xl md:text-4xl font-bold text-ink font-display mb-8" data-lang-en="The International Catering Cup" data-lang-fr="L'International Catering Cup">The International Catering Cup</h2>
-      <img src="https://placehold.co/800x300/f4eedd/c2a15c?text=International+Catering+Cup+Lyon" alt="International Catering Cup Event" class="w-full h-40 md:h-48 object-cover mb-8 border border-border-light">
+      <img src="https://placehold.co/800x300/f4eedd/c2a15c?text=International+Catering+Cup+Lyon" alt="International Catering Cup Event" class="w-full h-40 md:h-48 object-cover mb-8 border border-border-light rounded-md">
       <div class="grid md:grid-cols-2 gap-12">
         <div>
           <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Held in Lyon during <a href='https://www.sirha.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>Sirha</a>, alongside the <a href='https://www.bocusedor.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>Bocuse d'Or</a>, the <a href='https://www.international-catering-cup.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>International Catering Cup</a> brings together national teams for one of the hospitality industry's most respected culinary competitions." data-lang-fr="Organisée à Lyon pendant le <a href='https://www.sirha.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>Sirha</a>, aux côtés du <a href='https://www.bocusedor.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>Bocuse d'Or</a>, l'<a href='https://www.international-catering-cup.com/' target='_blank' rel='noopener' class='text-gold hover:text-gold-light underline'>International Catering Cup</a> rassemble des équipes nationales pour l'une des compétitions culinaires les plus respectées du secteur de l'hôtellerie.">Held in Lyon during <a href="https://www.sirha.com/" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline">Sirha</a>, alongside the <a href="https://www.bocusedor.com/" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline">Bocuse d'Or</a>, the <a href="https://www.international-catering-cup.com/" target="_blank" rel="noopener" class="text-gold hover:text-gold-light underline">International Catering Cup</a> brings together national teams for one of the hospitality industry's most respected culinary competitions.</p>
           <p class="text-body-alt leading-relaxed" data-lang-en="It places creativity, technical precision, service, pastry and teamwork on an international stage before leading professionals, media and decision-makers from across the global food and hospitality sector." data-lang-fr="Elle met en valeur la créativité, la précision technique, le service, la pâtisserie et le travail d'équipe sur une scène internationale devant des professionnels de renom, des médias et des décideurs du secteur mondial de l'alimentation et de l'hôtellerie.">It places creativity, technical precision, service, pastry and teamwork on an international stage before leading professionals, media and decision-makers from across the global food and hospitality sector.</p>
         </div>
-        <div class="bg-olive text-cream p-8">
+        <div class="bg-olive text-cream p-8 rounded-md">
           <p class="text-gold-light font-display italic mb-4" data-lang-en="Presented by Team Canada" data-lang-fr="Présenté par Équipe Canada">Presented by Team Canada</p>
           <p class="text-text-light-alt leading-relaxed mb-4" data-lang-en="Team Canada will be represented by Chef de Cuisine and Team Captain <strong>Donnel English</strong>, Pastry Chef <strong>Nicolas Parsy</strong>, and Executive Chef and Team Coach <strong>Kevin Ramasawmy</strong>." data-lang-fr="Équipe Canada sera représentée par le Chef de Cuisine et Capitaine d'équipe <strong>Donnel English</strong>, le Chef Pâtissier <strong>Nicolas Parsy</strong>, et le Chef Exécutif et Entraîneur <strong>Kevin Ramasawmy</strong>.">Team Canada will be represented by Chef de Cuisine and Team Captain <strong>Donnel English</strong>, Pastry Chef <strong>Nicolas Parsy</strong>, and Executive Chef and Team Coach <strong>Kevin Ramasawmy</strong>.</p>
           <p class="text-text-muted leading-relaxed text-sm" data-lang-en="All three are part of the culinary team at Bar George in Montréal, giving the campaign a unified identity, a credible home base and a strong foundation for training, storytelling, media and sponsor activations." data-lang-fr="Tous trois font partie de l'équipe culinaire du Bar George à Montréal, ce qui donne à la campagne une identité unifiée, une base crédible et une fondation solide pour l'entraînement, la narration, les médias et les activations des commanditaires.">All three are part of the culinary team at Bar George in Montréal, giving the campaign a unified identity, a credible home base and a strong foundation for training, storytelling, media and sponsor activations.</p>
@@ -482,60 +481,64 @@
 
   <!-- ===== MEET THE TEAM ===== -->
   <section id="team" class="py-20 md:py-28 px-6">
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-6xl mx-auto">
       <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Meet the Team" data-lang-fr="Rencontrez l'équipe">Meet the Team</p>
       <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3 text-center font-display" data-lang-en="Three Chefs. One Kitchen. One Mission." data-lang-fr="Trois chefs. Une cuisine. Une mission.">Three Chefs. One Kitchen. One Mission.</h2>
       <p class="text-muted text-center max-w-2xl mx-auto mb-16" data-lang-en="Drawn from the brigade at Bar George in Montréal, Team Canada combines leadership, pastry expertise and executive experience." data-lang-fr="Issus de la brigade du Bar George à Montréal, Équipe Canada allie leadership, expertise en pâtisserie et expérience de direction.">Drawn from the brigade at Bar George in Montréal, Team Canada combines leadership, pastry expertise and executive experience.</p>
 
-      <!-- Donnel English -->
-      <div class="grid md:grid-cols-3 gap-0 border border-border-light mb-0">
-        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
-          <img src="https://placehold.co/300x300/463f31/c2a15c?text=Donnel+English" alt="Donnel English" class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto md:mx-0 object-cover bg-body-alt">
-          <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Team Captain" data-lang-fr="Capitaine d'équipe">Team Captain</p>
-          <h3 class="text-2xl md:text-3xl font-bold mb-1">Donnel English</h3>
-          <p class="text-text-muted-alt text-sm">Chef de Cuisine, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
-        </div>
-        <div class="md:col-span-2 p-8 md:p-10">
-          <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Chef Donnel English's culinary story begins in Grenada, where his grandparents ran a farm and produce shop. After arriving in Montréal in 2007, his potential was quickly recognized, leading him to train at the Pearson School of Culinary Arts." data-lang-fr="L'histoire culinaire du Chef Donnel English commence à la Grenade, où ses grands-parents tenaient une ferme et un magasin de produits. Après son arrivée à Montréal en 2007, son potentiel a été rapidement reconnu, le menant à se former à la Pearson School of Culinary Arts.">Chef Donnel English's culinary story begins in Grenada, where his grandparents ran a farm and produce shop. After arriving in Montréal in 2007, his potential was quickly recognized, leading him to train at the Pearson School of Culinary Arts.</p>
-          <p class="text-body-alt leading-relaxed mb-6" data-lang-en="His career has taken him through the Ritz-Carlton, Maison Boulud, and New York's NoMad. He returned to Montréal to join Chef Kevin Ramasawmy at Bar George, progressing from Sous Chef to Chef de Cuisine." data-lang-fr="Sa carrière l'a mené au Ritz-Carlton, à la Maison Boulud et au NoMad à New York. Il est revenu à Montréal pour rejoindre le Chef Kevin Ramasawmy au Bar George, passant de Sous-Chef à Chef de Cuisine.">His career has taken him through the Ritz-Carlton, Maison Boulud, and New York's NoMad. He returned to Montréal to join Chef Kevin Ramasawmy at Bar George, progressing from Sous Chef to Chef de Cuisine.</p>
-          <div class="text-sm text-muted space-y-1">
-            <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> Team Captain, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Capitaine d'équipe, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York'><span class="text-gold font-semibold">Career Highlights:</span> Team Captain, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York</p>
-          </div>
-        </div>
-      </div>
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
 
-      <!-- Nicolas Parsy -->
-      <div class="grid md:grid-cols-3 gap-0 border-l border-r border-b border-border-light">
-        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
-          <img src="https://placehold.co/300x300/463f31/c2a15c?text=Nicolas+Parsy" alt="Nicolas Parsy" class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto md:mx-0 object-cover bg-body-alt">
-          <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Pastry Chef" data-lang-fr="Chef Pâtissier">Pastry Chef</p>
-          <h3 class="text-2xl md:text-3xl font-bold mb-1">Nicolas Parsy</h3>
-          <p class="text-text-muted-alt text-sm">Pastry Chef, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
-        </div>
-        <div class="md:col-span-2 p-8 md:p-10">
-          <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Raised in Pas-de-Calais in northern France, Nicolas discovered the power of food watching his mother and Polish grandmother bring family and friends together around the table. He developed his craft in France and Switzerland before moving to Montréal in 2018." data-lang-fr="Élevé dans le Pas-de-Calais, dans le nord de la France, Nicolas a découvert le pouvoir de la cuisine en regardant sa mère et sa grand-mère polonaise rassembler famille et amis autour de la table. Il a développé son art en France et en Suisse avant de s'installer à Montréal en 2018.">Raised in Pas-de-Calais in northern France, Nicolas discovered the power of food watching his mother and Polish grandmother bring family and friends together around the table. He developed his craft in France and Switzerland before moving to Montréal in 2018.</p>
-          <p class="text-body-alt leading-relaxed mb-6" data-lang-en="Nicolas approaches pastry through a modern interpretation of French tradition — flavour first, supported by precise technique, contrasting textures and thoughtful presentation." data-lang-fr="Nicolas aborde la pâtisserie à travers une interprétation moderne de la tradition française — la saveur d'abord, soutenue par une technique précise, des textures contrastées et une présentation soignée.">Nicolas approaches pastry through a modern interpretation of French tradition — flavour first, supported by precise technique, contrasting textures and thoughtful presentation.</p>
-          <div class="text-sm text-muted space-y-1">
-            <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> 2025 National Pastry Chef, Société des chefs du Québec · 2nd Place, Roland Mesnier North America Pastry Trophy · One to Watch Award, Canada's 100 Best' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Chef Pâtissier National 2025, Société des chefs du Québec · 2e place, Trophée Roland Mesnier Amérique du Nord · Prix One to Watch, Canada's 100 Best'><span class="text-gold font-semibold">Career Highlights:</span> 2025 National Pastry Chef, Société des chefs du Québec · 2nd Place, Roland Mesnier North America Pastry Trophy · One to Watch Award, Canada's 100 Best</p>
+        <!-- Donnel English -->
+        <div class="team-card flex flex-col border border-border-light bg-cream">
+          <div class="bg-olive text-cream p-6 md:p-8 text-center">
+            <img src="https://placehold.co/300x300/463f31/c2a15c?text=Donnel+English" alt="Donnel English" class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto object-cover bg-body-alt">
+            <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Team Captain" data-lang-fr="Capitaine d'équipe">Team Captain</p>
+            <h3 class="text-2xl md:text-3xl font-bold mb-1">Donnel English</h3>
+            <p class="text-text-muted-alt text-sm">Chef de Cuisine, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
+          </div>
+          <div class="p-6 md:p-8 flex-1">
+            <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Chef Donnel English's culinary story begins in Grenada, where his grandparents ran a farm and produce shop. After arriving in Montréal in 2007, his potential was quickly recognized, leading him to train at the Pearson School of Culinary Arts." data-lang-fr="L'histoire culinaire du Chef Donnel English commence à la Grenade, où ses grands-parents tenaient une ferme et un magasin de produits. Après son arrivée à Montréal en 2007, son potentiel a été rapidement reconnu, le menant à se former à la Pearson School of Culinary Arts.">Chef Donnel English's culinary story begins in Grenada, where his grandparents ran a farm and produce shop. After arriving in Montréal in 2007, his potential was quickly recognized, leading him to train at the Pearson School of Culinary Arts.</p>
+            <p class="text-body-alt leading-relaxed mb-6" data-lang-en="His career has taken him through the Ritz-Carlton, Maison Boulud, and New York's NoMad. He returned to Montréal to join Chef Kevin Ramasawmy at Bar George, progressing from Sous Chef to Chef de Cuisine." data-lang-fr="Sa carrière l'a mené au Ritz-Carlton, à la Maison Boulud et au NoMad à New York. Il est revenu à Montréal pour rejoindre le Chef Kevin Ramasawmy au Bar George, passant de Sous-Chef à Chef de Cuisine.">His career has taken him through the Ritz-Carlton, Maison Boulud, and New York's NoMad. He returned to Montréal to join Chef Kevin Ramasawmy at Bar George, progressing from Sous Chef to Chef de Cuisine.</p>
+            <div class="text-sm text-muted space-y-1">
+              <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> Team Captain, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Capitaine d'équipe, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York'><span class="text-gold font-semibold">Career Highlights:</span> Team Captain, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Kevin Ramasawmy -->
-      <div class="grid md:grid-cols-3 gap-0 border-l border-r border-b border-border-light">
-        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
-          <img src="https://placehold.co/300x300/463f31/c2a15c?text=Kevin+Ramasawmy" alt="Kevin Ramasawmy" class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto md:mx-0 object-cover bg-body-alt">
-          <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Team Coach" data-lang-fr="Entraîneur">Team Coach</p>
-          <h3 class="text-2xl md:text-3xl font-bold mb-1">Kevin Ramasawmy</h3>
-          <p class="text-text-muted-alt text-sm">Executive Chef, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
-        </div>
-        <div class="md:col-span-2 p-8 md:p-10">
-          <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Kevin's connection to food began in Mauritius, cooking with his mother. He moved to Montréal in 2004 at age 19. His career took him to Canoe in Toronto, Splendido, Daniel in New York, and Maison Boulud at the Ritz-Carlton." data-lang-fr="Le lien de Kevin avec la cuisine a commencé à l'Île Maurice, en cuisinant avec sa mère. Il a déménagé à Montréal en 2004 à l'âge de 19 ans. Sa carrière l'a mené à Canoe à Toronto, Splendido, Daniel à New York et Maison Boulud au Ritz-Carlton.">Kevin's connection to food began in Mauritius, cooking with his mother. He moved to Montréal in 2004 at age 19. His career took him to Canoe in Toronto, Splendido, Daniel in New York, and Maison Boulud at the Ritz-Carlton.</p>
-          <p class="text-body-alt leading-relaxed mb-6" data-lang-en="In 2017, he opened Bar George at Le Mount Stephen. He has cooked for the TGR Haas F1 Team during the Canadian Grand Prix and represented Bar George internationally. As Team Coach, he brings international kitchen experience and operational leadership." data-lang-fr="En 2017, il a ouvert le Bar George au Mount Stephen. Il a cuisiné pour l'équipe TGR Haas F1 lors du Grand Prix du Canada et a représenté le Bar George à l'international. En tant qu'entraîneur, il apporte une expérience de cuisine internationale et un leadership opérationnel.">In 2017, he opened Bar George at Le Mount Stephen. He has cooked for the TGR Haas F1 Team during the Canadian Grand Prix and represented Bar George internationally. As Team Coach, he brings international kitchen experience and operational leadership.</p>
-          <div class="text-sm text-muted space-y-1">
-            <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> Executive Chef, Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team · Canadian Grand Prix' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Chef Exécutif, Bar George · Canoe · Splendido · Daniel · Maison Boulud · Équipe TGR Haas F1 · Grand Prix du Canada'><span class="text-gold font-semibold">Career Highlights:</span> Executive Chef, Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team · Canadian Grand Prix</p>
+        <!-- Nicolas Parsy -->
+        <div class="team-card flex flex-col border border-border-light bg-cream">
+          <div class="bg-olive text-cream p-6 md:p-8 text-center">
+            <img src="https://placehold.co/300x300/463f31/c2a15c?text=Nicolas+Parsy" alt="Nicolas Parsy" class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto object-cover bg-body-alt">
+            <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Pastry Chef" data-lang-fr="Chef Pâtissier">Pastry Chef</p>
+            <h3 class="text-2xl md:text-3xl font-bold mb-1">Nicolas Parsy</h3>
+            <p class="text-text-muted-alt text-sm">Pastry Chef, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
+          </div>
+          <div class="p-6 md:p-8 flex-1">
+            <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Raised in Pas-de-Calais in northern France, Nicolas discovered the power of food watching his mother and Polish grandmother bring family and friends together around the table. He developed his craft in France and Switzerland before moving to Montréal in 2018." data-lang-fr="Élevé dans le Pas-de-Calais, dans le nord de la France, Nicolas a découvert le pouvoir de la cuisine en regardant sa mère et sa grand-mère polonaise rassembler famille et amis autour de la table. Il a développé son art en France et en Suisse avant de s'installer à Montréal en 2018.">Raised in Pas-de-Calais in northern France, Nicolas discovered the power of food watching his mother and Polish grandmother bring family and friends together around the table. He developed his craft in France and Switzerland before moving to Montréal in 2018.</p>
+            <p class="text-body-alt leading-relaxed mb-6" data-lang-en="Nicolas approaches pastry through a modern interpretation of French tradition — flavour first, supported by precise technique, contrasting textures and thoughtful presentation." data-lang-fr="Nicolas aborde la pâtisserie à travers une interprétation moderne de la tradition française — la saveur d'abord, soutenue par une technique précise, des textures contrastées et une présentation soignée.">Nicolas approaches pastry through a modern interpretation of French tradition — flavour first, supported by precise technique, contrasting textures and thoughtful presentation.</p>
+            <div class="text-sm text-muted space-y-1">
+              <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> 2025 National Pastry Chef, Société des chefs du Québec · 2nd Place, Roland Mesnier North America Pastry Trophy · One to Watch Award, Canada's 100 Best' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Chef Pâtissier National 2025, Société des chefs du Québec · 2e place, Trophée Roland Mesnier Amérique du Nord · Prix One to Watch, Canada's 100 Best'><span class="text-gold font-semibold">Career Highlights:</span> 2025 National Pastry Chef, Société des chefs du Québec · 2nd Place, Roland Mesnier North America Pastry Trophy · One to Watch Award, Canada's 100 Best</p>
+            </div>
           </div>
         </div>
+
+        <!-- Kevin Ramasawmy -->
+        <div class="team-card flex flex-col border border-border-light bg-cream">
+          <div class="bg-olive text-cream p-6 md:p-8 text-center">
+            <img src="https://placehold.co/300x300/463f31/c2a15c?text=Kevin+Ramasawmy" alt="Kevin Ramasawmy" class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-gold-light mb-4 mx-auto object-cover bg-body-alt">
+            <p class="text-gold-light font-display text-sm tracking-widest uppercase mb-2" data-lang-en="Team Coach" data-lang-fr="Entraîneur">Team Coach</p>
+            <h3 class="text-2xl md:text-3xl font-bold mb-1">Kevin Ramasawmy</h3>
+            <p class="text-text-muted-alt text-sm">Executive Chef, <a href="https://www.bargeorge.ca/" target="_blank" rel="noopener" class="hover:text-gold-light underline">Bar George</a></p>
+          </div>
+          <div class="p-6 md:p-8 flex-1">
+            <p class="text-body-alt leading-relaxed mb-4" data-lang-en="Kevin's connection to food began in Mauritius, cooking with his mother. He moved to Montréal in 2004 at age 19. His career took him to Canoe in Toronto, Splendido, Daniel in New York, and Maison Boulud at the Ritz-Carlton." data-lang-fr="Le lien de Kevin avec la cuisine a commencé à l'Île Maurice, en cuisinant avec sa mère. Il a déménagé à Montréal en 2004 à l'âge de 19 ans. Sa carrière l'a mené à Canoe à Toronto, Splendido, Daniel à New York et Maison Boulud au Ritz-Carlton.">Kevin's connection to food began in Mauritius, cooking with his mother. He moved to Montréal in 2004 at age 19. His career took him to Canoe in Toronto, Splendido, Daniel in New York, and Maison Boulud at the Ritz-Carlton.</p>
+            <p class="text-body-alt leading-relaxed mb-6" data-lang-en="In 2017, he opened Bar George at Le Mount Stephen. He has cooked for the TGR Haas F1 Team during the Canadian Grand Prix and represented Bar George internationally. As Team Coach, he brings international kitchen experience and operational leadership." data-lang-fr="En 2017, il a ouvert le Bar George au Mount Stephen. Il a cuisiné pour l'équipe TGR Haas F1 lors du Grand Prix du Canada et a représenté le Bar George à l'international. En tant qu'entraîneur, il apporte une expérience de cuisine internationale et un leadership opérationnel.">In 2017, he opened Bar George at Le Mount Stephen. He has cooked for the TGR Haas F1 Team during the Canadian Grand Prix and represented Bar George internationally. As Team Coach, he brings international kitchen experience and operational leadership.</p>
+            <div class="text-sm text-muted space-y-1">
+              <p data-lang-en='<span class="text-gold font-semibold">Career Highlights:</span> Executive Chef, Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team · Canadian Grand Prix' data-lang-fr='<span class="text-gold font-semibold">Faits saillants :</span> Chef Exécutif, Bar George · Canoe · Splendido · Daniel · Maison Boulud · Équipe TGR Haas F1 · Grand Prix du Canada'><span class="text-gold font-semibold">Career Highlights:</span> Executive Chef, Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team · Canadian Grand Prix</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -664,7 +667,7 @@
 
       <!-- In-Kind & Custom -->
       <div class="grid md:grid-cols-2 gap-8 mt-12">
-        <div class="border border-border-dark p-8">
+        <div class="border border-border-dark p-8 rounded-md">
           <h3 class="text-xl font-bold mb-4 text-gold font-display" data-lang-en="In-Kind Partnership Options" data-lang-fr="Options de partenariat en nature">In-Kind Partnership Options</h3>
           <p class="text-text-muted text-sm leading-relaxed mb-4" data-lang-en="We welcome products and services that directly support Team Canada's preparation, travel and participation in Lyon." data-lang-fr="Nous accueillons favorablement les produits et services qui soutiennent directement la préparation, le voyage et la participation d'Équipe Canada à Lyon.">We welcome products and services that directly support Team Canada's preparation, travel and participation in Lyon.</p>
           <div class="grid grid-cols-2 gap-2 text-sm text-text-light">
@@ -676,7 +679,7 @@
             <span data-lang-en="Photo, video & media" data-lang-fr="Photo, vidéo et médias">Photo, video & media</span>
           </div>
         </div>
-        <div class="border border-border-dark p-8 flex flex-col justify-center">
+        <div class="border border-border-dark p-8 flex flex-col justify-center rounded-md">
           <h3 class="text-xl font-bold mb-4 text-gold font-display" data-lang-en="Custom Partnerships" data-lang-fr="Partenariats sur mesure">Custom Partnerships</h3>
           <p class="text-text-muted text-sm leading-relaxed" data-lang-en="Customized packages and mixed cash-and-in-kind contributions are available. Partnerships may include additional content, hospitality, apparel visibility, category exclusivity or activation opportunities based on partner needs." data-lang-fr="Des forfaits personnalisés et des contributions mixtes en espèces et en nature sont disponibles. Les partenariats peuvent inclure du contenu supplémentaire, de l'accueil, de la visibilité sur les tenues, l'exclusivité de catégorie ou des opportunités d'activation selon les besoins du partenaire.">Customized packages and mixed cash-and-in-kind contributions are available. Partnerships may include additional content, hospitality, apparel visibility, category exclusivity or activation opportunities based on partner needs.</p>
         </div>
@@ -693,12 +696,12 @@
       <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4 text-center font-display" data-lang-en="Where Your Support Goes" data-lang-fr="Où va votre soutien">Where Your Support Goes</h2>
       <p class="text-muted text-center max-w-2xl mx-auto mb-16" data-lang-en="Every partnership helps move Team Canada from preparation in Montréal to competition day in Lyon." data-lang-fr="Chaque partenariat contribue à faire avancer Équipe Canada de la préparation à Montréal jusqu'au jour de la compétition à Lyon.">Every partnership helps move Team Canada from preparation in Montréal to competition day in Lyon.</p>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Prep" alt="Competition Preparation" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Competition Preparation" data-lang-fr="Préparation à la compétition">Competition Preparation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Registration, administrative requirements, technical planning and materials to meet ICC standards." data-lang-fr="Inscription, exigences administratives, planification technique et matériel pour répondre aux normes de l'ICC.">Registration, administrative requirements, technical planning and materials to meet ICC standards.</p></div>
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Train" alt="Training & Development" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Training & Development" data-lang-fr="Entraînement et développement">Training & Development</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program." data-lang-fr="Accès aux cuisines, tests de recettes, répétitions et pratique continue pour peaufiner chaque élément du programme de compétition.">Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program.</p></div>
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Ingredients" alt="Ingredients & Presentation" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Ingredients & Presentation" data-lang-fr="Ingrédients et présentation">Ingredients & Presentation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Premium ingredients, specialized products, serving pieces, uniforms and presentation materials." data-lang-fr="Ingrédients haut de gamme, produits spécialisés, pièces de service, uniformes et matériel de présentation.">Premium ingredients, specialized products, serving pieces, uniforms and presentation materials.</p></div>
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Travel" alt="Travel & Accommodation" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Travel & Accommodation" data-lang-fr="Voyage et hébergement">Travel & Accommodation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon." data-lang-fr="Vols, hôtels, transport terrestre et dépenses de voyage essentielles pour la participation de l'équipe à Lyon.">Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon.</p></div>
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Freight" alt="Freight & Logistics" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Freight & Logistics" data-lang-fr="Fret et logistique">Freight & Logistics</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France." data-lang-fr="Transport d'équipement, d'outils, d'uniformes, d'ingrédients et de matériel de présentation entre le Canada et la France.">Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France.</p></div>
-         <div class="border border-border-light p-6 text-center"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Content" alt="Content, PR & Activation" class="w-16 h-16 mx-auto mb-3 object-cover"><h3 class="font-bold text-lg mb-2" data-lang-en="Content, PR & Activation" data-lang-fr="Contenu, RP et activation">Content, PR & Activation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach." data-lang-fr="Photographie, vidéo, relations médias, production de campagne et activations des commanditaires qui étendent la portée du parcours.">Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Prep" alt="Competition Preparation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Competition Preparation" data-lang-fr="Préparation à la compétition">Competition Preparation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Registration, administrative requirements, technical planning and materials to meet ICC standards." data-lang-fr="Inscription, exigences administratives, planification technique et matériel pour répondre aux normes de l'ICC.">Registration, administrative requirements, technical planning and materials to meet ICC standards.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Train" alt="Training & Development" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Training & Development" data-lang-fr="Entraînement et développement">Training & Development</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program." data-lang-fr="Accès aux cuisines, tests de recettes, répétitions et pratique continue pour peaufiner chaque élément du programme de compétition.">Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Ingredients" alt="Ingredients & Presentation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Ingredients & Presentation" data-lang-fr="Ingrédients et présentation">Ingredients & Presentation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Premium ingredients, specialized products, serving pieces, uniforms and presentation materials." data-lang-fr="Ingrédients haut de gamme, produits spécialisés, pièces de service, uniformes et matériel de présentation.">Premium ingredients, specialized products, serving pieces, uniforms and presentation materials.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Travel" alt="Travel & Accommodation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Travel & Accommodation" data-lang-fr="Voyage et hébergement">Travel & Accommodation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon." data-lang-fr="Vols, hôtels, transport terrestre et dépenses de voyage essentielles pour la participation de l'équipe à Lyon.">Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Freight" alt="Freight & Logistics" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Freight & Logistics" data-lang-fr="Fret et logistique">Freight & Logistics</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France." data-lang-fr="Transport d'équipement, d'outils, d'uniformes, d'ingrédients et de matériel de présentation entre le Canada et la France.">Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France.</p></div>
+         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Content" alt="Content, PR & Activation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Content, PR & Activation" data-lang-fr="Contenu, RP et activation">Content, PR & Activation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach." data-lang-fr="Photographie, vidéo, relations médias, production de campagne et activations des commanditaires qui étendent la portée du parcours.">Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach.</p></div>
       </div>
     </div>
   </section>
@@ -717,13 +720,13 @@
         <h3 class="text-gold font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Lead Partners" data-lang-fr="Partenaires majeurs">Lead Partners</h3>
         <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16">
           <div class="sponsor-card group text-center">
-            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
@@ -736,25 +739,25 @@
         <h3 class="text-gold-light font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Premier & Official Partners" data-lang-fr="Partenaires Premier & Officiels">Premier & Official Partners</h3>
         <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
           <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
@@ -767,31 +770,31 @@
         <h3 class="text-text-muted-alt font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Supporting Partners & Community" data-lang-fr="Partenaires de soutien & Communauté">Supporting Partners & Community</h3>
         <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8">
           <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Contributor</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
           </div>
           <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300">
+            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
               <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
             </div>
             <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
@@ -802,7 +805,7 @@
       <!-- CTA -->
       <div class="text-center mt-12 pt-8 border-t border-border-dark">
         <p class="text-text-muted text-sm mb-6 max-w-xl mx-auto" data-lang-en="Want to see your logo here? Join the team and help us make history in Lyon." data-lang-fr="Vous voulez voir votre logo ici ? Rejoignez l'équipe et aidez-nous à marquer l'histoire à Lyon.">Want to see your logo here? Join the team and help us make history in Lyon.</p>
-        <a href="#inquiry" class="inline-block bg-red hover:bg-red-dark text-white px-8 py-3 font-semibold text-sm transition-colors duration-200" data-lang-en="Become a Sponsor" data-lang-fr="Devenez commanditaire">Become a Sponsor</a>
+        <a href="#inquiry" class="inline-block bg-red hover:bg-red-dark text-white px-8 py-3 font-semibold text-sm transition-colors duration-200 rounded-md" data-lang-en="Become a Sponsor" data-lang-fr="Devenez commanditaire">Become a Sponsor</a>
       </div>
     </div>
   </section>
@@ -813,7 +816,7 @@
       <p class="text-gold-light font-display italic text-lg mb-3 text-center" data-lang-en="Partnership Inquiries" data-lang-fr="Demandes de partenariat">Partnership Inquiries</p>
       <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Join Team Canada" data-lang-fr="Rejoignez Équipe Canada">Join Team Canada</h2>
       <p class="text-text-muted-alt text-center mb-4" data-lang-en="Partnerships begin at $1,000, with custom cash and in-kind opportunities available." data-lang-fr="Les partenariats commencent à 1 000 $, avec des opportunités personnalisées en espèces et en nature disponibles.">Partnerships begin at $1,000, with custom cash and in-kind opportunities available.</p>
-      <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10">
+      <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10 rounded-md">
         <div class="grid md:grid-cols-2 gap-6">
           <div>
             <label for="name" class="block text-sm font-semibold text-body mb-2"><span data-lang-en="Full Name" data-lang-fr="Nom complet">Full Name</span> *</label>
@@ -846,10 +849,18 @@
           <label for="message" class="block text-sm font-semibold text-body mb-2" data-lang-en="Message" data-lang-fr="Message">Message</label>
           <textarea id="message" name="message" rows="4" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm resize-y" data-lang-en-placeholder="Tell us about your interest in partnering with Team Canada..." data-lang-fr-placeholder="Parlez-nous de votre intérêt à devenir partenaire d'Équipe Canada..." placeholder="Tell us about your interest in partnering with Team Canada..."></textarea>
         </div>
+        <!-- Privacy Consent -->
+        <div class="space-y-3 border border-gold/20 bg-olive/30 p-4 text-sm rounded-md">
+          <p class="font-semibold text-ink mb-2" data-lang-en="Privacy & Consent" data-lang-fr="Confidentialité et consentement">Privacy & Consent</p>
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="privacy_consent" required class="mt-1 w-4 h-4 accent-gold flex-shrink-0">
+            <span class="text-body-alt text-xs leading-relaxed" data-lang-en='I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.' data-lang-fr='Je consens à ce qu&apos;Équipe Canada ICC recueille et utilise mes renseignements personnels (nom, courriel, entreprise, message) afin de répondre à ma demande de partenariat et de m&apos;envoyer des communications pertinentes liées au partenariat. Je comprends que je peux retirer mon consentement en tout temps en contactant <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.'>I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.</span>
+          </label>
+        </div>
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2"></div>
-        <div id="form-status" class="hidden text-sm font-semibold p-3"></div>
-        <button type="submit" class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" data-lang-en="Submit Inquiry" data-lang-fr="Envoyer la demande">Submit Inquiry</button>
-        <p class="text-muted text-xs text-center" data-lang-en="Your information will be sent directly to Team Canada's partnership team. We respect your privacy." data-lang-fr="Vos informations seront envoyées directement à l'équipe de partenariat d'Équipe Canada. Nous respectons votre vie privée.">Your information will be sent directly to Team Canada's partnership team. We respect your privacy.</p>
+        <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md"></div>
+        <button type="submit" class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md" data-lang-en="Submit Inquiry" data-lang-fr="Envoyer la demande">Submit Inquiry</button>
+        <p class="text-muted text-xs text-center leading-relaxed" data-lang-en='By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href="#" onclick="openPrivacyModal();return false;" class="text-gold hover:text-gold-light underline">Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.' data-lang-fr='En soumettant ce formulaire, vous acceptez qu&apos;Équipe Canada ICC recueille, utilise et conserve vos renseignements personnels tel que décrit dans notre <a href="#" onclick="openPrivacyModal();return false;" class="text-gold hover:text-gold-light underline">Avis de confidentialité</a>. Vos données sont conservées de manière sécurisée et ne seront ni vendues, ni louées, ni partagées avec des tiers sans votre consentement. Vous pouvez demander l&apos;accès, la correction ou la suppression de vos données en tout temps en contactant <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.'>By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href="#" onclick="openPrivacyModal();return false;" class="text-gold hover:text-gold-light underline">Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.</p>
       </form>
     </div>
   </section>
@@ -859,14 +870,84 @@
     <div class="max-w-3xl mx-auto">
       <h2 class="text-3xl md:text-5xl font-bold mb-6 font-display" data-lang-en="Let's Bring Canada Back to the World Stage" data-lang-fr="Ramenez le Canada sur la scène mondiale">Let's Bring Canada Back to the World Stage</h2>
       <p class="text-text-muted text-lg leading-relaxed mb-10 max-w-2xl mx-auto" data-lang-en="After ten years away, Team Canada is preparing to return to Lyon. This journey is led by three chefs, supported by Bar George and powered by partners who believe Canadian culinary talent deserves to be represented on one of the world's most prestigious stages." data-lang-fr="Après dix ans d'absence, Équipe Canada se prépare à revenir à Lyon. Ce parcours est mené par trois chefs, soutenu par le Bar George et propulsé par des partenaires qui croient que le talent culinaire canadien mérite d'être représenté sur l'une des scènes les plus prestigieuses du monde.">After ten years away, Team Canada is preparing to return to Lyon. This journey is led by three chefs, supported by Bar George and powered by partners who believe Canadian culinary talent deserves to be represented on one of the world's most prestigious stages.</p>
-      <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 mb-12" data-lang-en="Partner With Team Canada" data-lang-fr="Devenez partenaire d'Équipe Canada">Partner With Team Canada</a>
+      <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 mb-12 rounded-md" data-lang-en="Partner With Team Canada" data-lang-fr="Devenez partenaire d'Équipe Canada">Partner With Team Canada</a>
       <div class="border-t border-border-dark pt-8">
-        <p class="text-gold text-lg font-bold mb-1">TEAM CANADA · ICC 2027 · LYON</p>        
+        <p class="text-gold text-lg font-bold mb-1">TEAM CANADA · ICC 2027 · LYON</p>
+        <p class="text-text-muted text-xs mt-3"><a href="#" onclick="openPrivacyModal();return false;" class="hover:text-gold underline transition-colors" data-lang-en="Privacy Notice" data-lang-fr="Avis de confidentialité">Privacy Notice</a> · <a href="mailto:privacy@teamcanadaicc.ca" class="hover:text-gold underline transition-colors">privacy@teamcanadaicc.ca</a></p>
         <p class="text-text-muted text-xs mt-4">© 2026 Team Canada ICC. <span data-lang-en="All rights reserved." data-lang-fr="Tous droits réservés.">All rights reserved.</span></p>
         <p class="text-red/70 text-xs mt-2" data-lang-en="Made with ❤️ in Montréal 🍁" data-lang-fr="Fait avec ❤️ à Montréal 🍁">Made with ❤️ in Montréal 🍁</p>
       </div>
     </div>
   </footer>
+
+  <!-- ===== PRIVACY NOTICE MODAL ===== -->
+  <div id="privacy-modal" class="fixed inset-0 z-[100] bg-ink/90 backdrop-blur-sm flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+    <div class="bg-cream text-ink max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-10 relative rounded-md">
+      <button onclick="closePrivacyModal()" class="absolute top-4 right-4 text-muted hover:text-ink transition-colors text-2xl leading-none" aria-label="Close">&times;</button>
+      <h2 id="privacy-modal-title" class="text-2xl md:text-3xl font-bold font-display mb-6" data-lang-en="Privacy Notice" data-lang-fr="Avis de confidentialité">Privacy Notice</h2>
+
+      <div class="space-y-5 text-sm leading-relaxed text-body-alt">
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="1. Who We Are" data-lang-fr="1. Qui sommes-nous">1. Who We Are</h3>
+          <p data-lang-en="Team Canada ICC is a national culinary team representing Canada at the International Catering Cup (ICC) in Lyon, France. This privacy notice applies to personal information collected through teamcanadaicc.ca." data-lang-fr="Équipe Canada ICC est une équipe culinaire nationale représentant le Canada à l'International Catering Cup (ICC) à Lyon, France. Cet avis de confidentialité s'applique aux renseignements personnels recueillis via teamcanadaicc.ca.">Team Canada ICC is a national culinary team representing Canada at the International Catering Cup (ICC) in Lyon, France. This privacy notice applies to personal information collected through teamcanadaicc.ca.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="2. What We Collect" data-lang-fr="2. Ce que nous recueillons">2. What We Collect</h3>
+          <p data-lang-en="We collect only the personal information you voluntarily provide through our partnership inquiry form: full name, email address, company/organization name, partnership tier preference, and your message." data-lang-fr="Nous recueillons uniquement les renseignements personnels que vous fournissez volontairement via notre formulaire de demande de partenariat : nom complet, adresse courriel, nom de l'entreprise/organisation, niveau de partenariat préféré et votre message.">We collect only the personal information you voluntarily provide through our partnership inquiry form: full name, email address, company/organization name, partnership tier preference, and your message.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="3. Why We Collect It" data-lang-fr="3. Pourquoi nous le recueillons">3. Why We Collect It</h3>
+          <p data-lang-en="Your information is used exclusively to respond to your partnership inquiry, communicate about partnership opportunities, and manage the sponsor relationship. We do not use your data for automated decision-making or profiling." data-lang-fr="Vos renseignements sont utilisés exclusivement pour répondre à votre demande de partenariat, communiquer au sujet des opportunités de partenariat et gérer la relation de commandite. Nous n'utilisons pas vos données pour la prise de décision automatisée ou le profilage.">Your information is used exclusively to respond to your partnership inquiry, communicate about partnership opportunities, and manage the sponsor relationship. We do not use your data for automated decision-making or profiling.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="4. Legal Basis" data-lang-fr="4. Base légale">4. Legal Basis</h3>
+          <p data-lang-en="We process your personal information based on your explicit consent, which you provide by checking the consent checkbox on our form and submitting your inquiry. You may withdraw consent at any time (see Section 7)." data-lang-fr="Nous traitons vos renseignements personnels sur la base de votre consentement explicite, que vous fournissez en cochant la case de consentement sur notre formulaire et en soumettant votre demande. Vous pouvez retirer votre consentement en tout temps (voir Section 7).">We process your personal information based on your explicit consent, which you provide by checking the consent checkbox on our form and submitting your inquiry. You may withdraw consent at any time (see Section 7).</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="5. How We Protect Your Data" data-lang-fr="5. Comment nous protégeons vos données">5. How We Protect Your Data</h3>
+          <p data-lang-en="We implement reasonable technical and organizational safeguards to protect your personal information against unauthorized access, loss, or disclosure. Your data is transmitted securely and stored on Cloudflare's infrastructure. We use industry-standard encryption in transit and at rest." data-lang-fr="Nous mettons en œuvre des mesures de protection techniques et organisationnelles raisonnables pour protéger vos renseignements personnels contre l'accès non autorisé, la perte ou la divulgation. Vos données sont transmises de manière sécurisée et stockées sur l'infrastructure Cloudflare. Nous utilisons un chiffrement standard en transit et au repos.">We implement reasonable technical and organizational safeguards to protect your personal information against unauthorized access, loss, or disclosure. Your data is transmitted securely and stored on Cloudflare's infrastructure. We use industry-standard encryption in transit and at rest.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="6. Data Sharing & Third Parties" data-lang-fr="6. Partage de données et tiers">6. Data Sharing & Third Parties</h3>
+          <p data-lang-en="We do not sell, rent, or trade your personal information. We may share your data with trusted service providers (e.g., email delivery, hosting) who are contractually bound to protect it. We do not transfer personal data outside Canada without adequate safeguards." data-lang-fr="Nous ne vendons, ne louons ni n'échangeons vos renseignements personnels. Nous pouvons partager vos données avec des fournisseurs de services de confiance (par ex., livraison de courriels, hébergement) qui sont contractuellement tenus de les protéger. Nous ne transférons pas de données personnelles hors du Canada sans garanties adéquates.">We do not sell, rent, or trade your personal information. We may share your data with trusted service providers (e.g., email delivery, hosting) who are contractually bound to protect it. We do not transfer personal data outside Canada without adequate safeguards.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="7. Your Rights" data-lang-fr="7. Vos droits">7. Your Rights</h3>
+          <p data-lang-en="Under PIPEDA and Quebec Law 25, you have the right to: (a) access your personal information; (b) request correction of inaccurate data; (c) withdraw consent at any time; (d) request deletion of your data (subject to legal retention obligations); and (e) file a complaint with the Commission d'accès à l'information du Québec or the Office of the Privacy Commissioner of Canada." data-lang-fr="En vertu de la LPRPDE et de la Loi 25 du Québec, vous avez le droit de : (a) accéder à vos renseignements personnels; (b) demander la correction de données inexactes; (c) retirer votre consentement en tout temps; (d) demander la suppression de vos données (sous réserve des obligations légales de conservation); et (e) déposer une plainte auprès de la Commission d'accès à l'information du Québec ou du Commissariat à la protection de la vie privée du Canada.">Under PIPEDA and Quebec Law 25, you have the right to: (a) access your personal information; (b) request correction of inaccurate data; (c) withdraw consent at any time; (d) request deletion of your data (subject to legal retention obligations); and (e) file a complaint with the Commission d'accès à l'information du Québec or the Office of the Privacy Commissioner of Canada.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="8. Data Retention" data-lang-fr="8. Conservation des données">8. Data Retention</h3>
+          <p data-lang-en="We retain your personal information only as long as necessary to fulfill the purposes for which it was collected, or as required by applicable law. Inquiries that do not result in a partnership are typically retained for 24 months, after which data is securely deleted." data-lang-fr="Nous conservons vos renseignements personnels uniquement aussi longtemps que nécessaire pour atteindre les fins pour lesquelles ils ont été recueillis, ou tel que requis par la loi applicable. Les demandes qui ne donnent pas lieu à un partenariat sont généralement conservées pendant 24 mois, après quoi les données sont supprimées de manière sécurisée.">We retain your personal information only as long as necessary to fulfill the purposes for which it was collected, or as required by applicable law. Inquiries that do not result in a partnership are typically retained for 24 months, after which data is securely deleted.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="9. Privacy Officer & Contact" data-lang-fr="9. Responsable de la confidentialité et contact">9. Privacy Officer & Contact</h3>
+          <p data-lang-en='For questions, access requests, or to exercise your privacy rights, contact our Privacy Officer at <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.' data-lang-fr='Pour toute question, demande d&apos;accès ou pour exercer vos droits en matière de confidentialité, contactez notre responsable de la confidentialité à <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.'>For questions, access requests, or to exercise your privacy rights, contact our Privacy Officer at <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="10. Cookies & Tracking" data-lang-fr="10. Témoins et suivi">10. Cookies & Tracking</h3>
+          <p data-lang-en="This site uses Cloudflare Turnstile for spam protection, which may set essential security cookies. We also use a browser localStorage key to remember your language preference. No advertising, analytics, or third-party tracking cookies are used." data-lang-fr="Ce site utilise Cloudflare Turnstile pour la protection contre le spam, ce qui peut installer des témoins de sécurité essentiels. Nous utilisons également une clé localStorage du navigateur pour mémoriser votre préférence de langue. Aucun témoin publicitaire, analytique ou de suivi tiers n'est utilisé.">This site uses Cloudflare Turnstile for spam protection, which may set essential security cookies. We also use a browser localStorage key to remember your language preference. No advertising, analytics, or third-party tracking cookies are used.</p>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-ink mb-1" data-lang-en="11. Updates to This Notice" data-lang-fr="11. Mises à jour de cet avis">11. Updates to This Notice</h3>
+          <p data-lang-en="This privacy notice was last updated on July 22, 2026. We may update it periodically. Changes will be posted on this page." data-lang-fr="Cet avis de confidentialité a été mis à jour le 22 juillet 2026. Nous pouvons le mettre à jour périodiquement. Les modifications seront publiées sur cette page.">This privacy notice was last updated on July 22, 2026. We may update it periodically. Changes will be posted on this page.</p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-border-light">
+          <p class="text-xs text-muted" data-lang-en="Team Canada ICC · Montréal, Québec, Canada · privacy@teamcanadaicc.ca" data-lang-fr="Équipe Canada ICC · Montréal, Québec, Canada · privacy@teamcanadaicc.ca">Team Canada ICC · Montréal, Québec, Canada · privacy@teamcanadaicc.ca</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
@@ -949,7 +1030,7 @@
 
     function showStatus(msg, type) {
       fstatus.textContent = msg;
-      fstatus.className = 'text-sm font-semibold p-3 mb-4 ' + (type === 'success' ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300');
+      fstatus.className = 'text-sm font-semibold p-3 mb-4 rounded-md ' + (type === 'success' ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300');
       fstatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -978,6 +1059,20 @@
 
     /* Scroll-to-top click */
     document.getElementById('scroll-top-btn').addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    /* Privacy modal */
+    function openPrivacyModal() {
+      var modal = document.getElementById('privacy-modal');
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closePrivacyModal() {
+      var modal = document.getElementById('privacy-modal');
+      if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+    }
+    document.getElementById('privacy-modal').addEventListener('click', function(e) {
+      if (e.target === this) closePrivacyModal();
+    });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var m = document.getElementById('privacy-modal'); if (m && !m.classList.contains('hidden')) closePrivacyModal(); } });
 
     /* 🇨🇦 */
     console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c— Team Canada %c🇨🇦',
