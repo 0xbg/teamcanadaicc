@@ -3,11 +3,654 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>teamcanadaicc</title>
+  <title>Team Canada — ICC · Lyon 2027</title>
+  <meta name="description" content="After a ten-year absence, Canada returns to the International Catering Cup in Lyon. Become a partner and help bring Canada back to the world stage.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#f4eedd',
+            ink: '#14100a',
+            olive: '#463f31',
+            gold: '#c2a15c',
+            'gold-light': '#d9be86',
+            body: '#241f16',
+            'body-alt': '#3a382f',
+            muted: '#7a7461',
+            'muted-dark': '#5a5445',
+            'muted-gold': '#a17c33',
+            'text-light': '#e2ddcf',
+            'text-light-alt': '#d9d4c6',
+            'text-muted': '#9c9787',
+            'text-muted-alt': '#c8c3b4',
+            'border-light': '#d0c9b6',
+            'border-dark': '#3a3325',
+            'border-dark-alt': '#5a5241',
+          },
+          fontFamily: {
+            serif: ['Georgia', 'Times New Roman', 'serif'],
+            sans: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #c2a15c, transparent);
+      border: none;
+      margin: 0 auto;
+      max-width: 200px;
+    }
+    .gold-text {
+      color: #c2a15c;
+    }
+    .tier-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tier-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(20, 16, 10, 0.12);
+    }
+    .form-input {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: #c2a15c;
+      box-shadow: 0 0 0 3px rgba(194, 161, 92, 0.15);
+    }
+  </style>
 </head>
-<body>
-  <h1>teamcanadaicc</h1>
-  <p>Environment: <span id="env">loading...</span></p>
-  <p>Deployment: <span id="branch">unknown</span></p>
+<body class="bg-cream text-body font-sans antialiased">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-ink/95 backdrop-blur-sm border-b border-border-dark transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo / Brand -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gold flex items-center justify-center group-hover:bg-gold/10 transition-colors">
+            <span class="text-gold text-xs md:text-sm font-bold">TC</span>
+          </div>
+          <div class="hidden sm:block">
+            <p class="text-cream font-bold text-sm md:text-base leading-tight">TEAM CANADA</p>
+            <p class="text-gold font-serif text-xs tracking-widest">ICC · LYON 2027</p>
+          </div>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#about" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide">About</a>
+          <a href="#comeback" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide">The Comeback</a>
+          <a href="#team" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide">Team</a>
+          <a href="#tiers" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide">Partnerships</a>
+          <a href="#support" class="nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium tracking-wide">Impact</a>
+          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200">
+            Partner With Us
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Toggle menu">
+          <span class="block w-6 h-0.5 bg-cream transition-all duration-300 origin-center" id="bar1"></span>
+          <span class="block w-6 h-0.5 bg-cream transition-all duration-300 origin-center" id="bar2"></span>
+          <span class="block w-6 h-0.5 bg-cream transition-all duration-300 origin-center" id="bar3"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="lg:hidden max-h-0 overflow-hidden transition-all duration-400 ease-in-out">
+        <div class="flex flex-col gap-3 pb-6 pt-2 border-t border-border-dark">
+          <a href="#about" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide">About</a>
+          <a href="#comeback" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide">The Comeback</a>
+          <a href="#team" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide">Team</a>
+          <a href="#tiers" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide">Partnerships</a>
+          <a href="#support" class="mobile-nav-link text-text-muted hover:text-gold transition-colors text-sm font-medium py-2 tracking-wide">Impact</a>
+          <a href="#inquiry" class="inline-block bg-gold text-ink px-5 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 text-center">
+            Partner With Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 bg-ink text-cream pt-28 md:pt-32">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 50% 50%, #c2a15c 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div class="relative z-10 max-w-3xl">
+      <p class="text-gold-light font-serif italic text-lg md:text-xl mb-4 tracking-wide">Canada Returns to the World Stage</p>
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight mb-6">
+        TEAM CANADA
+      </h1>
+      <p class="text-gold text-xl md:text-2xl font-serif tracking-widest uppercase mb-8">ICC · Lyon 2027</p>
+      <p class="text-text-muted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+        After a ten-year absence, Canada returns to the International Catering Cup — one of the most prestigious stages in global culinary competition.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200">
+          Become a Partner
+        </a>
+        <a href="#about" class="inline-block border border-gold text-gold px-8 py-4 font-semibold text-lg hover:bg-gold hover:text-ink transition-colors duration-200">
+          Learn More
+        </a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 animate-bounce">
+      <svg class="w-6 h-6 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    </div>
+  </header>
+
+  <!-- ===== ABOUT THE EVENT ===== -->
+  <section id="about" class="py-20 md:py-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-gold font-serif italic text-lg mb-3">About the Event</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-8">The International Catering Cup</h2>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <p class="text-body-alt leading-relaxed mb-4">
+            Held in Lyon during Sirha, alongside the Bocuse d'Or, the International Catering Cup brings together national teams for one of the hospitality industry's most respected culinary competitions.
+          </p>
+          <p class="text-body-alt leading-relaxed">
+            It places creativity, technical precision, service, pastry and teamwork on an international stage before leading professionals, media and decision-makers from across the global food and hospitality sector.
+          </p>
+        </div>
+        <div class="bg-olive text-cream p-8">
+          <p class="text-gold-light font-serif italic mb-4">Presented by Team Canada</p>
+          <p class="text-text-light-alt leading-relaxed mb-4">
+            Team Canada will be represented by Chef de Cuisine and Team Captain <strong>Donnel English</strong>, Pastry Chef <strong>Nicolas Parsy</strong>, and Executive Chef and Team Coach <strong>Kevin Ramasawmy</strong>.
+          </p>
+          <p class="text-text-muted leading-relaxed text-sm">
+            All three are part of the culinary team at Bar George in Montréal, giving the campaign a unified identity, a credible home base and a strong foundation for training, storytelling, media and sponsor activations.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== THE COMEBACK ===== -->
+  <section id="comeback" class="py-20 md:py-28 px-6 bg-ink text-cream">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-gold font-serif italic text-lg mb-3">A 10-Year Comeback Story</p>
+      <h2 class="text-3xl md:text-5xl font-bold mb-8">A National Culinary Comeback</h2>
+      <p class="text-text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-12">
+        Canada has not competed at the International Catering Cup since 2017. ICC 2027 gives partners a rare opportunity to help bring the country back to the culinary world stage, and to be part of the journey from preparation in Montréal to competition day in Lyon.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8 text-left">
+        <div class="border border-border-dark p-6">
+          <p class="text-gold text-3xl font-serif mb-3">01</p>
+          <h3 class="text-xl font-semibold mb-3">The Road to Lyon</h3>
+          <p class="text-text-muted text-sm leading-relaxed">The campaign follows the chefs as they train, develop their competition program and prepare to represent Canada. Partners can be integrated naturally through products, services, experiences and shared storytelling.</p>
+        </div>
+        <div class="border border-border-dark p-6">
+          <p class="text-gold text-3xl font-serif mb-3">02</p>
+          <h3 class="text-xl font-semibold mb-3">Content Across the Campaign</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Chef-led content, behind-the-scenes moments, product integration, social media recognition, professional photography and coverage surrounding the competition.</p>
+        </div>
+        <div class="border border-border-dark p-6">
+          <p class="text-gold text-3xl font-serif mb-3">03</p>
+          <h3 class="text-xl font-semibold mb-3">A Story That Continues</h3>
+          <p class="text-text-muted text-sm leading-relaxed">The campaign does not end on competition day. Results coverage, behind-the-scenes content, sponsor recaps and post-event activations extend the story beyond Lyon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== MEET THE TEAM ===== -->
+  <section id="team" class="py-20 md:py-28 px-6">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-gold font-serif italic text-lg mb-3 text-center">Meet the Team</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3 text-center">Three Chefs. One Kitchen. One Mission.</h2>
+      <p class="text-muted text-center max-w-2xl mx-auto mb-16">Drawn from the brigade at Bar George in Montréal, Team Canada combines leadership, pastry expertise and executive experience.</p>
+
+      <!-- Donnel English -->
+      <div class="grid md:grid-cols-3 gap-0 border border-border-light mb-0">
+        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
+          <p class="text-gold-light font-serif text-sm tracking-widest uppercase mb-2">Team Captain</p>
+          <h3 class="text-2xl md:text-3xl font-bold mb-1">Donnel English</h3>
+          <p class="text-text-muted-alt text-sm">Chef de Cuisine, Bar George</p>
+        </div>
+        <div class="md:col-span-2 p-8 md:p-10">
+          <p class="text-body-alt leading-relaxed mb-4">
+            Chef Donnel English's culinary story begins in Grenada, where his grandparents ran a farm and produce shop. After arriving in Montréal in 2007, his potential was quickly recognized, leading him to train at the Pearson School of Culinary Arts.
+          </p>
+          <p class="text-body-alt leading-relaxed mb-6">
+            His career has taken him through the Ritz-Carlton, Maison Boulud, and New York's NoMad. He returned to Montréal to join Chef Kevin Ramasawmy at Bar George, progressing from Sous Chef to Chef de Cuisine.
+          </p>
+          <div class="text-sm text-muted space-y-1">
+            <p><span class="text-gold font-semibold">Career Highlights:</span> Team Captain, ICC 2027 · Chef de Cuisine, Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nicolas Parsy -->
+      <div class="grid md:grid-cols-3 gap-0 border-l border-r border-b border-border-light">
+        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
+          <p class="text-gold-light font-serif text-sm tracking-widest uppercase mb-2">Pastry Chef</p>
+          <h3 class="text-2xl md:text-3xl font-bold mb-1">Nicolas Parsy</h3>
+          <p class="text-text-muted-alt text-sm">Pastry Chef, Bar George</p>
+        </div>
+        <div class="md:col-span-2 p-8 md:p-10">
+          <p class="text-body-alt leading-relaxed mb-4">
+            Raised in Pas-de-Calais in northern France, Nicolas discovered the power of food watching his mother and Polish grandmother bring family and friends together around the table. He developed his craft in France and Switzerland before moving to Montréal in 2018.
+          </p>
+          <p class="text-body-alt leading-relaxed mb-6">
+            Nicolas approaches pastry through a modern interpretation of French tradition — flavour first, supported by precise technique, contrasting textures and thoughtful presentation.
+          </p>
+          <div class="text-sm text-muted space-y-1">
+            <p><span class="text-gold font-semibold">Career Highlights:</span> 2025 National Pastry Chef, Société des chefs du Québec · 2nd Place, Roland Mesnier North America Pastry Trophy · One to Watch Award, Canada's 100 Best</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kevin Ramasawmy -->
+      <div class="grid md:grid-cols-3 gap-0 border-l border-r border-b border-border-light">
+        <div class="bg-olive text-cream p-8 md:p-10 flex flex-col justify-center">
+          <p class="text-gold-light font-serif text-sm tracking-widest uppercase mb-2">Team Coach</p>
+          <h3 class="text-2xl md:text-3xl font-bold mb-1">Kevin Ramasawmy</h3>
+          <p class="text-text-muted-alt text-sm">Executive Chef, Bar George</p>
+        </div>
+        <div class="md:col-span-2 p-8 md:p-10">
+          <p class="text-body-alt leading-relaxed mb-4">
+            Kevin's connection to food began in Mauritius, cooking with his mother. He moved to Montréal in 2004 at age 19. His career took him to Canoe in Toronto, Splendido, Daniel in New York, and Maison Boulud at the Ritz-Carlton.
+          </p>
+          <p class="text-body-alt leading-relaxed mb-6">
+            In 2017, he opened Bar George at Le Mount Stephen. He has cooked for the TGR Haas F1 Team during the Canadian Grand Prix and represented Bar George internationally. As Team Coach, he brings international kitchen experience and operational leadership.
+          </p>
+          <div class="text-sm text-muted space-y-1">
+            <p><span class="text-gold font-semibold">Career Highlights:</span> Executive Chef, Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team · Canadian Grand Prix</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== SPONSOR TIERS ===== -->
+  <section id="tiers" class="py-20 md:py-28 px-6 bg-ink text-cream">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-gold font-serif italic text-lg mb-3 text-center">Partnership Opportunities</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Sponsor Tier System</h2>
+      <p class="text-text-muted text-center max-w-3xl mx-auto mb-16">Each partnership is built to create meaningful visibility across the journey — from preparation in Montréal to competition day in Lyon.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Lead Partner -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-gold lg:col-span-3 md:col-span-2">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <div>
+              <p class="text-gold font-serif text-sm tracking-widest uppercase">Limited to 2 Partners</p>
+              <h3 class="text-2xl font-bold">Lead Partner</h3>
+            </div>
+            <p class="text-3xl font-bold text-gold">$20,000</p>
+          </div>
+          <ul class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Lead Partner designation</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Premier logo placement on chef jackets & team apparel</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Highest logo placement across all campaign materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Lead recognition in press releases & media</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 2 dedicated branded social posts/reels</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 4+ dedicated story mentions</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Professionally produced partner content feature</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Custom activation, private dinner or chef appearance</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Product/service integration throughout campaign</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Industry-category exclusivity</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Access to approved photography for 12 months</li>
+          </ul>
+        </div>
+
+        <!-- Premier Partner -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-gold-light">
+          <div class="mb-4">
+            <p class="text-gold font-serif text-sm tracking-widest uppercase">Limited to 3 Partners</p>
+            <h3 class="text-2xl font-bold">Premier Partner</h3>
+          </div>
+          <p class="text-2xl font-bold text-gold mb-4">$15,000</p>
+          <ul class="space-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Premier Partner designation</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Prominent logo placement on campaign materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Secondary logo placement on selected team apparel</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Visibility in selected photography & campaign videos</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Inclusion in press releases & media materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 1 dedicated branded social post/reel</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 3+ story mentions</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Dedicated sponsor spotlight</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Product integration or chef appearance opportunity</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Category exclusivity where agreed</li>
+          </ul>
+        </div>
+
+        <!-- Official Partner -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-gold">
+          <div class="mb-4">
+            <p class="text-gold font-serif text-sm tracking-widest uppercase">Limited to 3 Partners</p>
+            <h3 class="text-2xl font-bold">Official Partner</h3>
+          </div>
+          <p class="text-2xl font-bold text-gold mb-4">$10,000</p>
+          <ul class="space-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Official Partner designation</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Logo placement on selected materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Inclusion in team photography & content</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Recognition in press & media materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 1 partner spotlight or integrated content feature</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 2+ story mentions</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Product or service integration opportunity</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Access to approved photography for 12 months</li>
+          </ul>
+        </div>
+
+        <!-- Supporting Partner -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-muted-gold">
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold">Supporting Partner</h3>
+          </div>
+          <p class="text-2xl font-bold text-gold mb-4">$5,000</p>
+          <ul class="space-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Supporting Partner designation</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Logo on sponsor page & selected materials</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Inclusion in 1 grouped partner post</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> 1+ story recognition</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Product/service integration where relevant</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Access to selected photography</li>
+          </ul>
+        </div>
+
+        <!-- Team Contributor -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-olive">
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold">Team Contributor</h3>
+          </div>
+          <p class="text-2xl font-bold text-gold mb-4">$2,500</p>
+          <ul class="space-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Team Contributor designation</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Logo on Team Canada sponsor page</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Recognition in 1 grouped sponsor post</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Inclusion in collective story recognition</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Recognition in final campaign recap</li>
+          </ul>
+        </div>
+
+        <!-- Team Supporter -->
+        <div class="tier-card bg-cream text-ink p-8 border-t-4 border-muted-dark">
+          <div class="mb-4">
+            <h3 class="text-2xl font-bold">Team Supporter</h3>
+          </div>
+          <p class="text-2xl font-bold text-gold mb-4">$1,000</p>
+          <ul class="space-y-2 text-sm text-body-alt">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Name/logo on digital sponsor page</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Recognition in collective thank-you post</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Inclusion in collective story recognition</li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> Recognition in final thank-you & recap</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- In-Kind & Custom -->
+      <div class="grid md:grid-cols-2 gap-8 mt-12">
+        <div class="border border-border-dark p-8">
+          <h3 class="text-xl font-bold mb-4 text-gold">In-Kind Partnership Options</h3>
+          <p class="text-text-muted text-sm leading-relaxed mb-4">We welcome products and services that directly support Team Canada's preparation, travel and participation in Lyon.</p>
+          <div class="grid grid-cols-2 gap-2 text-sm text-text-light">
+            <span>Flights & freight</span>
+            <span>Hotels & hospitality</span>
+            <span>Cookware & uniforms</span>
+            <span>Premium ingredients</span>
+            <span>Printing & signage</span>
+            <span>Photo, video & media</span>
+          </div>
+        </div>
+        <div class="border border-border-dark p-8 flex flex-col justify-center">
+          <h3 class="text-xl font-bold mb-4 text-gold">Custom Partnerships</h3>
+          <p class="text-text-muted text-sm leading-relaxed">Customized packages and mixed cash-and-in-kind contributions are available. Partnerships may include additional content, hospitality, apparel visibility, category exclusivity or activation opportunities based on partner needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== WHERE SUPPORT GOES ===== -->
+  <section id="support" class="py-20 md:py-28 px-6">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-gold font-serif italic text-lg mb-3 text-center">Your Impact</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4 text-center">Where Your Support Goes</h2>
+      <p class="text-muted text-center max-w-2xl mx-auto mb-16">Every partnership helps move Team Canada from preparation in Montréal to competition day in Lyon.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">🥘</p>
+          <h3 class="font-bold text-lg mb-2">Competition Preparation</h3>
+          <p class="text-muted text-sm leading-relaxed">Registration, administrative requirements, technical planning and materials to meet ICC standards.</p>
+        </div>
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">👨‍🍳</p>
+          <h3 class="font-bold text-lg mb-2">Training & Development</h3>
+          <p class="text-muted text-sm leading-relaxed">Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program.</p>
+        </div>
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">🍽️</p>
+          <h3 class="font-bold text-lg mb-2">Ingredients & Presentation</h3>
+          <p class="text-muted text-sm leading-relaxed">Premium ingredients, specialized products, serving pieces, uniforms and presentation materials.</p>
+        </div>
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">✈️</p>
+          <h3 class="font-bold text-lg mb-2">Travel & Accommodation</h3>
+          <p class="text-muted text-sm leading-relaxed">Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon.</p>
+        </div>
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">📦</p>
+          <h3 class="font-bold text-lg mb-2">Freight & Logistics</h3>
+          <p class="text-muted text-sm leading-relaxed">Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France.</p>
+        </div>
+        <div class="border border-border-light p-6 text-center">
+          <p class="text-gold text-3xl mb-3">📸</p>
+          <h3 class="font-bold text-lg mb-2">Content, PR & Activation</h3>
+          <p class="text-muted text-sm leading-relaxed">Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ===== PARTNERSHIP INQUIRY FORM ===== -->
+  <section id="inquiry" class="py-20 md:py-28 px-6 bg-olive text-cream">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-gold-light font-serif italic text-lg mb-3 text-center">Partnership Inquiries</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center">Join Team Canada</h2>
+      <p class="text-text-muted-alt text-center mb-4">Partnerships begin at $1,000, with custom cash and in-kind opportunities available.</p>
+      <p class="text-gold text-center mb-10 text-sm">
+        Contact: Deisy Mariano · <a href="tel:+15145736758" class="hover:text-gold-light transition-colors">514-573-6758</a>
+      </p>
+
+      <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-semibold text-body mb-2">Full Name *</label>
+            <input type="text" id="name" name="name" required
+              class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm"
+              placeholder="Your full name">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-semibold text-body mb-2">Email Address *</label>
+            <input type="email" id="email" name="email" required
+              class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm"
+              placeholder="you@example.com">
+          </div>
+        </div>
+        <div>
+          <label for="company" class="block text-sm font-semibold text-body mb-2">Company / Organization</label>
+          <input type="text" id="company" name="company"
+            class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm"
+            placeholder="Your company or organization name">
+        </div>
+        <div>
+          <label for="tier" class="block text-sm font-semibold text-body mb-2">Partnership Tier of Interest</label>
+          <select id="tier" name="tier"
+            class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink focus:outline-none text-sm">
+            <option value="">Select a tier (optional)</option>
+            <option value="Lead Partner — $20,000">Lead Partner — $20,000</option>
+            <option value="Premier Partner — $15,000">Premier Partner — $15,000</option>
+            <option value="Official Partner — $10,000">Official Partner — $10,000</option>
+            <option value="Supporting Partner — $5,000">Supporting Partner — $5,000</option>
+            <option value="Team Contributor — $2,500">Team Contributor — $2,500</option>
+            <option value="Team Supporter — $1,000">Team Supporter — $1,000</option>
+            <option value="In-Kind Partnership">In-Kind Partnership</option>
+            <option value="Custom Partnership">Custom Partnership</option>
+          </select>
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-semibold text-body mb-2">Message</label>
+          <textarea id="message" name="message" rows="4"
+            class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm resize-y"
+            placeholder="Tell us about your interest in partnering with Team Canada..."></textarea>
+        </div>
+
+        <div id="form-status" class="hidden text-sm font-semibold p-3"></div>
+
+        <button type="submit"
+          class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          Submit Inquiry
+        </button>
+        <p class="text-muted text-xs text-center">Your information will be sent directly to Team Canada's partnership team. We respect your privacy.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER / FINAL CTA ===== -->
+  <footer class="py-20 md:py-28 px-6 bg-ink text-cream text-center">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-5xl font-bold mb-6">Let's Bring Canada Back to the World Stage</h2>
+      <p class="text-text-muted text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+        After ten years away, Team Canada is preparing to return to Lyon. This journey is led by three chefs, supported by Bar George and powered by partners who believe Canadian culinary talent deserves to be represented on one of the world's most prestigious stages.
+      </p>
+      <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 mb-12">
+        Partner With Team Canada
+      </a>
+      <div class="border-t border-border-dark pt-8">
+        <p class="text-gold text-lg font-bold mb-1">TEAM CANADA · ICC 2027 · LYON</p>
+        <p class="text-text-muted text-sm">Partnership Inquiries: Deisy Mariano · <a href="tel:+15145736758" class="hover:text-gold-light transition-colors">514-573-6758</a></p>
+        <p class="text-text-muted text-xs mt-4">© 2026 Team Canada ICC. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== FORM SCRIPT ===== -->
+  <script>
+    const form = document.getElementById('inquiry-form');
+    const status = document.getElementById('form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!name || !email) {
+        showStatus('Please fill in all required fields.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      status.className = 'hidden';
+
+      try {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch('/api/inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showStatus('Thank you for your interest! The Team Canada partnership team will be in touch shortly.', 'success');
+          form.reset();
+        } else {
+          showStatus(result.message || 'Something went wrong. Please try again or contact us directly at 514-573-6758.', 'error');
+        }
+      } catch (err) {
+        showStatus('Unable to send your inquiry. Please try again or contact us directly at 514-573-6758.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Inquiry';
+      }
+    });
+
+    function showStatus(message, type) {
+      status.textContent = message;
+      status.className = 'text-sm font-semibold p-3 mb-4 ' + (
+        type === 'success'
+          ? 'bg-green-100 text-green-800 border border-green-300'
+          : 'bg-red-100 text-red-800 border border-red-300'
+      );
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ===== NAVBAR SCRIPTS =====
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+    let menuOpen = false;
+
+    mobileMenuBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      if (menuOpen) {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+        bar1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+        bar2.style.opacity = '0';
+        bar3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        mobileMenu.style.maxHeight = '0';
+        bar1.style.transform = 'none';
+        bar2.style.opacity = '1';
+        bar3.style.transform = 'none';
+      }
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        if (menuOpen) mobileMenuBtn.click();
+      });
+    });
+
+    // Scroll-aware active link highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      const scrollY = window.scrollY + 120;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('text-gold', link.getAttribute('href') === '#' + current);
+        link.classList.toggle('text-text-muted', link.getAttribute('href') !== '#' + current);
+      });
+    });
+  </script>
+
 </body>
 </html>
