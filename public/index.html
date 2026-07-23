@@ -1201,14 +1201,17 @@
         </div>
 
         <!-- Slider -->
-        <div class="relative mb-8 px-1">
-          <input type="range" id="impact-slider" min="100" max="5000" value="500" step="100"
+        <div class="relative mb-8">
+          <input type="range" id="impact-slider" min="0" max="3" value="1" step="1"
             class="w-full appearance-none h-2 rounded-full outline-none cursor-pointer"
-            style="background: linear-gradient(to right, #c2a15c 0%, #c2a15c 8%, rgba(244,238,221,0.12) 8%, rgba(244,238,221,0.12) 100%);"
+            style="background: linear-gradient(to right, #c2a15c 0%, #c2a15c 33.333%, rgba(244,238,221,0.12) 33.333%, rgba(244,238,221,0.12) 100%);"
             aria-label="Contribution amount slider"
             aria-valuemin="100" aria-valuemax="5000" aria-valuenow="500" aria-valuetext="$500">
-          <div class="flex justify-between text-xs text-text-muted mt-2 font-mono">
-            <span>$100</span><span>$500</span><span>$1,000</span><span>$5,000</span>
+          <div class="relative h-5 mt-2" id="slider-labels">
+            <span class="absolute text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap" style="left:0%; transform:translateX(-50%);" data-index="0">$100</span>
+            <span class="absolute text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap" style="left:33.333%; transform:translateX(-50%);" data-index="1">$500</span>
+            <span class="absolute text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap" style="left:66.667%; transform:translateX(-50%);" data-index="2">$1,000</span>
+            <span class="absolute text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap" style="left:100%; transform:translateX(-50%);" data-index="3">$5,000</span>
           </div>
         </div>
 
@@ -2052,11 +2055,16 @@
     (function() {
       var slider = document.getElementById('impact-slider');
       var snapBtns = document.querySelectorAll('.slider-snap-btn');
+      var labelEls = document.querySelectorAll('#slider-labels span[data-index]');
       var impactAmount = document.getElementById('impact-amount');
       var impactDesc = document.getElementById('impact-description');
       var impactIcons = document.getElementById('impact-icons');
 
       if (!slider || !impactAmount) return;
+
+      // Index-to-dollar mapping: slider position 0→$100, 1→$500, 2→$1,000, 3→$5,000
+      var VALUE_TIERS = [100, 500, 1000, 5000];
+      var MAX_INDEX = VALUE_TIERS.length - 1;
 
       var impactData = {
         // EN descriptions
@@ -2161,12 +2169,18 @@
         return html;
       }
 
-      function updateSliderUI(val) {
+      function updateSliderUI(index) {
+        var dollarValue = VALUE_TIERS[index];
+        if (dollarValue === undefined) return;
+
         var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
         var lang = isFr ? 'fr' : 'en';
-        var data = impactData[lang][val];
+        var data = impactData[lang][dollarValue];
 
-        impactAmount.textContent = formatCurrency(val);
+        // Sync the native slider value (critical: ensures thumb position updates)
+        slider.value = index;
+
+        impactAmount.textContent = formatCurrency(dollarValue);
 
         if (data) {
           impactDesc.textContent = data.desc;
@@ -2174,17 +2188,17 @@
         }
 
         // Update slider track fill
-        var pct = ((val - 100) / (5000 - 100)) * 100;
+        var pct = (index / MAX_INDEX) * 100;
         slider.style.background = 'linear-gradient(to right, #c2a15c 0%, #c2a15c ' + pct + '%, rgba(244,238,221,0.12) ' + pct + '%, rgba(244,238,221,0.12) 100%)';
 
         // Update aria
-        slider.setAttribute('aria-valuenow', val);
-        slider.setAttribute('aria-valuetext', formatCurrency(val));
+        slider.setAttribute('aria-valuenow', dollarValue);
+        slider.setAttribute('aria-valuetext', formatCurrency(dollarValue));
 
         // Update snap button active states
         snapBtns.forEach(function(btn) {
           var btnVal = parseInt(btn.getAttribute('data-value'));
-          if (btnVal === val) {
+          if (btnVal === dollarValue) {
             btn.classList.add('active');
             btn.setAttribute('aria-checked', 'true');
           } else {
@@ -2194,22 +2208,42 @@
         });
       }
 
-      // Slider input event
+      // Slider input event (fires continuously during drag)
       slider.addEventListener('input', function() {
         updateSliderUI(parseInt(slider.value));
       });
 
-      // Snap button clicks
+      // Slider change event (fires when user releases the slider after dragging)
+      slider.addEventListener('change', function() {
+        updateSliderUI(parseInt(slider.value));
+      });
+
+      // Snap button clicks — set slider to corresponding index
       snapBtns.forEach(function(btn) {
         btn.addEventListener('click', function() {
-          var val = parseInt(btn.getAttribute('data-value'));
-          slider.value = val;
-          updateSliderUI(val);
+          var dollarVal = parseInt(btn.getAttribute('data-value'));
+          var index = VALUE_TIERS.indexOf(dollarVal);
+          if (index === -1) return;
+          slider.value = index;
+          // Dispatch both input and change events so all listener callbacks fire seamlessly
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+          slider.dispatchEvent(new Event('change', { bubbles: true }));
         });
       });
 
-      // Initial state
-      updateSliderUI(500);
+      // Label clicks — set slider to the exact index
+      labelEls.forEach(function(label) {
+        label.addEventListener('click', function() {
+          var index = parseInt(label.getAttribute('data-index'));
+          if (isNaN(index) || index < 0 || index > MAX_INDEX) return;
+          slider.value = index;
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+          slider.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+
+      // Initial state (index 1 = $500)
+      updateSliderUI(1);
     })();
   </script>
 </body>
