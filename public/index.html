@@ -55,6 +55,267 @@
     }
     .tier-card { border-radius: 0.375rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(20, 16, 10, 0.12); }
+
+    /* ---------- Hero Tier Card (Lead Partner) ---------- */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .hero-tier-card {
+      position: relative; overflow: hidden;
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, rgba(194,161,92,0.06) 0%, rgba(244,238,221,0.02) 50%, rgba(194,161,92,0.06) 100%);
+    }
+    .hero-tier-card::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      padding: 2px;
+      background: linear-gradient(135deg, #c2a15c, #d9be86, #f4eedd, #c2a15c, #d9be86);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: shimmer 3s linear infinite;
+      pointer-events: none; z-index: 0;
+    }
+    .hero-tier-card > * { position: relative; z-index: 1; }
+    .tier-top-border-gold { border-top: 4px solid #c2a15c; }
+    .tier-top-border-gold-light { border-top: 4px solid #d9be86; }
+    .tier-top-border-muted-gold { border-top: 4px solid #a17c33; }
+    .tier-top-border-olive { border-top: 3px solid #463f31; }
+    .tier-top-border-muted { border-top: 2px solid #5a5445; }
+
+    /* Benefit expand/collapse */
+    .benefit-hidden { display: none; }
+    .benefit-visible { display: flex; }
+    .expand-toggle {
+      cursor: pointer; color: #c2a15c; font-size: 0.8rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      transition: color 0.2s ease; margin-top: 0.5rem;
+    }
+    .expand-toggle:hover { color: #d9be86; }
+    .expand-toggle svg { width: 0.75rem; height: 0.75rem; transition: transform 0.3s ease; }
+    .expand-toggle.expanded svg { transform: rotate(180deg); }
+
+    /* Comparison Table */
+    .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .comparison-table th, .comparison-table td {
+      padding: 0.5rem 0.75rem; border: 1px solid rgba(194,161,92,0.15);
+      text-align: center; vertical-align: middle;
+    }
+    .comparison-table th {
+      font-family: "JetBrains Mono", monospace; font-size: 0.65rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: #c2a15c;
+      background: rgba(20,16,10,0.3); font-weight: 700;
+    }
+    .comparison-table td:first-child {
+      text-align: left; font-weight: 600; color: #e2ddcf;
+    }
+    .comparison-table .check { color: #c2a15c; font-weight: 700; }
+    .comparison-table .dash { color: #5a5445; }
+    .comparison-table tr:hover td { background: rgba(194,161,92,0.04); }
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    @media (max-width: 768px) {
+      .comparison-table { font-size: 0.7rem; }
+      .comparison-table th, .comparison-table td { padding: 0.35rem 0.5rem; }
+    }
+
+    /* Sponsor Logo Modal */
+    .logo-modal-overlay {
+      position: fixed; inset: 0; z-index: 100; background: rgba(20,16,10,0.92);
+      backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem; opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .logo-modal-overlay.active { opacity: 1; visibility: visible; }
+    .logo-modal {
+      background: #f4eedd; color: #241f16; border-radius: 0.5rem;
+      max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto;
+      padding: 2rem; position: relative;
+      border: 1px solid rgba(194,161,92,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      transform: translateY(20px); transition: transform 0.3s ease;
+    }
+    .logo-modal-overlay.active .logo-modal { transform: translateY(0); }
+    .logo-modal-close {
+      position: absolute; top: 0.75rem; right: 1rem;
+      background: none; border: none; font-size: 1.5rem; cursor: pointer;
+      color: #7a7461; transition: color 0.2s ease; line-height: 1;
+    }
+    .logo-modal-close:hover { color: #14100a; }
+    .tier-badge {
+      display: inline-block; font-family: "JetBrains Mono", monospace;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem; border-radius: 0.25rem;
+      font-weight: 700; margin-bottom: 0.75rem;
+    }
+    .tier-badge.lead { background: #c2a15c; color: #14100a; }
+    .tier-badge.premier { background: #d9be86; color: #14100a; }
+    .tier-badge.official { background: #a17c33; color: #f4eedd; }
+    .tier-badge.supporting { background: #463f31; color: #d9be86; }
+    .tier-badge.contributor { background: #3a382f; color: #c2a15c; }
+    .tier-badge.supporter { background: #5a5445; color: #e2ddcf; }
+
+    /* Sponsor logo hover: grayscale → color */
+    .sponsor-logo-img { transition: filter 0.4s ease, transform 0.3s ease; }
+    .sponsor-logo-container:hover .sponsor-logo-img {
+      filter: grayscale(0%); transform: scale(1.04);
+    }
+    .sponsor-logo-container { cursor: pointer; }
+
+    /* ═══════════════════════════════════════════
+       REVAMPED SPONSORS WALL STYLES
+       ═══════════════════════════════════════════ */
+
+    /* Filter Bar */
+    .filter-pill {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.5rem 1.1rem; border-radius: 2rem;
+      border: 1px solid rgba(194,161,92,0.3);
+      background: rgba(255,255,255,0.04);
+      color: #9c9787; cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .filter-pill:hover {
+      border-color: #c2a15c; color: #f4eedd;
+      background: rgba(194,161,92,0.08);
+    }
+    .filter-pill.active {
+      background: #c2a15c; color: #14100a;
+      border-color: #c2a15c; font-weight: 700;
+    }
+
+    /* Tier Cards */
+    .sponsor-tile {
+      position: relative; cursor: pointer;
+      border-radius: 0.5rem; overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+                  box-shadow 0.35s ease,
+                  border-color 0.35s ease;
+    }
+    .sponsor-tile:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(194,161,92,0.12), 0 0 0 1px rgba(194,161,92,0.2);
+    }
+    .sponsor-tile:focus-visible {
+      outline: 2px solid #c2a15c; outline-offset: 3px;
+    }
+    .sponsor-tile .tile-img {
+      transition: filter 0.5s ease, transform 0.4s ease;
+    }
+    .sponsor-tile:hover .tile-img {
+      filter: grayscale(0%) brightness(1.05); transform: scale(1.06);
+    }
+
+    /* Lead Partner Glow */
+    @keyframes goldPulse {
+      0%, 100% { box-shadow: 0 0 18px rgba(194,161,92,0.18), 0 0 0 1px rgba(194,161,92,0.2); }
+      50% { box-shadow: 0 0 32px rgba(194,161,92,0.28), 0 0 0 2px rgba(194,161,92,0.35); }
+    }
+    .tile-lead {
+      animation: goldPulse 3.5s ease-in-out infinite;
+      border: 1px solid rgba(194,161,92,0.35);
+    }
+    @keyframes borderShimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .tile-lead::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 0;
+      padding: 1.5px;
+      background: linear-gradient(135deg, #c2a15c, #d9be86, #f4eedd, #c2a15c, #d9be86);
+      background-size: 300% 300%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: borderShimmer 4s linear infinite;
+      pointer-events: none;
+    }
+    .tile-lead > * { position: relative; z-index: 1; }
+
+    /* Glassmorphism card body */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(194,161,92,0.15);
+    }
+    .glass-card.border-dashed {
+      border-style: dashed; border-color: rgba(194,161,92,0.35);
+    }
+
+    /* Empty / Placeholder Slot */
+    .placeholder-slot {
+      border: 2px dashed rgba(194,161,92,0.35);
+      background: rgba(255,255,255,0.025);
+    }
+    .placeholder-slot:hover {
+      border-color: rgba(194,161,92,0.55);
+      background: rgba(194,161,92,0.04);
+    }
+    .placeholder-cta {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #c2a15c;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid rgba(194,161,92,0.4);
+      border-radius: 0.25rem;
+      transition: all 0.25s ease;
+      cursor: pointer; background: transparent;
+      white-space: nowrap;
+    }
+    .placeholder-cta:hover {
+      background: #c2a15c; color: #14100a;
+      border-color: #c2a15c;
+    }
+
+    /* Tier Badge on Cards */
+    .tile-tier-tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.58rem; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 700;
+      padding: 0.2rem 0.55rem; border-radius: 0.2rem;
+      pointer-events: none;
+    }
+    .tag-lead { background: #c2a15c; color: #14100a; }
+    .tag-premier { background: #d9be86; color: #14100a; }
+    .tag-official { background: #a17c33; color: #f4eedd; }
+    .tag-supporting { background: #463f31; color: #d9be86; }
+    .tag-contributor { background: #3a382f; color: #c2a15c; }
+    .tag-supporter { background: #5a5445; color: #e2ddcf; }
+    .tag-inkind { background: #3a3325; color: #d9be86; }
+
+    /* Filtered-out state */
+    .sponsor-tile.filtered-out {
+      opacity: 0; transform: scale(0.92); pointer-events: none;
+      max-height: 0; margin: 0; padding: 0; border-width: 0;
+      overflow: hidden;
+      transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.4s ease,
+                  margin 0.4s ease, padding 0.4s ease;
+    }
+
+    /* Modal Enhancements */
+    .sponsor-modal-img {
+      max-height: 140px; object-fit: contain;
+    }
+
+    @media (max-width: 640px) {
+      .filter-pill { font-size: 0.6rem; padding: 0.4rem 0.75rem; }
+      .sponsor-tile:hover { transform: translateY(-1px); }
+    }
+
+    /* Collapse toggle for comparison table */
+    .collapse-trigger {
+      cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+      color: #c2a15c; font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.5rem 1rem; border: 1px solid rgba(194,161,92,0.3);
+      border-radius: 0.25rem; transition: all 0.2s ease; background: transparent;
+    }
+    .collapse-trigger:hover { background: rgba(194,161,92,0.08); border-color: #c2a15c; }
+    .collapse-trigger svg { width: 0.875rem; height: 0.875rem; transition: transform 0.3s ease; }
+    .collapse-trigger.expanded svg { transform: rotate(180deg); }
+    .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .collapsible-content.open { max-height: 2000px; }
     .team-card { border-radius: 0.375rem; transition: transform 0.25s ease, box-shadow 0.25s ease; }
     .team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(20, 16, 10, 0.15); }
     .form-input { border-radius: 0.375rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
@@ -75,6 +336,73 @@
       .hero-reveal, .hero-reveal-delay-1, .hero-reveal-delay-2, .hero-reveal-delay-3 {
         animation: none; opacity: 1; transform: none; filter: none;
       }
+    }
+
+    /* ---------- Impact Dashboard ---------- */
+    .budget-bar-fill {
+      background: linear-gradient(90deg, #c2a15c 0%, #d9be86 50%, #f4eedd 100%);
+      box-shadow: 0 0 12px rgba(194,161,92,0.3);
+    }
+    .budget-category:hover .budget-bar-fill,
+    .budget-category:focus-visible .budget-bar-fill {
+      box-shadow: 0 0 24px rgba(194,161,92,0.55), 0 0 60px rgba(194,161,92,0.15);
+    }
+    .budget-category:focus-visible {
+      outline: 2px solid #c2a15c;
+      outline-offset: 4px;
+      border-radius: 0.375rem;
+    }
+    .budget-category.active .budget-bar-track {
+      border-color: rgba(194,161,92,0.5);
+    }
+    .budget-category.active .budget-bar-fill {
+      box-shadow: 0 0 28px rgba(194,161,92,0.6), 0 0 70px rgba(194,161,92,0.2);
+    }
+    .budget-bar-track { transition: border-color 0.3s ease; }
+
+    /* Impact slider thumb styles */
+    #impact-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #c2a15c;
+      border: 2px solid #f4eedd;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(194,161,92,0.5), 0 2px 8px rgba(20,16,10,0.3);
+      transition: all 0.2s ease;
+    }
+    #impact-slider::-webkit-slider-thumb:hover {
+      background: #d9be86;
+      box-shadow: 0 0 24px rgba(194,161,92,0.7), 0 2px 12px rgba(20,16,10,0.4);
+      transform: scale(1.1);
+    }
+    #impact-slider::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #c2a15c;
+      border: 2px solid #f4eedd;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(194,161,92,0.5);
+    }
+    #impact-slider:focus-visible {
+      outline: 2px solid #c2a15c;
+      outline-offset: 4px;
+    }
+
+    /* Slider snap button active state */
+    .slider-snap-btn.active {
+      border-color: #c2a15c !important;
+      color: #c2a15c !important;
+      background: rgba(194,161,92,0.12);
+      box-shadow: 0 0 16px rgba(194,161,92,0.15);
+    }
+
+    /* Counter card highlight */
+    .impact-counter-card.counted .counter-value {
+      text-shadow: 0 0 24px rgba(194,161,92,0.4);
     }
 
     /* Text selection highlight */
@@ -552,122 +880,183 @@
       <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Sponsor Tier System" data-lang-fr="Niveaux de commandite">Sponsor Tier System</h2>
       <p class="text-text-muted text-center max-w-3xl mx-auto mb-16" data-lang-en="Each partnership is built to create meaningful visibility across the journey — from preparation in Montréal to competition day in Lyon." data-lang-fr="Chaque partenariat est conçu pour offrir une visibilité significative tout au long du parcours — de la préparation à Montréal jusqu'au jour de la compétition à Lyon.">Each partnership is built to create meaningful visibility across the journey — from preparation in Montréal to competition day in Lyon.</p>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <!-- Lead Partner -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-8 border-gold lg:col-span-3 md:col-span-2">
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <div>
-              <p class="text-gold font-display text-sm tracking-widest uppercase" data-lang-en="Limited to 2 Partners" data-lang-fr="Limité à 2 partenaires">Limited to 2 Partners</p>
-              <h3 class="text-2xl font-bold font-display" data-lang-en="Lead Partner" data-lang-fr="Partenaire majeur">Lead Partner</h3>
-            </div>
-            <p class="text-3xl font-bold text-gold font-mono">$20,000</p>
+      <!-- ===== HERO TIER: Lead Partner ===== -->
+      <div class="hero-tier-card bg-cream text-ink p-8 md:p-10 mb-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <div>
+            <span class="inline-block bg-gold text-ink text-xs font-bold font-mono tracking-widest uppercase px-3 py-1 rounded-sm mb-3">★ Top Tier</span>
+            <p class="text-gold font-display text-sm tracking-widest uppercase" data-lang-en="Limited to 2 Partners" data-lang-fr="Limité à 2 partenaires">Limited to 2 Partners</p>
+            <h3 class="text-3xl md:text-4xl font-bold font-display mt-1" data-lang-en="Lead Partner" data-lang-fr="Partenaire majeur">Lead Partner</h3>
           </div>
-          <ul class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Lead Partner designation" data-lang-fr="Désignation Partenaire majeur">Lead Partner designation</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Premier logo placement on chef jackets & team apparel" data-lang-fr="Placement logo de premier plan sur les vestes des chefs et les tenues d'équipe">Premier logo placement on chef jackets & team apparel</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Highest logo placement across all campaign materials" data-lang-fr="Placement logo le plus élevé sur tous les supports de campagne">Highest logo placement across all campaign materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Lead recognition in press releases & media" data-lang-fr="Reconnaissance principale dans les communiqués de presse et médias">Lead recognition in press releases & media</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="2 dedicated branded social posts/reels" data-lang-fr="2 publications/réels de marque dédiés sur les réseaux sociaux">2 dedicated branded social posts/reels</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="4+ dedicated story mentions" data-lang-fr="4+ mentions dédiées en story">4+ dedicated story mentions</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Professionally produced partner content feature" data-lang-fr="Contenu partenaire produit professionnellement">Professionally produced partner content feature</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Custom activation, private dinner or chef appearance" data-lang-fr="Activation personnalisée, dîner privé ou apparition des chefs">Custom activation, private dinner or chef appearance</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Product/service integration throughout campaign" data-lang-fr="Intégration produit/service tout au long de la campagne">Product/service integration throughout campaign</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Industry-category exclusivity" data-lang-fr="Exclusivité de catégorie sectorielle">Industry-category exclusivity</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Access to approved photography for 12 months" data-lang-fr="Accès à la photographie approuvée pendant 12 mois">Access to approved photography for 12 months</span></li>
-          </ul>
+          <div class="text-right">
+            <p class="text-4xl font-bold text-gold font-mono">$20,000</p>
+            <p class="text-muted text-xs font-mono mt-1" data-lang-en="cash contribution" data-lang-fr="contribution en espèces">cash contribution</p>
+          </div>
         </div>
+        <ul class="grid md:grid-cols-2 gap-x-8 gap-y-2 text-sm text-body-alt mb-4" id="lead-benefits">
+          <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Lead Partner designation" data-lang-fr="Désignation Partenaire majeur">Lead Partner designation</span></li>
+          <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Premier logo placement on chef jackets & team apparel" data-lang-fr="Placement logo de premier plan sur les vestes des chefs et les tenues d'équipe">Premier logo placement on chef jackets & team apparel</span></li>
+          <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Highest logo placement across all campaign materials" data-lang-fr="Placement logo le plus élevé sur tous les supports de campagne">Highest logo placement across all campaign materials</span></li>
+          <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Lead recognition in press releases & media" data-lang-fr="Reconnaissance principale dans les communiqués de presse et médias">Lead recognition in press releases & media</span></li>
+          <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="2 dedicated branded social posts/reels" data-lang-fr="2 publications/réels de marque dédiés sur les réseaux sociaux">2 dedicated branded social posts/reels</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="4+ dedicated story mentions" data-lang-fr="4+ mentions dédiées en story">4+ dedicated story mentions</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Professionally produced partner content feature" data-lang-fr="Contenu partenaire produit professionnellement">Professionally produced partner content feature</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Custom activation, private dinner or chef appearance" data-lang-fr="Activation personnalisée, dîner privé ou apparition des chefs">Custom activation, private dinner or chef appearance</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Product/service integration throughout campaign" data-lang-fr="Intégration produit/service tout au long de la campagne">Product/service integration throughout campaign</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Industry-category exclusivity" data-lang-fr="Exclusivité de catégorie sectorielle">Industry-category exclusivity</span></li>
+          <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Access to approved photography for 12 months" data-lang-fr="Accès à la photographie approuvée pendant 12 mois">Access to approved photography for 12 months</span></li>
+        </ul>
+        <button class="expand-toggle" onclick="toggleBenefits('lead-benefits', this)" aria-expanded="false">
+          <span data-lang-en="Show all 11 benefits" data-lang-fr="Afficher les 11 avantages">Show all 11 benefits</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
+
+      <!-- ===== MID TIERS: 3-Column Grid ===== -->
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
 
         <!-- Premier Partner -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-6 border-gold">
+        <div class="tier-card bg-cream text-ink p-6 md:p-8 tier-top-border-gold">
           <div class="mb-4">
             <p class="text-gold font-display text-sm tracking-widest uppercase" data-lang-en="Limited to 3 Partners" data-lang-fr="Limité à 3 partenaires">Limited to 3 Partners</p>
             <h3 class="text-2xl font-bold font-display" data-lang-en="Premier Partner" data-lang-fr="Partenaire Premier">Premier Partner</h3>
           </div>
           <p class="text-2xl font-bold text-gold font-mono mb-4">$15,000</p>
-          <ul class="space-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Premier Partner designation" data-lang-fr="Désignation Partenaire Premier">Premier Partner designation</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Prominent logo placement on campaign materials" data-lang-fr="Placement logo bien visible sur les supports de campagne">Prominent logo placement on campaign materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Secondary logo placement on selected team apparel" data-lang-fr="Placement logo secondaire sur certaines tenues d'équipe">Secondary logo placement on selected team apparel</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Visibility in selected photography & campaign videos" data-lang-fr="Visibilité dans certaines photographies et vidéos de campagne">Visibility in selected photography & campaign videos</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Inclusion in press releases & media materials" data-lang-fr="Inclusion dans les communiqués de presse et supports médias">Inclusion in press releases & media materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="1 dedicated branded social post/reel" data-lang-fr="1 publication/réel de marque dédié sur les réseaux sociaux">1 dedicated branded social post/reel</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="3+ story mentions" data-lang-fr="3+ mentions en story">3+ story mentions</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Dedicated sponsor spotlight" data-lang-fr="Mise en avant dédiée du commanditaire">Dedicated sponsor spotlight</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Product integration or chef appearance opportunity" data-lang-fr="Opportunité d'intégration produit ou d'apparition des chefs">Product integration or chef appearance opportunity</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Category exclusivity where agreed" data-lang-fr="Exclusivité de catégorie lorsque convenue">Category exclusivity where agreed</span></li>
+          <ul class="space-y-2 text-sm text-body-alt" id="premier-benefits">
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Premier Partner designation" data-lang-fr="Désignation Partenaire Premier">Premier Partner designation</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Prominent logo on campaign materials" data-lang-fr="Logo bien visible sur les supports">Prominent logo on campaign materials</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Secondary logo on team apparel" data-lang-fr="Logo secondaire sur les tenues d'équipe">Secondary logo on team apparel</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Visibility in photography & videos" data-lang-fr="Visibilité dans photos et vidéos">Visibility in photography & videos</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Inclusion in press releases" data-lang-fr="Inclusion dans les communiqués">Inclusion in press releases</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="1 dedicated branded social post/reel" data-lang-fr="1 publication/réel de marque dédié">1 dedicated branded social post/reel</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="3+ story mentions" data-lang-fr="3+ mentions en story">3+ story mentions</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Dedicated sponsor spotlight" data-lang-fr="Mise en avant dédiée">Dedicated sponsor spotlight</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Product integration or chef appearance" data-lang-fr="Intégration produit ou apparition chef">Product integration or chef appearance</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Category exclusivity where agreed" data-lang-fr="Exclusivité de catégorie convenue">Category exclusivity where agreed</span></li>
           </ul>
+          <button class="expand-toggle" onclick="toggleBenefits('premier-benefits', this)" aria-expanded="false">
+            <span data-lang-en="Show all 10 benefits" data-lang-fr="Afficher les 10 avantages">Show all 10 benefits</span>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
         </div>
 
         <!-- Official Partner -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-5 border-gold-light">
+        <div class="tier-card bg-cream text-ink p-6 md:p-8 tier-top-border-gold-light">
           <div class="mb-4">
             <p class="text-muted-gold font-display text-sm tracking-widest uppercase" data-lang-en="Limited to 3 Partners" data-lang-fr="Limité à 3 partenaires">Limited to 3 Partners</p>
             <h3 class="text-2xl font-bold font-display" data-lang-en="Official Partner" data-lang-fr="Partenaire Officiel">Official Partner</h3>
           </div>
           <p class="text-2xl font-bold text-gold font-mono mb-4">$10,000</p>
-          <ul class="space-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Official Partner designation" data-lang-fr="Désignation Partenaire Officiel">Official Partner designation</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Logo placement on selected materials" data-lang-fr="Placement logo sur certains supports">Logo placement on selected materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Inclusion in team photography & content" data-lang-fr="Inclusion dans la photographie et le contenu d'équipe">Inclusion in team photography & content</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Recognition in press & media materials" data-lang-fr="Reconnaissance dans la presse et les supports médias">Recognition in press & media materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="1 partner spotlight or integrated content feature" data-lang-fr="1 mise en avant partenaire ou contenu intégré">1 partner spotlight or integrated content feature</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="2+ story mentions" data-lang-fr="2+ mentions en story">2+ story mentions</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Product or service integration opportunity" data-lang-fr="Opportunité d'intégration de produit ou service">Product or service integration opportunity</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold-light mt-1">•</span> <span data-lang-en="Access to approved photography for 12 months" data-lang-fr="Accès à la photographie approuvée pendant 12 mois">Access to approved photography for 12 months</span></li>
+          <ul class="space-y-2 text-sm text-body-alt" id="official-benefits">
+            <li class="flex items-start gap-2"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Official Partner designation" data-lang-fr="Désignation Partenaire Officiel">Official Partner designation</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Logo on selected materials" data-lang-fr="Logo sur certains supports">Logo on selected materials</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Inclusion in photography & content" data-lang-fr="Inclusion dans photos et contenu">Inclusion in photography & content</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Recognition in press materials" data-lang-fr="Reconnaissance dans la presse">Recognition in press materials</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="1 partner spotlight or content feature" data-lang-fr="1 mise en avant partenaire">1 partner spotlight or content feature</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="2+ story mentions" data-lang-fr="2+ mentions en story">2+ story mentions</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Product/service integration" data-lang-fr="Intégration produit/service">Product/service integration</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-gold-light mt-1 font-bold">✓</span> <span data-lang-en="Access to photography (12 months)" data-lang-fr="Accès aux photos (12 mois)">Access to photography (12 months)</span></li>
           </ul>
+          <button class="expand-toggle" onclick="toggleBenefits('official-benefits', this)" aria-expanded="false">
+            <span data-lang-en="Show all 8 benefits" data-lang-fr="Afficher les 8 avantages">Show all 8 benefits</span>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
         </div>
 
         <!-- Supporting Partner -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-4 border-muted-gold">
+        <div class="tier-card bg-cream text-ink p-6 md:p-8 tier-top-border-muted-gold">
           <div class="mb-4">
             <h3 class="text-2xl font-bold font-display" data-lang-en="Supporting Partner" data-lang-fr="Partenaire de soutien">Supporting Partner</h3>
           </div>
           <p class="text-2xl font-bold text-gold font-mono mb-4">$5,000</p>
-          <ul class="space-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="Supporting Partner designation" data-lang-fr="Désignation Partenaire de soutien">Supporting Partner designation</span></li>
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="Logo on sponsor page & selected materials" data-lang-fr="Logo sur la page des commanditaires et certains supports">Logo on sponsor page & selected materials</span></li>
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="Inclusion in 1 grouped partner post" data-lang-fr="Inclusion dans 1 publication groupée de partenaires">Inclusion in 1 grouped partner post</span></li>
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="1+ story recognition" data-lang-fr="1+ reconnaissance en story">1+ story recognition</span></li>
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="Product/service integration where relevant" data-lang-fr="Intégration produit/service lorsque pertinent">Product/service integration where relevant</span></li>
-            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1">•</span> <span data-lang-en="Access to selected photography" data-lang-fr="Accès à une sélection de photographies">Access to selected photography</span></li>
+          <ul class="space-y-2 text-sm text-body-alt" id="supporting-benefits">
+            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="Supporting Partner designation" data-lang-fr="Désignation Partenaire de soutien">Supporting Partner designation</span></li>
+            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="Logo on sponsor page & materials" data-lang-fr="Logo sur la page commanditaires">Logo on sponsor page & materials</span></li>
+            <li class="flex items-start gap-2"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="Inclusion in 1 grouped post" data-lang-fr="Inclusion dans 1 publication groupée">Inclusion in 1 grouped post</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="1+ story recognition" data-lang-fr="1+ reconnaissance en story">1+ story recognition</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="Product/service integration" data-lang-fr="Intégration produit/service">Product/service integration</span></li>
+            <li class="flex items-start gap-2 benefit-hidden"><span class="text-muted-gold mt-1 font-bold">✓</span> <span data-lang-en="Access to selected photography" data-lang-fr="Accès aux photos sélectionnées">Access to selected photography</span></li>
           </ul>
+          <button class="expand-toggle" onclick="toggleBenefits('supporting-benefits', this)" aria-expanded="false">
+            <span data-lang-en="Show all 6 benefits" data-lang-fr="Afficher les 6 avantages">Show all 6 benefits</span>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </button>
         </div>
+      </div>
 
+      <!-- ===== ENTRY TIERS: 2-Column Grid ===== -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
         <!-- Team Contributor -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-3 border-olive">
+        <div class="tier-card bg-cream text-ink p-6 md:p-8 tier-top-border-olive">
           <div class="mb-4">
             <h3 class="text-2xl font-bold font-display" data-lang-en="Team Contributor" data-lang-fr="Contributeur d'équipe">Team Contributor</h3>
           </div>
           <p class="text-2xl font-bold text-gold font-mono mb-4">$2,500</p>
           <ul class="space-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Team Contributor designation" data-lang-fr="Désignation Contributeur d'équipe">Team Contributor designation</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Logo on Team Canada sponsor page" data-lang-fr="Logo sur la page des commanditaires d'Équipe Canada">Logo on Team Canada sponsor page</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Recognition in 1 grouped sponsor post" data-lang-fr="Reconnaissance dans 1 publication groupée de commanditaires">Recognition in 1 grouped sponsor post</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Inclusion in collective story recognition" data-lang-fr="Inclusion dans la reconnaissance collective">Inclusion in collective story recognition</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Recognition in final campaign recap" data-lang-fr="Reconnaissance dans le récapitulatif final de campagne">Recognition in final campaign recap</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Team Contributor designation" data-lang-fr="Désignation Contributeur d'équipe">Team Contributor designation</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Logo on Team Canada sponsor page" data-lang-fr="Logo sur la page des commanditaires">Logo on Team Canada sponsor page</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Recognition in 1 grouped sponsor post" data-lang-fr="Reconnaissance dans 1 publication groupée">Recognition in 1 grouped sponsor post</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Collective story recognition" data-lang-fr="Reconnaissance collective">Collective story recognition</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Recognition in campaign recap" data-lang-fr="Reconnaissance dans le récapitulatif">Recognition in campaign recap</span></li>
           </ul>
         </div>
 
         <!-- Team Supporter -->
-        <div class="tier-card bg-cream text-ink p-8 border-l-2 border-muted-dark">
+        <div class="tier-card bg-cream text-ink p-6 md:p-8 tier-top-border-muted">
           <div class="mb-4">
             <h3 class="text-2xl font-bold font-display" data-lang-en="Team Supporter" data-lang-fr="Supporteur de l'équipe">Team Supporter</h3>
           </div>
           <p class="text-2xl font-bold text-gold font-mono mb-4">$1,000</p>
           <ul class="space-y-2 text-sm text-body-alt">
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Name/logo on digital sponsor page" data-lang-fr="Nom/logo sur la page numérique des commanditaires">Name/logo on digital sponsor page</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Recognition in collective thank-you post" data-lang-fr="Reconnaissance dans la publication collective de remerciement">Recognition in collective thank-you post</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Inclusion in collective story recognition" data-lang-fr="Inclusion dans la reconnaissance collective">Inclusion in collective story recognition</span></li>
-            <li class="flex items-start gap-2"><span class="text-gold mt-1">•</span> <span data-lang-en="Recognition in final thank-you & recap" data-lang-fr="Reconnaissance dans le remerciement final et le récapitulatif">Recognition in final thank-you & recap</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Name/logo on digital sponsor page" data-lang-fr="Nom/logo sur la page numérique">Name/logo on digital sponsor page</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Recognition in collective thank-you post" data-lang-fr="Reconnaissance collective">Recognition in collective thank-you post</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Collective story recognition" data-lang-fr="Reconnaissance collective">Collective story recognition</span></li>
+            <li class="flex items-start gap-2"><span class="text-gold mt-1 font-bold">✓</span> <span data-lang-en="Recognition in final recap" data-lang-fr="Reconnaissance finale">Recognition in final recap</span></li>
           </ul>
         </div>
+      </div>
 
+      <!-- ===== COLLAPSIBLE COMPARISON TABLE ===== -->
+      <div class="mt-12 border border-border-dark rounded-md overflow-hidden">
+        <button class="collapse-trigger w-full text-left px-6 py-4 rounded-md" onclick="toggleComparison(this)" aria-expanded="false" id="comparison-trigger">
+          <span data-lang-en="Compare all tiers at a glance" data-lang-fr="Comparer tous les niveaux en un coup d'œil">Compare all tiers at a glance</span>
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="collapsible-content" id="comparison-table-wrap">
+          <div class="table-scroll px-4 pb-4">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th data-lang-en="Benefit" data-lang-fr="Avantage">Benefit</th>
+                  <th><span class="text-gold">Lead</span><br>$20K</th>
+                  <th><span class="text-gold-light">Premier</span><br>$15K</th>
+                  <th><span class="text-muted-gold">Official</span><br>$10K</th>
+                  <th>Supporting<br>$5K</th>
+                  <th>Contrib.<br>$2.5K</th>
+                  <th>Supporter<br>$1K</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td data-lang-en="Tier designation" data-lang-fr="Désignation de niveau">Tier designation</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td data-lang-en="Logo on chef jackets" data-lang-fr="Logo sur les vestes">Logo on chef jackets</td><td class="check">✓</td><td class="check">✓</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Campaign materials placement" data-lang-fr="Placement sur les supports">Campaign materials placement</td><td class="check">Highest</td><td class="check">Prominent</td><td class="check">Selected</td><td class="check">✓</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Press & media recognition" data-lang-fr="Reconnaissance presse et médias">Press & media recognition</td><td class="check">Lead</td><td class="check">✓</td><td class="check">✓</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Dedicated social posts" data-lang-fr="Publications réseaux sociaux dédiées">Dedicated social posts</td><td class="check">2</td><td class="check">1</td><td class="check">1</td><td class="dash">Group</td><td class="dash">Group</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Story mentions" data-lang-fr="Mentions en story">Story mentions</td><td class="check">4+</td><td class="check">3+</td><td class="check">2+</td><td class="check">1+</td><td class="check">✓</td><td class="check">✓</td></tr>
+                <tr><td data-lang-en="Custom activation / chef appearance" data-lang-fr="Activation personnalisée">Custom activation / chef appearance</td><td class="check">✓</td><td class="check">✓</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Product/service integration" data-lang-fr="Intégration produit/service">Product/service integration</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Category exclusivity" data-lang-fr="Exclusivité de catégorie">Category exclusivity</td><td class="check">✓</td><td class="check">Agreed</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Photography access (12 mo)" data-lang-fr="Accès photos (12 mois)">Photography access (12 mo)</td><td class="check">✓</td><td class="dash">—</td><td class="check">✓</td><td class="check">Selected</td><td class="dash">—</td><td class="dash">—</td></tr>
+                <tr><td data-lang-en="Partner limit" data-lang-fr="Limite de partenaires">Partner limit</td><td class="check">2</td><td class="check">3</td><td class="check">3</td><td>—</td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <!-- In-Kind & Custom -->
       <div class="grid md:grid-cols-2 gap-8 mt-12">
-        <div class="border border-border-dark p-8 rounded-md">
+        <div class="border border-border-dark p-8 rounded-md hover:border-gold/30 transition-colors duration-300">
           <h3 class="text-xl font-bold mb-4 text-gold font-display" data-lang-en="In-Kind Partnership Options" data-lang-fr="Options de partenariat en nature">In-Kind Partnership Options</h3>
           <p class="text-text-muted text-sm leading-relaxed mb-4" data-lang-en="We welcome products and services that directly support Team Canada's preparation, travel and participation in Lyon." data-lang-fr="Nous accueillons favorablement les produits et services qui soutiennent directement la préparation, le voyage et la participation d'Équipe Canada à Lyon.">We welcome products and services that directly support Team Canada's preparation, travel and participation in Lyon.</p>
           <div class="grid grid-cols-2 gap-2 text-sm text-text-light">
@@ -679,7 +1068,7 @@
             <span data-lang-en="Photo, video & media" data-lang-fr="Photo, vidéo et médias">Photo, video & media</span>
           </div>
         </div>
-        <div class="border border-border-dark p-8 flex flex-col justify-center rounded-md">
+        <div class="border border-border-dark p-8 flex flex-col justify-center rounded-md hover:border-gold/30 transition-colors duration-300">
           <h3 class="text-xl font-bold mb-4 text-gold font-display" data-lang-en="Custom Partnerships" data-lang-fr="Partenariats sur mesure">Custom Partnerships</h3>
           <p class="text-text-muted text-sm leading-relaxed" data-lang-en="Customized packages and mixed cash-and-in-kind contributions are available. Partnerships may include additional content, hospitality, apparel visibility, category exclusivity or activation opportunities based on partner needs." data-lang-fr="Des forfaits personnalisés et des contributions mixtes en espèces et en nature sont disponibles. Les partenariats peuvent inclure du contenu supplémentaire, de l'accueil, de la visibilité sur les tenues, l'exclusivité de catégorie ou des opportunités d'activation selon les besoins du partenaire.">Customized packages and mixed cash-and-in-kind contributions are available. Partnerships may include additional content, hospitality, apparel visibility, category exclusivity or activation opportunities based on partner needs.</p>
         </div>
@@ -689,121 +1078,193 @@
 
   <hr class="section-divider">
 
-  <!-- ===== WHERE SUPPORT GOES ===== -->
-  <section id="support" class="py-20 md:py-28 px-6">
-    <div class="max-w-4xl mx-auto">
+  <!-- ===== IMPACT DASHBOARD ===== -->
+  <section id="support" class="py-20 md:py-28 px-6 bg-ink text-cream relative overflow-hidden">
+    <!-- Subtle radial glow background -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px]"></div>
+      <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gold/3 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto relative z-10">
       <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Your Impact" data-lang-fr="Votre impact">Your Impact</p>
-      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4 text-center font-display" data-lang-en="Where Your Support Goes" data-lang-fr="Où va votre soutien">Where Your Support Goes</h2>
-      <p class="text-muted text-center max-w-2xl mx-auto mb-16" data-lang-en="Every partnership helps move Team Canada from preparation in Montréal to competition day in Lyon." data-lang-fr="Chaque partenariat contribue à faire avancer Équipe Canada de la préparation à Montréal jusqu'au jour de la compétition à Lyon.">Every partnership helps move Team Canada from preparation in Montréal to competition day in Lyon.</p>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Prep" alt="Competition Preparation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Competition Preparation" data-lang-fr="Préparation à la compétition">Competition Preparation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Registration, administrative requirements, technical planning and materials to meet ICC standards." data-lang-fr="Inscription, exigences administratives, planification technique et matériel pour répondre aux normes de l'ICC.">Registration, administrative requirements, technical planning and materials to meet ICC standards.</p></div>
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Train" alt="Training & Development" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Training & Development" data-lang-fr="Entraînement et développement">Training & Development</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program." data-lang-fr="Accès aux cuisines, tests de recettes, répétitions et pratique continue pour peaufiner chaque élément du programme de compétition.">Kitchen access, recipe testing, rehearsals and repeated practice to refine every element of the competition program.</p></div>
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Ingredients" alt="Ingredients & Presentation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Ingredients & Presentation" data-lang-fr="Ingrédients et présentation">Ingredients & Presentation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Premium ingredients, specialized products, serving pieces, uniforms and presentation materials." data-lang-fr="Ingrédients haut de gamme, produits spécialisés, pièces de service, uniformes et matériel de présentation.">Premium ingredients, specialized products, serving pieces, uniforms and presentation materials.</p></div>
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Travel" alt="Travel & Accommodation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Travel & Accommodation" data-lang-fr="Voyage et hébergement">Travel & Accommodation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon." data-lang-fr="Vols, hôtels, transport terrestre et dépenses de voyage essentielles pour la participation de l'équipe à Lyon.">Flights, hotels, ground transportation and essential travel expenses for the team's participation in Lyon.</p></div>
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Freight" alt="Freight & Logistics" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Freight & Logistics" data-lang-fr="Fret et logistique">Freight & Logistics</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France." data-lang-fr="Transport d'équipement, d'outils, d'uniformes, d'ingrédients et de matériel de présentation entre le Canada et la France.">Transportation of equipment, tools, uniforms, ingredients and presentation materials between Canada and France.</p></div>
-         <div class="border border-border-light p-6 text-center rounded-md"><img src="https://placehold.co/120x120/f4eedd/c2a15c?text=Content" alt="Content, PR & Activation" class="w-16 h-16 mx-auto mb-3 object-cover rounded-md"><h3 class="font-bold text-lg mb-2" data-lang-en="Content, PR & Activation" data-lang-fr="Contenu, RP et activation">Content, PR & Activation</h3><p class="text-muted text-sm leading-relaxed" data-lang-en="Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach." data-lang-fr="Photographie, vidéo, relations médias, production de campagne et activations des commanditaires qui étendent la portée du parcours.">Photography, video, media outreach, campaign production and sponsor activations that extend the journey's reach.</p></div>
+      <h2 class="text-3xl md:text-5xl font-bold mb-4 text-center font-display text-cream" data-lang-en="Where Your Support Goes" data-lang-fr="Où va votre soutien">Where Your Support Goes</h2>
+      <p class="text-text-muted text-center max-w-2xl mx-auto mb-16 text-lg leading-relaxed" data-lang-en="Every dollar fuels a specific part of Team Canada's journey — from kitchen training in Montréal to the competition floor in Lyon." data-lang-fr="Chaque dollar finance une partie précise du parcours d'Équipe Canada — de l'entraînement en cuisine à Montréal jusqu'au parquet de compétition à Lyon.">Every dollar fuels a specific part of Team Canada's journey — from kitchen training in Montréal to the competition floor in Lyon.</p>
+
+      <!-- ═══ 1. METRIC COUNTERS ═══ -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-20">
+        <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+          <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="100" data-suffix="%" data-decimals="0">0%</div>
+          <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Volunteer-Driven" data-lang-fr="Équipe bénévole">Volunteer-Driven</p>
+          <p class="text-text-muted text-xs leading-relaxed" data-lang-en="No one on Team Canada draws a salary — every hour is donated." data-lang-fr="Personne chez Équipe Canada ne reçoit de salaire — chaque heure est donnée.">No one on Team Canada draws a salary — every hour is donated.</p>
+        </div>
+        <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+          <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="12" data-suffix="" data-decimals="0">0</div>
+          <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Young Chefs Mentored" data-lang-fr="Jeunes chefs mentorés">Young Chefs Mentored</p>
+          <p class="text-text-muted text-xs leading-relaxed" data-lang-en="Apprentices and junior cooks trained alongside the national team." data-lang-fr="Apprentis et jeunes cuisiniers formés aux côtés de l'équipe nationale.">Apprentices and junior cooks trained alongside the national team.</p>
+        </div>
+        <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+          <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="240" data-suffix="+" data-decimals="0">0+</div>
+          <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Hours of Training" data-lang-fr="Heures d'entraînement">Hours of Training</p>
+          <p class="text-text-muted text-xs leading-relaxed" data-lang-en="Intensive preparation across kitchens in Montréal before Lyon." data-lang-fr="Préparation intensive dans les cuisines de Montréal avant Lyon.">Intensive preparation across kitchens in Montréal before Lyon.</p>
+        </div>
+        <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+          <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="2" data-suffix="" data-decimals="0">0</div>
+          <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Int'l Competitions" data-lang-fr="Compétitions int'les">Int'l Competitions</p>
+          <p class="text-text-muted text-xs leading-relaxed" data-lang-en="ICC Lyon 2027 is the primary target — with more to come." data-lang-fr="L'ICC Lyon 2027 est l'objectif principal — avec d'autres à venir.">ICC Lyon 2027 is the primary target — with more to come.</p>
+        </div>
       </div>
+
+      <!-- ═══ 2. BUDGET ALLOCATION VISUALIZER ═══ -->
+      <div class="mb-20">
+        <h3 class="text-gold font-display text-lg md:text-xl mb-2 text-center" data-lang-en="Budget Allocation" data-lang-fr="Répartition du budget">Budget Allocation</h3>
+        <p class="text-text-muted text-sm text-center mb-10" data-lang-en="Hover or tap a category to see exactly where each dollar goes." data-lang-fr="Survolez ou touchez une catégorie pour voir exactement où va chaque dollar.">Hover or tap a category to see exactly where each dollar goes.</p>
+
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+          <!-- Progress Bars -->
+          <div class="flex-1 space-y-5" role="list" aria-label="Budget allocation categories">
+            <!-- Training & Ingredients — 40% -->
+            <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Training & Ingredients: 40 percent" data-category="training" data-pct="40">
+              <div class="flex justify-between items-baseline mb-2">
+                <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Training & Ingredients" data-lang-fr="Entraînement et ingrédients">Training & Ingredients</span>
+                <span class="font-mono text-lg font-bold text-gold tabular-nums">40%</span>
+              </div>
+              <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+                <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="40%" data-color="from-gold to-gold-light"></div>
+              </div>
+            </div>
+            <!-- Equipment & Uniforms — 25% -->
+            <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Equipment & Uniforms: 25 percent" data-category="equipment" data-pct="25">
+              <div class="flex justify-between items-baseline mb-2">
+                <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Equipment & Uniforms" data-lang-fr="Équipement et uniformes">Equipment & Uniforms</span>
+                <span class="font-mono text-lg font-bold text-gold tabular-nums">25%</span>
+              </div>
+              <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+                <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="25%" data-color="from-gold-light to-gold"></div>
+              </div>
+            </div>
+            <!-- Travel & Logistics — 20% -->
+            <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Travel & Logistics: 20 percent" data-category="travel" data-pct="20">
+              <div class="flex justify-between items-baseline mb-2">
+                <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Travel & Logistics" data-lang-fr="Voyage et logistique">Travel & Logistics</span>
+                <span class="font-mono text-lg font-bold text-gold tabular-nums">20%</span>
+              </div>
+              <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+                <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="20%" data-color="from-muted-gold to-gold"></div>
+              </div>
+            </div>
+            <!-- Youth Mentorship — 15% -->
+            <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Youth Mentorship: 15 percent" data-category="mentorship" data-pct="15">
+              <div class="flex justify-between items-baseline mb-2">
+                <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Youth Mentorship" data-lang-fr="Mentorat jeunesse">Youth Mentorship</span>
+                <span class="font-mono text-lg font-bold text-gold tabular-nums">15%</span>
+              </div>
+              <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+                <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="15%" data-color="from-gold to-muted-gold"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detail Readout Card -->
+          <div class="lg:w-80 flex-shrink-0">
+            <div id="budget-detail-card" class="sticky top-24 bg-cream/5 backdrop-blur-md border border-border-dark rounded-lg p-6 transition-all duration-500 min-h-[260px] flex flex-col justify-center">
+              <div id="budget-detail-default" class="text-center">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-gold/40 flex items-center justify-center">
+                  <svg class="w-7 h-7 text-gold/60" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+                </div>
+                <p class="text-text-muted text-sm leading-relaxed" data-lang-en="Select a category to see the breakdown" data-lang-fr="Sélectionnez une catégorie pour voir le détail">Select a category to see the breakdown</p>
+              </div>
+              <div id="budget-detail-content" class="hidden">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full border-2 border-gold flex items-center justify-center bg-gold/10">
+                  <span id="budget-detail-icon" class="text-2xl">🍳</span>
+                </div>
+                <h4 id="budget-detail-title" class="text-gold font-display text-xl font-bold text-center mb-2"></h4>
+                <p id="budget-detail-pct" class="font-mono text-3xl font-bold text-cream text-center mb-3"></p>
+                <p id="budget-detail-desc" class="text-text-muted text-sm leading-relaxed text-center"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ 3. IMPACT CALCULATOR / DOLLAR SLIDER ═══ -->
+      <div class="bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-6 md:p-10">
+        <h3 class="text-gold font-display text-lg md:text-xl mb-2 text-center" data-lang-en="Impact Calculator" data-lang-fr="Calculateur d'impact">Impact Calculator</h3>
+        <p class="text-text-muted text-sm text-center mb-8" data-lang-en="Slide to see what your contribution makes possible." data-lang-fr="Glissez pour voir ce que votre contribution rend possible.">Slide to see what your contribution makes possible.</p>
+
+        <!-- Snap Buttons -->
+        <div class="flex justify-center gap-2 md:gap-3 mb-6 flex-wrap" role="radiogroup" aria-label="Donation amount presets">
+          <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="100" data-lang-en="$100" data-lang-fr="100 $" aria-checked="false" role="radio">$100</button>
+          <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="500" data-lang-en="$500" data-lang-fr="500 $" aria-checked="false" role="radio">$500</button>
+          <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="1000" data-lang-en="$1,000" data-lang-fr="1 000 $" aria-checked="false" role="radio">$1,000</button>
+          <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="5000" data-lang-en="$5,000" data-lang-fr="5 000 $" aria-checked="false" role="radio">$5,000</button>
+        </div>
+
+        <!-- Slider -->
+        <div class="relative mb-8 px-1">
+          <input type="range" id="impact-slider" min="100" max="5000" value="500" step="100"
+            class="w-full appearance-none h-2 rounded-full outline-none cursor-pointer"
+            style="background: linear-gradient(to right, #c2a15c 0%, #c2a15c 8%, rgba(244,238,221,0.12) 8%, rgba(244,238,221,0.12) 100%);"
+            aria-label="Contribution amount slider"
+            aria-valuemin="100" aria-valuemax="5000" aria-valuenow="500" aria-valuetext="$500">
+          <div class="flex justify-between text-xs text-text-muted mt-2 font-mono">
+            <span>$100</span><span>$500</span><span>$1,000</span><span>$5,000</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Outcome Display -->
+        <div id="impact-output" class="text-center min-h-[140px] flex flex-col items-center justify-center transition-all duration-500">
+          <div class="font-mono text-4xl md:text-5xl font-bold text-gold mb-4" id="impact-amount">$500</div>
+          <p class="text-cream text-lg md:text-xl font-semibold max-w-xl leading-relaxed" id="impact-description" data-lang-en="Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket." data-lang-fr="Couvre les ingrédients spécialisés de compétition pour 2 séances d'entraînement + 1 veste officielle de chef Équipe Canada.">Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket.</p>
+          <div class="mt-6 flex flex-wrap justify-center gap-3" id="impact-icons">
+            <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">🥘</span> <span data-lang-en="Ingredients" data-lang-fr="Ingrédients">Ingredients</span></span>
+            <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">👨‍🍳</span> <span data-lang-en="Chef Jacket" data-lang-fr="Veste de chef">Chef Jacket</span></span>
+            <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">🏋️</span> <span data-lang-en="Training" data-lang-fr="Entraînement">Training</span></span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
   <hr class="section-divider">
 
-  <!-- ===== SPONSORS WALL ===== -->
+  <!-- ===== SPONSORS WALL (REVAMPED) ===== -->
   <section id="sponsors" class="py-20 md:py-28 px-6 bg-ink text-cream">
     <div class="max-w-6xl mx-auto">
       <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Our Partners" data-lang-fr="Nos partenaires">Our Partners</p>
       <h2 class="text-3xl md:text-5xl font-bold mb-6 font-display text-center" data-lang-en="Sponsors Wall" data-lang-fr="Mur des commanditaires">Sponsors Wall</h2>
-      <p class="text-text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-16 text-center" data-lang-en="The organizations, brands and individuals who are helping bring Team Canada back to the world stage." data-lang-fr="Les organisations, marques et individus qui aident à ramener Équipe Canada sur la scène mondiale.">The organizations, brands and individuals who are helping bring Team Canada back to the world stage.</p>
+      <p class="text-text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-10 text-center" data-lang-en="The organizations, brands and individuals who are helping bring Team Canada back to the world stage." data-lang-fr="Les organisations, marques et individus qui aident à ramener Équipe Canada sur la scène mondiale.">The organizations, brands and individuals who are helping bring Team Canada back to the world stage.</p>
 
-      <!-- Lead Partners Row -->
-      <div class="mb-16">
-        <h3 class="text-gold font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Lead Partners" data-lang-fr="Partenaires majeurs">Lead Partners</h3>
-        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16">
-          <div class="sponsor-card group text-center">
-            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-40 h-24 md:w-52 md:h-28 border-2 border-gold bg-cream/5 flex items-center justify-center p-4 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold font-display font-bold text-lg md:text-xl opacity-60 group-hover:opacity-100 transition-opacity">Your Logo Here</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Lead Partner</span>
-          </div>
-        </div>
+      <!-- ═══ FILTER BAR ═══ -->
+      <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-14" role="tablist" aria-label="Sponsor filter">
+        <button class="filter-pill active" role="tab" aria-selected="true" data-filter="all">
+          <span data-lang-en="All" data-lang-fr="Tous">All</span>
+        </button>
+        <button class="filter-pill" role="tab" aria-selected="false" data-filter="lead">
+          <span data-lang-en="Lead" data-lang-fr="Majeur">Lead</span>
+        </button>
+        <button class="filter-pill" role="tab" aria-selected="false" data-filter="premier">
+          <span data-lang-en="Premier" data-lang-fr="Premier">Premier</span>
+        </button>
+        <button class="filter-pill" role="tab" aria-selected="false" data-filter="official">
+          <span data-lang-en="Official" data-lang-fr="Officiel">Official</span>
+        </button>
+        <button class="filter-pill" role="tab" aria-selected="false" data-filter="supporting">
+          <span data-lang-en="Supporting" data-lang-fr="Soutien">Supporting</span>
+        </button>
+        <button class="filter-pill" role="tab" aria-selected="false" data-filter="community">
+          <span data-lang-en="In-Kind" data-lang-fr="Fournisseurs">In-Kind</span>
+        </button>
       </div>
 
-      <!-- Premier & Official Partners -->
-      <div class="mb-16">
-        <h3 class="text-gold-light font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Premier & Official Partners" data-lang-fr="Partenaires Premier & Officiels">Premier & Official Partners</h3>
-        <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-          <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Premier</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-32 h-20 md:w-40 md:h-24 border border-gold-light bg-cream/5 flex items-center justify-center p-3 mx-auto mb-2 group-hover:border-gold group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-gold-light font-display font-bold text-sm opacity-50 group-hover:opacity-100 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-xs font-mono tracking-wider uppercase">Official</span>
-          </div>
-        </div>
+      <!-- ═══ SPONSOR GRID (DYNAMIC) ═══ -->
+      <div id="sponsor-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        <!-- Populated by JavaScript -->
       </div>
 
-      <!-- Supporting & Community Partners -->
-      <div class="mb-12">
-        <h3 class="text-text-muted-alt font-display text-sm tracking-widest uppercase mb-8 text-center" data-lang-en="Supporting Partners & Community" data-lang-fr="Partenaires de soutien & Communauté">Supporting Partners & Community</h3>
-        <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8">
-          <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporting</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Contributor</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
-          </div>
-          <div class="sponsor-card group text-center">
-            <div class="w-24 h-16 md:w-28 md:h-18 border border-border-dark bg-cream/5 flex items-center justify-center p-2 mx-auto mb-2 group-hover:border-gold-light group-hover:bg-cream/10 transition-all duration-300 rounded-md">
-              <p class="text-text-muted font-display font-bold text-xs opacity-40 group-hover:opacity-80 transition-opacity">Your Logo</p>
-            </div>
-            <span class="text-text-muted text-[10px] font-mono tracking-wider uppercase opacity-60">Supporter</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA -->
-      <div class="text-center mt-12 pt-8 border-t border-border-dark">
+      <!-- Bottom CTA -->
+      <div class="text-center mt-14 pt-8 border-t border-border-dark">
         <p class="text-text-muted text-sm mb-6 max-w-xl mx-auto" data-lang-en="Want to see your logo here? Join the team and help us make history in Lyon." data-lang-fr="Vous voulez voir votre logo ici ? Rejoignez l'équipe et aidez-nous à marquer l'histoire à Lyon.">Want to see your logo here? Join the team and help us make history in Lyon.</p>
         <a href="#inquiry" class="inline-block bg-red hover:bg-red-dark text-white px-8 py-3 font-semibold text-sm transition-colors duration-200 rounded-md" data-lang-en="Become a Sponsor" data-lang-fr="Devenez commanditaire">Become a Sponsor</a>
       </div>
@@ -949,6 +1410,18 @@
     </div>
   </div>
 
+  <!-- ===== SPONSOR LOGO MODAL ===== -->
+  <div id="logo-modal-overlay" class="logo-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="logo-modal-title">
+    <div class="logo-modal">
+      <button id="logo-modal-close-btn" class="logo-modal-close" onclick="closeLogoModal()" aria-label="Close">&times;</button>
+      <span id="modal-tier-badge" class="tier-badge lead">Lead Partner</span>
+      <h3 id="logo-modal-title" class="text-xl font-bold font-display text-gold mb-3" data-lang-en="Partner Spotlight" data-lang-fr="Pleins feux sur le partenaire">Partner Spotlight</h3>
+      <p id="modal-description" class="text-body-alt text-sm leading-relaxed mb-4" data-lang-en="This partner supports Team Canada's journey to Lyon 2027. Click the link below to learn more about their organization." data-lang-fr="Ce partenaire soutient le parcours d'Équipe Canada vers Lyon 2027. Cliquez sur le lien ci-dessous pour en savoir plus sur leur organisation.">This partner supports Team Canada's journey to Lyon 2027. Click the link below to learn more about their organization.</p>
+      <a id="modal-link" href="#" target="_blank" rel="noopener" class="inline-block bg-gold text-ink px-5 py-2 text-sm font-semibold rounded-md hover:bg-gold-light transition-colors duration-200" style="display:none;" data-lang-en="Visit Website" data-lang-fr="Visiter le site">Visit Website</a>
+      <p class="text-muted text-xs mt-4 pt-4 border-t border-border-light" data-lang-en="Want your logo here? " data-lang-fr="Vous voulez voir votre logo ici ? ">Want your logo here? <a href="#inquiry" class="text-gold hover:text-gold-light underline" onclick="closeLogoModal();">Partner with us</a>.</p>
+    </div>
+  </div>
+
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
@@ -1078,6 +1551,666 @@
     console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c— Team Canada %c🇨🇦',
       'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
     console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
+
+    /* ===== Tier Benefit Expand/Collapse ===== */
+    function toggleBenefits(listId, btn) {
+      var list = document.getElementById(listId);
+      if (!list) return;
+      var hidden = list.querySelectorAll('.benefit-hidden');
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        hidden.forEach(function(li) { li.classList.add('benefit-hidden'); li.classList.remove('benefit-visible'); });
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('expanded');
+        var showText = btn.querySelector('span');
+        var total = list.querySelectorAll('li').length;
+        var enPhrases = { 'lead': 'Show all 11 benefits', 'premier': 'Show all 10 benefits', 'official': 'Show all 8 benefits', 'supporting': 'Show all 6 benefits' };
+        var frPhrases = { 'lead': 'Afficher les 11 avantages', 'premier': 'Afficher les 10 avantages', 'official': 'Afficher les 8 avantages', 'supporting': 'Afficher les 6 avantages' };
+        var key = listId.replace('-benefits', '');
+        if (showText) showText.textContent = currentLang === 'fr' ? (frPhrases[key] || 'Afficher tout') : (enPhrases[key] || 'Show all');
+      } else {
+        hidden.forEach(function(li) { li.classList.remove('benefit-hidden'); li.classList.add('benefit-visible'); });
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('expanded');
+        var hideText = btn.querySelector('span');
+        if (hideText) hideText.textContent = currentLang === 'fr' ? 'Réduire' : 'Show less';
+      }
+    }
+
+    /* ===== Comparison Table Collapse ===== */
+    function toggleComparison(btn) {
+      var wrap = document.getElementById('comparison-table-wrap');
+      if (!wrap) return;
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        wrap.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('expanded');
+      } else {
+        wrap.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('expanded');
+      }
+    }
+
+    /* ===== Sponsor Logo Modal ===== */
+    function openLogoModal(tier, name, description, link) {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (!overlay) return;
+      document.getElementById('modal-tier-badge').textContent = name;
+      document.getElementById('modal-tier-badge').className = 'tier-badge ' + tier;
+      document.getElementById('modal-description').textContent = description || '';
+      var linkEl = document.getElementById('modal-link');
+      if (link && linkEl) {
+        linkEl.href = link;
+        linkEl.style.display = 'inline-block';
+      } else if (linkEl) {
+        linkEl.style.display = 'none';
+      }
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('logo-modal-close-btn').focus();
+    }
+    function closeLogoModal() {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (!overlay) return;
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* Initialize sponsor logo modal */
+    (function() {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) closeLogoModal();
+        });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && overlay.classList.contains('active')) closeLogoModal();
+        });
+      }
+    })();
+
+    /* ═══════════════════════════════════════════════════════
+       IMPACT DASHBOARD — Interactive JavaScript
+       ═══════════════════════════════════════════════════════ */
+
+    /* --- 1. Metric Counter Animations (Intersection Observer) --- */
+    (function() {
+      var counterEls = document.querySelectorAll('.impact-counter-card .counter-value');
+      if (!counterEls.length) return;
+
+      var counted = new WeakSet();
+
+      function animateCounter(el) {
+        if (counted.has(el)) return;
+        counted.add(el);
+
+        var target = parseFloat(el.getAttribute('data-target')) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        var decimals = parseInt(el.getAttribute('data-decimals')) || 0;
+        var duration = 1800;
+        var startTime = null;
+        var startVal = 0;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          // ease-out quad
+          var eased = 1 - (1 - progress) * (1 - progress);
+          var current = startVal + (target - startVal) * eased;
+          el.textContent = (decimals > 0 ? current.toFixed(decimals) : Math.round(current)) + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target)) + suffix;
+            el.closest('.impact-counter-card').classList.add('counted');
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      counterEls.forEach(function(el) { counterObserver.observe(el); });
+    })();
+
+    /* --- 2. Budget Bar Fill Animations (Intersection Observer) --- */
+    (function() {
+      var bars = document.querySelectorAll('.budget-bar-fill');
+      if (!bars.length) return;
+
+      var barObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var bar = entry.target;
+            var targetWidth = bar.getAttribute('data-width') || '0%';
+            bar.style.width = targetWidth;
+            barObserver.unobserve(bar);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      bars.forEach(function(bar) { barObserver.observe(bar); });
+    })();
+
+    /* --- 3. Budget Category Hover/Click → Detail Card Update --- */
+    (function() {
+      var categories = document.querySelectorAll('.budget-category');
+      var detailDefault = document.getElementById('budget-detail-default');
+      var detailContent = document.getElementById('budget-detail-content');
+      var detailIcon = document.getElementById('budget-detail-icon');
+      var detailTitle = document.getElementById('budget-detail-title');
+      var detailPct = document.getElementById('budget-detail-pct');
+      var detailDesc = document.getElementById('budget-detail-desc');
+
+      if (!categories.length || !detailContent) return;
+
+      // Category data: icon, title, description (EN)
+      var categoryData = {
+        training: {
+          icon: "\uD83C\uDF73",
+          titleEn: "Training & Ingredients",
+          titleFr: "Entraînement et ingrédients",
+          descEn: "Kitchen access, premium ingredients, specialized products, recipe testing, and repeated rehearsal sessions that refine every element of the competition program.",
+          descFr: "Accès aux cuisines, ingrédients haut de gamme, produits spécialisés, tests de recettes et séances de répétition qui peaufine chaque élément du programme de compétition."
+        },
+        equipment: {
+          icon: "\uD83D\uDC54",
+          titleEn: "Equipment & Uniforms",
+          titleFr: "Équipement et uniformes",
+          descEn: "Professional-grade cookware, serving pieces, chef jackets, team apparel, and presentation materials that represent Canada on the world stage.",
+          descFr: "Ustensiles de cuisine professionnels, pièces de service, vestes de chef, tenues d\u2019équipe et matériel de présentation qui représentent le Canada sur la scène mondiale."
+        },
+        travel: {
+          icon: "\u2708\uFE0F",
+          titleEn: "Travel & Logistics",
+          titleFr: "Voyage et logistique",
+          descEn: "Flights, hotels, ground transportation, equipment freight, and essential travel expenses for the team\u2019s journey from Montréal to Lyon.",
+          descFr: "Vols, hôtels, transport terrestre, fret d\u2019équipement et dépenses de voyage essentielles pour le parcours de l\u2019équipe de Montréal à Lyon."
+        },
+        mentorship: {
+          icon: "\uD83C\uDF1F",
+          titleEn: "Youth Mentorship",
+          titleFr: "Mentorat jeunesse",
+          descEn: "Apprentice and junior cook development, culinary education outreach, and building the next generation of Canadian culinary talent alongside the national team.",
+          descFr: "Développement des apprentis et jeunes cuisiniers, sensibilisation culinaire éducative et construction de la prochaine génération de talents culinaires canadiens aux côtés de l\u2019équipe nationale."
+        }
+      };
+
+      function updateDetailCard(category, pct) {
+        var data = categoryData[category];
+        if (!data) return;
+
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+
+        if (detailDefault) detailDefault.classList.add('hidden');
+        detailContent.classList.remove('hidden');
+
+        detailIcon.textContent = data.icon;
+        detailTitle.textContent = isFr ? data.titleFr : data.titleEn;
+        detailPct.textContent = pct + '%';
+        detailDesc.textContent = isFr ? data.descFr : data.descEn;
+      }
+
+      function resetDetailCard() {
+        if (detailDefault) detailDefault.classList.remove('hidden');
+        detailContent.classList.add('hidden');
+      }
+
+      function setActive(catEl) {
+        categories.forEach(function(c) { c.classList.remove('active'); });
+        catEl.classList.add('active');
+      }
+
+      function clearActive() {
+        categories.forEach(function(c) { c.classList.remove('active'); });
+      }
+
+      categories.forEach(function(cat) {
+        // Mouse hover
+        cat.addEventListener('mouseenter', function() {
+          var catKey = cat.getAttribute('data-category');
+          var pct = cat.getAttribute('data-pct');
+          updateDetailCard(catKey, pct);
+          setActive(cat);
+        });
+        cat.addEventListener('mouseleave', function() {
+          resetDetailCard();
+          clearActive();
+        });
+
+        // Click for mobile (toggle behavior)
+        cat.addEventListener('click', function(e) {
+          // Don't interfere with keyboard Enter
+          var catKey = cat.getAttribute('data-category');
+          var pct = cat.getAttribute('data-pct');
+          if (cat.classList.contains('active')) {
+            resetDetailCard();
+            clearActive();
+          } else {
+            updateDetailCard(catKey, pct);
+            setActive(cat);
+          }
+        });
+
+        // Keyboard accessibility: Enter/Space toggles
+        cat.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            cat.click();
+          }
+        });
+      });
+    })();
+
+    /* ===== REVAMPED SPONSORS WALL — Data & Logic ===== */
+    (function() {
+      var grid = document.getElementById('sponsor-grid');
+      if (!grid) return;
+
+      // Sponsor mock data
+      var sponsors = [
+        // LEAD TIER (2 slots: 1 mock, 1 placeholder)
+        { id: 1, tier: 'lead', name: 'Acme Foods', nameFr: 'Aliments Acme',
+          desc: 'Canada\u2019s premier food distributor, supplying kitchens from coast to coast with premium ingredients.',
+          descFr: 'Le principal distributeur alimentaire du Canada, approvisionnant les cuisines d\u2019un oc\u00E9an \u00E0 l\u2019autre en ingr\u00E9dients haut de gamme.',
+          website: '#', logo: 'A', isEmpty: false },
+        { id: 2, tier: 'lead', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+
+        // PREMIER TIER (3 slots: 2 mock, 1 placeholder)
+        { id: 3, tier: 'premier', name: 'Maple Supply Co.', nameFr: 'Approvisionnement Maple',
+          desc: 'Premium kitchen equipment and uniform supplier trusted by Canada\u2019s top restaurants.',
+          descFr: 'Fournisseur d\u2019\u00E9quipement de cuisine et d\u2019uniformes haut de gamme reconnu par les meilleurs restaurants du Canada.',
+          website: '#', logo: 'M', isEmpty: false },
+        { id: 4, tier: 'premier', name: 'Gourmet Express', nameFr: 'Gourmet Express',
+          desc: 'Nationwide logistics and freight partner specializing in temperature-controlled culinary transport.',
+          descFr: 'Partenaire logistique et de fret \u00E0 l\u2019\u00E9chelle nationale sp\u00E9cialis\u00E9 dans le transport culinaire \u00E0 temp\u00E9rature contr\u00F4l\u00E9e.',
+          website: '#', logo: 'G', isEmpty: false },
+        { id: 5, tier: 'premier', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+
+        // OFFICIAL TIER (3 slots: 1 mock, 2 placeholders)
+        { id: 6, tier: 'official', name: 'Nordic Kitchenware', nameFr: 'Articles de cuisine Nordic',
+          desc: 'Crafting professional-grade cookware trusted by competition chefs worldwide.',
+          descFr: 'Fabricant d\u2019ustensiles de cuisine de qualit\u00E9 professionnelle reconnu par les chefs de comp\u00E9tition du monde entier.',
+          website: '#', logo: 'N', isEmpty: false },
+        { id: 7, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 8, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+
+        // SUPPORTING TIER (5 slots: 2 mock, 3 placeholders)
+        { id: 9, tier: 'supporting', name: 'PureSpring Water', nameFr: 'Eau PureSpring',
+          desc: 'Official hydration partner providing premium natural spring water for Team Canada\u2019s training and competition.',
+          descFr: 'Partenaire officiel d\u2019hydratation fournissant de l\u2019eau de source naturelle haut de gamme pour l\u2019entra\u00EEnement et la comp\u00E9tition d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'P', isEmpty: false },
+        { id: 10, tier: 'supporting', name: 'Heritage Print', nameFr: 'Imprimerie Heritage',
+          desc: 'Full-service printing, signage, and branding partner for Team Canada campaign materials.',
+          descFr: 'Partenaire d\u2019impression, de signal\u00E9tique et d\u2019image de marque complet pour les supports de campagne d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'H', isEmpty: false },
+        { id: 11, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 12, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 13, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+
+        // COMMUNITY TIER (contributor + supporter + in-kind: 4 slots)
+        { id: 14, tier: 'contributor', name: 'Laurentian Dairy', nameFr: 'Laiterie Laurentienne',
+          desc: 'Family-owned dairy providing premium butter, cream, and cheeses to Team Canada\u2019s pastry kitchen.',
+          descFr: 'Laiterie familiale fournissant du beurre, de la cr\u00E8me et des fromages haut de gamme \u00E0 la cuisine p\u00E2tissi\u00E8re d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'L', isEmpty: false },
+        { id: 15, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 16, tier: 'inkind', name: 'Studio Ouest M\u00E9dia', nameFr: 'Studio Ouest M\u00E9dia',
+          desc: 'Photography and video production partner documenting Team Canada\u2019s journey to Lyon.',
+          descFr: 'Partenaire de production photo et vid\u00E9o documentant le parcours d\u2019\u00C9quipe Canada jusqu\u2019\u00E0 Lyon.',
+          website: '#', logo: 'S', isEmpty: false },
+        { id: 17, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true }
+      ];
+
+      var currentFilter = 'all';
+
+      function getTierLabel(tier, lang) {
+        var labels = {
+          en: { lead:'Lead Partner', premier:'Premier Partner', official:'Official Partner', supporting:'Supporting Partner', contributor:'Team Contributor', supporter:'Team Supporter', inkind:'In-Kind Partner' },
+          fr: { lead:'Partenaire majeur', premier:'Partenaire Premier', official:'Partenaire Officiel', supporting:'Partenaire de soutien', contributor:'Contributeur', supporter:'Supporteur', inkind:'Partenaire en nature' }
+        };
+        return (labels[lang] && labels[lang][tier]) || tier;
+      }
+
+      function getTierTagClass(tier) {
+        return 'tile-tier-tag tag-' + tier;
+      }
+
+      function getTileExtraClass(tier) {
+        if (tier === 'lead') return 'tile-lead sm:col-span-2';
+        if (tier === 'premier' || tier === 'official') return 'sm:col-span-1';
+        return '';
+      }
+
+      function getTileHeight(tier) {
+        if (tier === 'lead') return 'h-36 md:h-40';
+        if (tier === 'premier' || tier === 'official') return 'h-28';
+        if (tier === 'supporting' || tier === 'contributor') return 'h-20';
+        return 'h-16';
+      }
+
+      function getPlaceholderGradient(index) {
+        var colors = ['#c2a15c', '#d9be86', '#a17c33', '#f4eedd'];
+        return colors[index % colors.length];
+      }
+
+      function buildGridCell(sponsor, index) {
+        var tier = sponsor.tier;
+        var isEmpty = sponsor.isEmpty;
+        var extraClass = getTileExtraClass(tier);
+        var height = getTileHeight(tier);
+
+        if (isEmpty) {
+          // Empty placeholder card
+          var ctaEn = 'Become a Partner';
+          var ctaFr = 'Devenez partenaire';
+          var phTextEn = 'Your Logo Here';
+          var phTextFr = 'Votre logo ici';
+          var grad = getPlaceholderGradient(index);
+
+          return '<div class="sponsor-tile placeholder-slot ' + extraClass + ' ' + height + ' flex flex-col items-center justify-center p-4 text-center gap-3" data-tier="' + tier + '" role="button" tabindex="0" aria-label="' + phTextEn + '">'
+            + '<svg class="w-6 h-6 text-gold/40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>'
+            + '<p class="text-text-muted text-xs font-display italic opacity-60"><span data-ph-en="' + phTextEn + '" data-ph-fr="' + phTextFr + '">' + phTextEn + '</span></p>'
+            + '<div class="absolute inset-0 flex items-end justify-center pb-3 opacity-0 hover:opacity-100 transition-opacity duration-300">'
+            + '<a href="#inquiry" class="placeholder-cta" onclick="event.stopPropagation();"><span data-ph-en="' + ctaEn + '" data-ph-fr="' + ctaFr + '">' + ctaEn + '</span></a>'
+            + '</div>'
+            + '</div>';
+        }
+
+        // Real sponsor card with grayscale effect
+        var name = (typeof currentLang !== 'undefined' && currentLang === 'fr') ? (sponsor.nameFr || sponsor.name) : sponsor.name;
+        var initial = sponsor.logo || name.charAt(0);
+
+        return '<div class="sponsor-tile glass-card ' + extraClass + ' ' + height + ' flex flex-col items-center justify-center p-4 text-center relative" data-tier="' + tier + '" data-sponsor-id="' + sponsor.id + '" role="button" tabindex="0" aria-label="' + name + '">'
+          + '<span class="' + getTierTagClass(tier) + ' absolute top-2 left-2 z-10"><span data-tier-label-en="' + getTierLabel(tier, 'en') + '" data-tier-label-fr="' + getTierLabel(tier, 'fr') + '">' + getTierLabel(tier, 'en') + '</span></span>'
+          + '<div class="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-2xl md:text-3xl font-display font-bold text-gold mb-2 tile-img" style="background:rgba(194,161,92,0.1); filter:grayscale(60%);">'
+          + initial
+          + '</div>'
+          + '<p class="text-cream text-sm font-semibold leading-tight max-w-full px-1 tile-img" style="filter:grayscale(40%);">' + name + '</p>'
+          + '</div>';
+      }
+
+      function renderGrid(filterTier) {
+        var filtered = sponsors;
+        if (filterTier !== 'all') {
+          filtered = sponsors.filter(function(s) { return s.tier === filterTier; });
+        }
+
+        // For community filter, combine contributor + supporter + inkind
+        if (filterTier === 'community') {
+          filtered = sponsors.filter(function(s) {
+            return s.tier === 'contributor' || s.tier === 'supporter' || s.tier === 'inkind';
+          });
+        }
+
+        var html = '';
+        for (var i = 0; i < filtered.length; i++) {
+          html += buildGridCell(filtered[i], i);
+        }
+        grid.innerHTML = html;
+
+        // Attach click handlers to non-empty sponsor tiles
+        var tiles = grid.querySelectorAll('.sponsor-tile[data-sponsor-id]');
+        tiles.forEach(function(tile) {
+          tile.addEventListener('click', function() {
+            var id = parseInt(tile.getAttribute('data-sponsor-id'));
+            var sponsor = null;
+            for (var j = 0; j < sponsors.length; j++) {
+              if (sponsors[j].id === id) { sponsor = sponsors[j]; break; }
+            }
+            if (sponsor) {
+              var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+              var spName = isFr ? (sponsor.nameFr || sponsor.name) : sponsor.name;
+              var spDesc = isFr ? (sponsor.descFr || sponsor.desc) : sponsor.desc;
+              var spLink = sponsor.website || '#tiers';
+              openLogoModalDynamic(sponsor.tier, spName, spDesc, spLink);
+            }
+          });
+        });
+
+        // Click to open #inquiry on empty placeholder tiles
+        var phTiles = grid.querySelectorAll('.sponsor-tile.placeholder-slot');
+        phTiles.forEach(function(tile) {
+          tile.addEventListener('click', function(e) {
+            window.location.href = '#inquiry';
+          });
+        });
+      }
+
+      // Enhanced modal opener for dynamic data
+      function openLogoModalDynamic(tier, name, description, link) {
+        var overlay = document.getElementById('logo-modal-overlay');
+        if (!overlay) return;
+
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+        var tierLabel = getTierLabel(tier, isFr ? 'fr' : 'en');
+
+        document.getElementById('modal-tier-badge').textContent = tierLabel;
+        document.getElementById('modal-tier-badge').className = 'tier-badge ' + (tier === 'inkind' ? 'supporter' : tier);
+
+        var titleEl = document.getElementById('logo-modal-title');
+        if (titleEl) {
+          titleEl.textContent = name;
+          titleEl.removeAttribute('data-lang-en');
+          titleEl.removeAttribute('data-lang-fr');
+        }
+
+        document.getElementById('modal-description').textContent = description || '';
+
+        var linkEl = document.getElementById('modal-link');
+        if (link && link !== '#tiers' && linkEl) {
+          linkEl.href = link;
+          linkEl.style.display = 'inline-block';
+          if (isFr) {
+            linkEl.textContent = 'Visiter le site';
+          } else {
+            linkEl.textContent = 'Visit Website';
+          }
+        } else if (linkEl) {
+          linkEl.style.display = 'none';
+        }
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        var closeBtn = document.getElementById('logo-modal-close-btn');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      // Filter button handler
+      var filterPills = document.querySelectorAll('#sponsors .filter-pill');
+      filterPills.forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          var filter = pill.getAttribute('data-filter');
+          currentFilter = filter;
+
+          // Update active state
+          filterPills.forEach(function(p) { p.classList.remove('active'); p.setAttribute('aria-selected', 'false'); });
+          pill.classList.add('active');
+          pill.setAttribute('aria-selected', 'true');
+
+          renderGrid(filter);
+        });
+      });
+
+      // Expose openLogoModalDynamic globally so the old openLogoModal can call it if needed
+      window.openLogoModalDynamic = openLogoModalDynamic;
+
+      // Initial render
+      renderGrid('all');
+    })();
+
+    /* --- 4. Impact Calculator Slider --- */
+    (function() {
+      var slider = document.getElementById('impact-slider');
+      var snapBtns = document.querySelectorAll('.slider-snap-btn');
+      var impactAmount = document.getElementById('impact-amount');
+      var impactDesc = document.getElementById('impact-description');
+      var impactIcons = document.getElementById('impact-icons');
+
+      if (!slider || !impactAmount) return;
+
+      var impactData = {
+        // EN descriptions
+        en: {
+          100: {
+            desc: 'Provides 1 official Team Canada chef jacket for the competition.',
+            icons: ['\uD83D\uDC54', 'Chef Jacket']
+          },
+          200: {
+            desc: 'Funds 1 full day of intensive kitchen training for the team.',
+            icons: ['\uD83C\uDFCB\uFE0F', '1 Day Training']
+          },
+          300: {
+            desc: 'Covers premium ingredients for 1 complete competition rehearsal.',
+            icons: ['\uD83E\uDD58', 'Ingredients']
+          },
+          400: {
+            desc: 'Supplies team uniforms & aprons for 1 chef during training.',
+            icons: ['\uD83D\uDC54', 'Uniforms']
+          },
+          500: {
+            desc: 'Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket.',
+            icons: ['\uD83C\uDF73', 'Ingredients', '\uD83D\uDC54', 'Chef Jacket', '\uD83C\uDFCB\uFE0F', 'Training']
+          },
+          600: {
+            desc: 'Funds 1 chef travel kit including luggage, tools, and presentation materials.',
+            icons: ['\uD83E\uDDF3', 'Travel Kit', '\uD83D\uDD2A', 'Tools']
+          },
+          700: {
+            desc: 'Covers team freight costs for shipping equipment to Lyon.',
+            icons: ['\uD83D\uDCE6', 'Freight']
+          },
+          800: {
+            desc: 'Provides 3 days of kitchen access + ingredients for recipe development.',
+            icons: ['\uD83C\uDF73', 'Kitchen', '\uD83D\uDCCB', 'Recipes']
+          },
+          900: {
+            desc: 'Funds media content production for 1 full training session.',
+            icons: ['\uD83D\uDCF8', 'Content', '\uD83C\uDFA5', 'Media']
+          },
+          1000: {
+            desc: 'Funds 1 week of premium ingredients + full uniform set for 1 chef.',
+            icons: ['\uD83C\uDF73', '1 Week Ingredients', '\uD83D\uDC54', 'Full Uniform']
+          },
+          1500: {
+            desc: 'Covers 1 round-trip flight from Montréal to Lyon for 1 team member.',
+            icons: ['\u2708\uFE0F', 'Flight', '\uD83C\uDDE8\uD83C\uDDE6', 'MTL→LYS']
+          },
+          2000: {
+            desc: 'Funds 5 nights of accommodation in Lyon for 1 chef.',
+            icons: ['\uD83C\uDFE8', '5 Nights Hotel', '\uD83C\uDDEB\uD83C\uDDF7', 'Lyon']
+          },
+          2500: {
+            desc: 'Covers all ground transportation + per diem expenses for 1 chef during competition week.',
+            icons: ['\uD83D\uDE97', 'Transport', '\uD83C\uDF7D\uFE0F', 'Per Diem']
+          },
+          3000: {
+            desc: 'Provides complete competition kit: uniforms, tools, presentation ware & ingredients for 1 chef.',
+            icons: ['\uD83E\uDDF0', 'Full Kit', '\uD83D\uDC54', 'Uniforms', '\uD83D\uDD2A', 'Tools']
+          },
+          4000: {
+            desc: 'Funds 2 weeks of intensive pre-competition training with coaching staff.',
+            icons: ['\uD83C\uDFCB\uFE0F', '2 Weeks Training', '\uD83C\uDF96\uFE0F', 'Coaching']
+          },
+          5000: {
+            desc: 'Supports 1 chef travel & accommodation in Lyon + full competition program support.',
+            icons: ['\u2708\uFE0F', 'Full Travel', '\uD83C\uDFE8', 'Accommodation', '\uD83C\uDFC6', 'Comp Support']
+          }
+        },
+        // FR descriptions
+        fr: {
+          100: { desc: "Fournit 1 veste officielle de chef \u00C9quipe Canada pour la comp\u00E9tition.", icons: ["\uD83D\uDC54", "Veste de chef"] },
+          200: { desc: "Finance 1 journ\u00E9e compl\u00E8te d\u2019entra\u00EEnement intensif en cuisine pour l\u2019\u00E9quipe.", icons: ["\uD83C\uDFCB\uFE0F", "1 jour entra\u00EEnement"] },
+          300: { desc: "Couvre les ingr\u00E9dients haut de gamme pour 1 r\u00E9p\u00E9tition compl\u00E8te de comp\u00E9tition.", icons: ["\uD83E\uDD58", "Ingr\u00E9dients"] },
+          400: { desc: "Fournit les uniformes et tabliers pour 1 chef pendant l\u2019entra\u00EEnement.", icons: ["\uD83D\uDC54", "Uniformes"] },
+          500: { desc: "Couvre les ingr\u00E9dients sp\u00E9cialis\u00E9s de comp\u00E9tition pour 2 s\u00E9ances d\u2019entra\u00EEnement + 1 veste officielle de chef \u00C9quipe Canada.", icons: ["\uD83C\uDF73", "Ingr\u00E9dients", "\uD83D\uDC54", "Veste", "\uD83C\uDFCB\uFE0F", "Entra\u00EEnement"] },
+          600: { desc: "Finance le kit de voyage d\u2019un chef incluant bagages, outils et mat\u00E9riel de pr\u00E9sentation.", icons: ["\uD83E\uDDF3", "Kit voyage", "\uD83D\uDD2A", "Outils"] },
+          700: { desc: "Couvre les frais de fret d\u2019\u00E9quipe pour l\u2019exp\u00E9dition du mat\u00E9riel \u00E0 Lyon.", icons: ["\uD83D\uDCE6", "Fret"] },
+          800: { desc: "Fournit 3 jours d\u2019acc\u00E8s cuisine + ingr\u00E9dients pour le d\u00E9veloppement de recettes.", icons: ["\uD83C\uDF73", "Cuisine", "\uD83D\uDCCB", "Recettes"] },
+          900: { desc: "Finance la production de contenu m\u00E9dia pour 1 s\u00E9ance d\u2019entra\u00EEnement compl\u00E8te.", icons: ["\uD83D\uDCF8", "Contenu", "\uD83C\uDFA5", "M\u00E9dia"] },
+          1000: { desc: "Finance 1 semaine d\u2019ingr\u00E9dients haut de gamme + ensemble d\u2019uniformes complet pour 1 chef.", icons: ["\uD83C\uDF73", "1 semaine ingr\u00E9dients", "\uD83D\uDC54", "Uniforme complet"] },
+          1500: { desc: "Couvre 1 vol aller-retour de Montr\u00E9al \u00E0 Lyon pour 1 membre de l\u2019\u00E9quipe.", icons: ["\u2708\uFE0F", "Vol", "\uD83C\uDDE8\uD83C\uDDE6", "MTL\u2192LYS"] },
+          2000: { desc: "Finance 5 nuits d\u2019h\u00E9bergement \u00E0 Lyon pour 1 chef.", icons: ["\uD83C\uDFE8", "5 nuits h\u00F4tel", "\uD83C\uDDEB\uD83C\uDDF7", "Lyon"] },
+          2500: { desc: "Couvre tous les transports terrestres + indemnit\u00E9s journali\u00E8res pour 1 chef pendant la semaine de comp\u00E9tition.", icons: ["\uD83D\uDE97", "Transport", "\uD83C\uDF7D\uFE0F", "Indemnit\u00E9s"] },
+          3000: { desc: "Fournit le kit de comp\u00E9tition complet : uniformes, outils, vaisselle de pr\u00E9sentation et ingr\u00E9dients pour 1 chef.", icons: ["\uD83E\uDDF0", "Kit complet", "\uD83D\uDC54", "Uniformes", "\uD83D\uDD2A", "Outils"] },
+          4000: { desc: "Finance 2 semaines d\u2019entra\u00EEnement intensif pr\u00E9-comp\u00E9tition avec l\u2019\u00E9quipe d\u2019encadrement.", icons: ["\uD83C\uDFCB\uFE0F", "2 semaines entra\u00EEnement", "\uD83C\uDF96\uFE0F", "Encadrement"] },
+          5000: { desc: "Soutient le voyage et l\u2019h\u00E9bergement d\u2019un chef \u00E0 Lyon + le soutien complet au programme de comp\u00E9tition.", icons: ["\u2708\uFE0F", "Voyage complet", "\uD83C\uDFE8", "H\u00E9bergement", "\uD83C\uDFC6", "Soutien comp"] }
+        }
+      };
+
+      function formatCurrency(val) {
+        return '$' + val.toLocaleString('en-CA');
+      }
+
+      function buildIconsHTML(iconsArr) {
+        var html = '';
+        for (var i = 0; i < iconsArr.length; i += 2) {
+          var emoji = iconsArr[i];
+          var label = iconsArr[i + 1] || '';
+          html += '<span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">' + emoji + '</span> ' + label + '</span>';
+        }
+        return html;
+      }
+
+      function updateSliderUI(val) {
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+        var lang = isFr ? 'fr' : 'en';
+        var data = impactData[lang][val];
+
+        impactAmount.textContent = formatCurrency(val);
+
+        if (data) {
+          impactDesc.textContent = data.desc;
+          impactIcons.innerHTML = buildIconsHTML(data.icons);
+        }
+
+        // Update slider track fill
+        var pct = ((val - 100) / (5000 - 100)) * 100;
+        slider.style.background = 'linear-gradient(to right, #c2a15c 0%, #c2a15c ' + pct + '%, rgba(244,238,221,0.12) ' + pct + '%, rgba(244,238,221,0.12) 100%)';
+
+        // Update aria
+        slider.setAttribute('aria-valuenow', val);
+        slider.setAttribute('aria-valuetext', formatCurrency(val));
+
+        // Update snap button active states
+        snapBtns.forEach(function(btn) {
+          var btnVal = parseInt(btn.getAttribute('data-value'));
+          if (btnVal === val) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-checked', 'true');
+          } else {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-checked', 'false');
+          }
+        });
+      }
+
+      // Slider input event
+      slider.addEventListener('input', function() {
+        updateSliderUI(parseInt(slider.value));
+      });
+
+      // Snap button clicks
+      snapBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var val = parseInt(btn.getAttribute('data-value'));
+          slider.value = val;
+          updateSliderUI(val);
+        });
+      });
+
+      // Initial state
+      updateSliderUI(500);
+    })();
   </script>
 </body>
 </html>
