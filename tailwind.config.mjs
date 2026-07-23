@@ -6,11 +6,13 @@ export default {
       colors: {
         red: '#cc1f2d',
         'red-dark': '#a01824',
-        cream: '#f4eedd',
-        ink: '#14100a',
+        cream: '#f4efea',
+        'gold-hover': '#b08f4c',
+        ink: '#0f1115',
+        'ink-card': '#161920',
         olive: '#463f31',
         gold: '#c2a15c',
-        'gold-light': '#d9be86',
+        'gold-light': '#e8d5b5',
         body: '#241f16',
         'body-alt': '#3a382f',
         muted: '#7a7461',
@@ -26,7 +28,7 @@ export default {
       },
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['"Source Sans 3"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
       },
     }
