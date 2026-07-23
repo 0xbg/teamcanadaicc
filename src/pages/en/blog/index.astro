@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { useTranslations } from '../../../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+
+const posts = await getCollection('blog', ({ data }) => data.lang === lang);
+
+// Sort by pubDate descending
+posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BlogLayout lang={lang} title={t.blogTitle} description={t.blogDescription}>
+  {
+    posts.length === 0 ? (
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">🍁</div>
+        <p class="text-muted text-lg">{t.noPosts}</p>
+      </div>
+    ) : (
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {
+          posts.map((post) => (
+            <a href={`/en/blog/${post.id.replace(/^en\//, '')}`} class="blog-card flex flex-col">
+              {
+                post.data.featuredImage && (
+                  <img
+                    src={post.data.featuredImage}
+                    alt={post.data.title}
+                    class="w-full h-44 object-cover"
+                    loading="lazy"
+                  />
+                )
+              }
+              <div class="p-5 flex flex-col flex-1">
+                {post.data.category && (
+                  <span class="text-xs tracking-widest uppercase text-gold font-semibold mb-2 font-mono">
+                    {post.data.category}
+                  </span>
+                )}
+                <h2 class="text-lg font-display font-bold text-ink leading-snug mb-2 group-hover:text-red transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="text-sm text-muted leading-relaxed mb-4 flex-1">
+                  {post.data.description}
+                </p>
+                <div class="flex items-center justify-between mt-auto pt-3 border-t border-border-light">
+                  <span class="text-xs text-muted-dark">
+                    {post.data.pubDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}
+                  </span>
+                  <span class="text-xs text-gold font-semibold hover:underline">
+                    {t.readMore} →
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    )
+  }
+</BlogLayout>

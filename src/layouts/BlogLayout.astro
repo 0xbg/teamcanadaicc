@@ -1,0 +1,166 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { useTranslations } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  post?: CollectionEntry<'blog'>;
+  lang: 'en' | 'fr';
+  title?: string;
+  description?: string;
+  translatedSlug?: string;
+}
+
+const { post, lang, title, description, translatedSlug } = Astro.props;
+const t = useTranslations(lang);
+
+const pageTitle = title ?? post?.data.title ?? t.blogTitle;
+const pageDesc = description ?? post?.data.description ?? t.blogDescription;
+
+const otherLang = lang === 'en' ? 'fr' : 'en';
+const otherLangLabel = lang === 'en' ? 'FR' : 'EN';
+
+// Translated URL: if a translated slug is provided, use it; otherwise fall back to the other language's blog listing
+const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : `/${otherLang}/blog`;
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDesc}>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-cream text-body font-sans antialiased">
+
+  <!-- Blog Header Nav -->
+  <nav class="bg-white/80 backdrop-blur-sm border-b border-border-light sticky top-0 z-40">
+    <div class="max-w-5xl mx-auto px-4 md:px-6">
+      <div class="flex items-center justify-between h-14 md:h-16">
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-7 h-7 rounded-full border-2 border-gold flex items-center justify-center group-hover:bg-gold/10 transition-colors">
+            <span class="text-gold text-xs font-bold">TC</span>
+          </div>
+          <span class="text-ink font-bold text-sm hidden sm:inline">TEAM CANADA</span>
+        </a>
+        <div class="flex items-center gap-4">
+          <a href={`/${lang}/blog`} class="text-sm text-muted hover:text-gold transition-colors font-medium">
+            {t.blog}
+          </a>
+          <div class="flex items-center gap-1">
+            <a href="/en/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold rounded-sm transition-colors ${lang === 'en' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>EN</a>
+            <a href="/fr/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold rounded-sm transition-colors ${lang === 'fr' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>FR</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="min-h-screen">
+    {
+      post ? (
+        /* Single Post Layout */
+        <article class="max-w-3xl mx-auto px-4 md:px-6 py-8 md:py-12">
+          <header class="mb-8 md:mb-10">
+            <a href={`/${lang}/blog`} class="inline-flex items-center gap-1.5 text-sm text-muted hover:text-gold transition-colors mb-6 font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              {t.backToBlog}
+            </a>
+
+            {
+              post.data.featuredImage && (
+                <img
+                  src={post.data.featuredImage}
+                  alt={post.data.title}
+                  class="w-full h-48 md:h-72 object-cover rounded-lg mb-6"
+                />
+              )
+            }
+
+            <div class="flex flex-wrap items-center gap-2 mb-3">
+              {post.data.category && (
+                <span class="font-mono text-xs tracking-widest uppercase text-gold bg-gold/10 px-2.5 py-0.5 rounded-full font-semibold">
+                  {post.data.category}
+                </span>
+              )}
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-display font-black text-ink leading-tight mb-4">
+              {post.data.title}
+            </h1>
+
+            <p class="text-lg md:text-xl text-muted leading-relaxed mb-5">
+              {post.data.description}
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3 text-sm text-muted-dark">
+              {post.data.author && (
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                  {post.data.author}
+                </span>
+              )}
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                {t.publishedOn} {post.data.pubDate.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
+            </div>
+
+            {
+              post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1.5 mt-4">
+                  {post.data.tags.map((tag: string) => (
+                    <span class="tag-pill">{tag}</span>
+                  ))}
+                </div>
+              )
+            }
+
+            {/* Language Switcher for individual post */}
+            <div class="mt-6 pt-4 border-t border-border-light">
+              <span class="text-xs text-muted mr-2">{t.langLabel}:</span>
+              <a href={translatedUrl} class="lang-switch-btn">
+                {otherLangLabel}
+              </a>
+            </div>
+          </header>
+
+          <div class="blog-content">
+            <slot />
+          </div>
+
+          <footer class="mt-12 pt-8 border-t border-border-light">
+            <a href={`/${lang}/blog`} class="inline-flex items-center gap-1.5 text-gold hover:text-gold-light transition-colors font-semibold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+              {t.backToBlog}
+            </a>
+          </footer>
+        </article>
+      ) : (
+        /* Blog Listing Layout */
+        <div class="max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-12">
+          <header class="mb-10 md:mb-14 text-center">
+            <h1 class="text-3xl md:text-5xl font-display font-black text-ink mb-4">{pageTitle}</h1>
+            <p class="text-lg text-muted max-w-2xl mx-auto">{pageDesc}</p>
+          </header>
+          <slot />
+        </div>
+      )
+    }
+  </main>
+
+  <!-- Blog Footer -->
+  <footer class="bg-ink text-cream py-10 px-6 text-center mt-12">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-gold text-sm font-bold mb-2">TEAM CANADA · ICC 2027 · LYON</p>
+      <p class="text-text-muted text-xs">© 2026 Team Canada ICC. <span>{lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span></p>
+      <p class="text-red/70 text-xs mt-2">Made with ❤️ in Montréal 🍁</p>
+    </div>
+  </footer>
+
+</body>
+</html>

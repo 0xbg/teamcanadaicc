@@ -1,0 +1,755 @@
+---
+import '../styles/global.css';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang-en="Team Canada — ICC · Lyon 2027" data-lang-fr="Équipe Canada — ICC · Lyon 2027">Team Canada — ICC · Lyon 2027</title>
+  <meta name="description" content="After a ten-year absence, Canada returns to the International Catering Cup in Lyon. Become a partner and help bring Canada back to the world stage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
+  <slot />
+
+  <!-- Scroll-to-top button -->
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+  </button>
+
+  <!-- Global Scripts -->
+  <script is:inline>
+    var currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(function(btn) { btn.classList.remove('active'); });
+      var ab = document.getElementById('lang-' + lang);
+      if (ab) ab.classList.add('active');
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        var bl = btn.textContent.trim().toLowerCase();
+        if (bl === lang) btn.classList.add('active'); else btn.classList.remove('active');
+      });
+      document.querySelectorAll('[data-lang-en]').forEach(function(el) {
+        var fr = el.getAttribute('data-lang-fr'), en = el.getAttribute('data-lang-en');
+        if (lang === 'fr' && fr) el.innerHTML = fr;
+        else if (lang === 'en' && en) el.innerHTML = en;
+      });
+      document.querySelectorAll('[data-lang-en-placeholder]').forEach(function(el) {
+        var fr = el.getAttribute('data-lang-fr-placeholder'), en = el.getAttribute('data-lang-en-placeholder');
+        el.placeholder = (lang === 'fr' && fr) ? fr : en;
+      });
+      var md = document.querySelector('meta[name="description"]');
+      var de = md.getAttribute('data-lang-en-desc') || md.getAttribute('content');
+      if (!md.getAttribute('data-lang-en-desc')) md.setAttribute('data-lang-en-desc', de);
+      var df = md.getAttribute('data-lang-fr-desc') || "Après dix ans d'absence, le Canada revient à l'International Catering Cup à Lyon. Devenez partenaire et aidez à ramener le Canada sur la scène mondiale.";
+      if (!md.getAttribute('data-lang-fr-desc')) md.setAttribute('data-lang-fr-desc', df);
+      md.content = lang === 'fr' ? df : de;
+      var te = document.querySelector('title');
+      var tEn = te.getAttribute('data-lang-en') || 'Team Canada — ICC · Lyon 2027';
+      var tFr = te.getAttribute('data-lang-fr') || 'Équipe Canada — ICC · Lyon 2027';
+      document.title = lang === 'fr' ? tFr : tEn;
+      try { localStorage.setItem('tc-lang', lang); } catch(e) {}
+    }
+
+    (function() {
+      var sv; try { sv = localStorage.getItem('tc-lang'); } catch(e) {}
+      if (!sv && navigator.language && navigator.language.startsWith('fr')) sv = 'fr';
+      if (sv === 'fr' || sv === 'en') setLang(sv);
+    })();
+
+    /* Form handling */
+    var form = document.getElementById('inquiry-form');
+    var fstatus = document.getElementById('form-status');
+    var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+    if (form && submitBtn) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var nm = document.getElementById('name').value.trim();
+        var em = document.getElementById('email').value.trim();
+        var errEn = 'Please fill in all required fields.';
+        var errFr = 'Veuillez remplir tous les champs obligatoires.';
+        if (!nm || !em) { showStatus(currentLang === 'fr' ? errFr : errEn, 'error'); return; }
+        submitBtn.disabled = true;
+        submitBtn.textContent = currentLang === 'fr' ? 'Envoi en cours...' : 'Sending...';
+        fstatus.className = 'hidden';
+        var fd = new FormData(form);
+        var data = Object.fromEntries(fd.entries());
+        fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+          .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, result: j }; }); })
+          .then(function(rr) {
+            if (rr.ok && rr.result.success) {
+              showStatus(currentLang === 'fr' ? 'Merci de votre intérêt ! L\'équipe de partenariat d\'Équipe Canada vous contactera sous peu.' : 'Thank you for your interest! The Team Canada partnership team will be in touch shortly.', 'success');
+              form.reset();
+            } else {
+              showStatus(rr.result.message || (currentLang === 'fr' ? 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Something went wrong. Please try again or contact us directly at 514-573-6758.'), 'error');
+            }
+          })
+          .catch(function() {
+            showStatus(currentLang === 'fr' ? 'Impossible d\'envoyer votre demande. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Unable to send your inquiry. Please try again or contact us directly at 514-573-6758.', 'error');
+          })
+          .then(function() { submitBtn.disabled = false; submitBtn.textContent = currentLang === 'fr' ? 'Envoyer la demande' : 'Submit Inquiry'; });
+      });
+    }
+
+    function showStatus(msg, type) {
+      if (!fstatus) return;
+      fstatus.textContent = msg;
+      fstatus.className = 'text-sm font-semibold p-3 mb-4 rounded-md ' + (type === 'success' ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300');
+      fstatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    /* Mobile menu */
+    var mmb = document.getElementById('mobile-menu-btn');
+    var mm = document.getElementById('mobile-menu');
+    if (mmb && mm) {
+      var b1 = document.getElementById('bar1'), b2 = document.getElementById('bar2'), b3 = document.getElementById('bar3');
+      var mo = false;
+      mmb.addEventListener('click', function() {
+        mo = !mo;
+        if (mo) { mm.style.maxHeight = mm.scrollHeight + 'px'; b1.style.transform = 'rotate(45deg) translate(5px,5px)'; b2.style.opacity = '0'; b3.style.transform = 'rotate(-45deg) translate(5px,-5px)'; }
+        else { mm.style.maxHeight = '0'; b1.style.transform = 'none'; b2.style.opacity = '1'; b3.style.transform = 'none'; }
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(function(l) { l.addEventListener('click', function() { if (mo) mmb.click(); }); });
+    }
+
+    /* Scroll spy + scroll-to-top toggle */
+    var secs = document.querySelectorAll('section[id]');
+    var nls = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', function() {
+      var cur = '', sy = window.scrollY + 120;
+      secs.forEach(function(s) { var t = s.offsetTop, h = s.offsetHeight; if (sy >= t && sy < (t + h)) cur = s.getAttribute('id'); });
+      nls.forEach(function(l) { l.classList.toggle('text-gold', l.getAttribute('href') === '#' + cur); l.classList.toggle('text-text-muted', l.getAttribute('href') !== '#' + cur); });
+      var stb = document.getElementById('scroll-top-btn');
+      if (stb) stb.classList.toggle('visible', window.scrollY > 500);
+    });
+
+    /* Scroll-to-top click */
+    var stbEl = document.getElementById('scroll-top-btn');
+    if (stbEl) stbEl.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+    /* Privacy modal */
+    function openPrivacyModal() {
+      var modal = document.getElementById('privacy-modal');
+      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+    }
+    function closePrivacyModal() {
+      var modal = document.getElementById('privacy-modal');
+      if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
+    }
+    var pm = document.getElementById('privacy-modal');
+    if (pm) {
+      pm.addEventListener('click', function(e) { if (e.target === this) closePrivacyModal(); });
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var m = document.getElementById('privacy-modal'); if (m && !m.classList.contains('hidden')) closePrivacyModal(); } });
+
+    /* 🇨🇦 */
+    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c— Team Canada %c🇨🇦',
+      'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
+    console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
+
+    /* ===== Tier Benefit Expand/Collapse ===== */
+    function toggleBenefits(listId, btn) {
+      var list = document.getElementById(listId);
+      if (!list) return;
+      var hidden = list.querySelectorAll('.benefit-hidden');
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        hidden.forEach(function(li) { li.classList.add('benefit-hidden'); li.classList.remove('benefit-visible'); });
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('expanded');
+        var showText = btn.querySelector('span');
+        var enPhrases = { 'lead': 'Show all 11 benefits', 'premier': 'Show all 10 benefits', 'official': 'Show all 8 benefits', 'supporting': 'Show all 6 benefits' };
+        var frPhrases = { 'lead': 'Afficher les 11 avantages', 'premier': 'Afficher les 10 avantages', 'official': 'Afficher les 8 avantages', 'supporting': 'Afficher les 6 avantages' };
+        var key = listId.replace('-benefits', '');
+        if (showText) showText.textContent = currentLang === 'fr' ? (frPhrases[key] || 'Afficher tout') : (enPhrases[key] || 'Show all');
+      } else {
+        hidden.forEach(function(li) { li.classList.remove('benefit-hidden'); li.classList.add('benefit-visible'); });
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('expanded');
+        var hideText = btn.querySelector('span');
+        if (hideText) hideText.textContent = currentLang === 'fr' ? 'Réduire' : 'Show less';
+      }
+    }
+
+    /* ===== Comparison Table Collapse ===== */
+    function toggleComparison(btn) {
+      var wrap = document.getElementById('comparison-table-wrap');
+      if (!wrap) return;
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        wrap.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.classList.remove('expanded');
+      } else {
+        wrap.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.classList.add('expanded');
+      }
+    }
+
+    /* ===== Sponsor Logo Modal ===== */
+    function openLogoModal(tier, name, description, link) {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (!overlay) return;
+      document.getElementById('modal-tier-badge').textContent = name;
+      document.getElementById('modal-tier-badge').className = 'tier-badge ' + tier;
+      document.getElementById('modal-description').textContent = description || '';
+      var linkEl = document.getElementById('modal-link');
+      if (link && linkEl) {
+        linkEl.href = link;
+        linkEl.style.display = 'inline-block';
+      } else if (linkEl) {
+        linkEl.style.display = 'none';
+      }
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      var closeBtn = document.getElementById('logo-modal-close-btn');
+      if (closeBtn) closeBtn.focus();
+    }
+    function closeLogoModal() {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (!overlay) return;
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* Initialize sponsor logo modal */
+    (function() {
+      var overlay = document.getElementById('logo-modal-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', function(e) {
+          if (e.target === overlay) closeLogoModal();
+        });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && overlay.classList.contains('active')) closeLogoModal();
+        });
+      }
+    })();
+
+    /* ═══════════════════════════════════════════════════════
+       IMPACT DASHBOARD — Interactive JavaScript
+       ═══════════════════════════════════════════════════════ */
+
+    /* --- 1. Metric Counter Animations (Intersection Observer) --- */
+    (function() {
+      var counterEls = document.querySelectorAll('.impact-counter-card .counter-value');
+      if (!counterEls.length) return;
+
+      var counted = new WeakSet();
+
+      function animateCounter(el) {
+        if (counted.has(el)) return;
+        counted.add(el);
+
+        var target = parseFloat(el.getAttribute('data-target')) || 0;
+        var suffix = el.getAttribute('data-suffix') || '';
+        var decimals = parseInt(el.getAttribute('data-decimals')) || 0;
+        var duration = 1800;
+        var startTime = null;
+        var startVal = 0;
+
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          var eased = 1 - (1 - progress) * (1 - progress);
+          var current = startVal + (target - startVal) * eased;
+          el.textContent = (decimals > 0 ? current.toFixed(decimals) : Math.round(current)) + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target)) + suffix;
+            var card = el.closest('.impact-counter-card');
+            if (card) card.classList.add('counted');
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      counterEls.forEach(function(el) { counterObserver.observe(el); });
+    })();
+
+    /* --- 2. Budget Bar Fill Animations (Intersection Observer) --- */
+    (function() {
+      var bars = document.querySelectorAll('.budget-bar-fill');
+      if (!bars.length) return;
+
+      var barObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var bar = entry.target;
+            var targetWidth = bar.getAttribute('data-width') || '0%';
+            bar.style.width = targetWidth;
+            barObserver.unobserve(bar);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      bars.forEach(function(bar) { barObserver.observe(bar); });
+    })();
+
+    /* --- 3. Budget Category Hover/Click → Detail Card Update --- */
+    (function() {
+      var categories = document.querySelectorAll('.budget-category');
+      var detailDefault = document.getElementById('budget-detail-default');
+      var detailContent = document.getElementById('budget-detail-content');
+      var detailIcon = document.getElementById('budget-detail-icon');
+      var detailTitle = document.getElementById('budget-detail-title');
+      var detailPct = document.getElementById('budget-detail-pct');
+      var detailDesc = document.getElementById('budget-detail-desc');
+
+      if (!categories.length || !detailContent) return;
+
+      var categoryData = {
+        training: {
+          icon: "\uD83C\uDF73",
+          titleEn: "Training & Ingredients",
+          titleFr: "Entraînement et ingrédients",
+          descEn: "Kitchen access, premium ingredients, specialized products, recipe testing, and repeated rehearsal sessions that refine every element of the competition program.",
+          descFr: "Accès aux cuisines, ingrédients haut de gamme, produits spécialisés, tests de recettes et séances de répétition qui peaufine chaque élément du programme de compétition."
+        },
+        equipment: {
+          icon: "\uD83D\uDC54",
+          titleEn: "Equipment & Uniforms",
+          titleFr: "Équipement et uniformes",
+          descEn: "Professional-grade cookware, serving pieces, chef jackets, team apparel, and presentation materials that represent Canada on the world stage.",
+          descFr: "Ustensiles de cuisine professionnels, pièces de service, vestes de chef, tenues d\u2019équipe et matériel de présentation qui représentent le Canada sur la scène mondiale."
+        },
+        travel: {
+          icon: "\u2708\uFE0F",
+          titleEn: "Travel & Logistics",
+          titleFr: "Voyage et logistique",
+          descEn: "Flights, hotels, ground transportation, equipment freight, and essential travel expenses for the team\u2019s journey from Montréal to Lyon.",
+          descFr: "Vols, hôtels, transport terrestre, fret d\u2019équipement et dépenses de voyage essentielles pour le parcours de l\u2019équipe de Montréal à Lyon."
+        },
+        mentorship: {
+          icon: "\uD83C\uDF1F",
+          titleEn: "Youth Mentorship",
+          titleFr: "Mentorat jeunesse",
+          descEn: "Apprentice and junior cook development, culinary education outreach, and building the next generation of Canadian culinary talent alongside the national team.",
+          descFr: "Développement des apprentis et jeunes cuisiniers, sensibilisation culinaire éducative et construction de la prochaine génération de talents culinaires canadiens aux côtés de l\u2019équipe nationale."
+        }
+      };
+
+      function updateDetailCard(category, pct) {
+        var data = categoryData[category];
+        if (!data) return;
+
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+
+        if (detailDefault) detailDefault.classList.add('hidden');
+        detailContent.classList.remove('hidden');
+
+        detailIcon.textContent = data.icon;
+        detailTitle.textContent = isFr ? data.titleFr : data.titleEn;
+        detailPct.textContent = pct + '%';
+        detailDesc.textContent = isFr ? data.descFr : data.descEn;
+      }
+
+      function resetDetailCard() {
+        if (detailDefault) detailDefault.classList.remove('hidden');
+        detailContent.classList.add('hidden');
+      }
+
+      function setActive(catEl) {
+        categories.forEach(function(c) { c.classList.remove('active'); });
+        catEl.classList.add('active');
+      }
+
+      function clearActive() {
+        categories.forEach(function(c) { c.classList.remove('active'); });
+      }
+
+      categories.forEach(function(cat) {
+        cat.addEventListener('mouseenter', function() {
+          var catKey = cat.getAttribute('data-category');
+          var pct = cat.getAttribute('data-pct');
+          updateDetailCard(catKey, pct);
+          setActive(cat);
+        });
+        cat.addEventListener('mouseleave', function() {
+          resetDetailCard();
+          clearActive();
+        });
+
+        cat.addEventListener('click', function(e) {
+          var catKey = cat.getAttribute('data-category');
+          var pct = cat.getAttribute('data-pct');
+          if (cat.classList.contains('active')) {
+            resetDetailCard();
+            clearActive();
+          } else {
+            updateDetailCard(catKey, pct);
+            setActive(cat);
+          }
+        });
+
+        cat.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            cat.click();
+          }
+        });
+      });
+    })();
+
+    /* ===== REVAMPED SPONSORS WALL — Data & Logic ===== */
+    (function() {
+      var grid = document.getElementById('sponsor-grid');
+      if (!grid) return;
+
+      var sponsors = [
+        { id: 1, tier: 'lead', name: 'Acme Foods', nameFr: 'Aliments Acme',
+          desc: 'Canada\u2019s premier food distributor, supplying kitchens from coast to coast with premium ingredients.',
+          descFr: 'Le principal distributeur alimentaire du Canada, approvisionnant les cuisines d\u2019un oc\u00E9an \u00E0 l\u2019autre en ingr\u00E9dients haut de gamme.',
+          website: '#', logo: 'A', isEmpty: false },
+        { id: 2, tier: 'lead', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 3, tier: 'premier', name: 'Maple Supply Co.', nameFr: 'Approvisionnement Maple',
+          desc: 'Premium kitchen equipment and uniform supplier trusted by Canada\u2019s top restaurants.',
+          descFr: 'Fournisseur d\u2019\u00E9quipement de cuisine et d\u2019uniformes haut de gamme reconnu par les meilleurs restaurants du Canada.',
+          website: '#', logo: 'M', isEmpty: false },
+        { id: 4, tier: 'premier', name: 'Gourmet Express', nameFr: 'Gourmet Express',
+          desc: 'Nationwide logistics and freight partner specializing in temperature-controlled culinary transport.',
+          descFr: 'Partenaire logistique et de fret \u00E0 l\u2019\u00E9chelle nationale sp\u00E9cialis\u00E9 dans le transport culinaire \u00E0 temp\u00E9rature contr\u00F4l\u00E9e.',
+          website: '#', logo: 'G', isEmpty: false },
+        { id: 5, tier: 'premier', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 6, tier: 'official', name: 'Nordic Kitchenware', nameFr: 'Articles de cuisine Nordic',
+          desc: 'Crafting professional-grade cookware trusted by competition chefs worldwide.',
+          descFr: 'Fabricant d\u2019ustensiles de cuisine de qualit\u00E9 professionnelle reconnu par les chefs de comp\u00E9tition du monde entier.',
+          website: '#', logo: 'N', isEmpty: false },
+        { id: 7, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 8, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 9, tier: 'supporting', name: 'PureSpring Water', nameFr: 'Eau PureSpring',
+          desc: 'Official hydration partner providing premium natural spring water for Team Canada\u2019s training and competition.',
+          descFr: 'Partenaire officiel d\u2019hydratation fournissant de l\u2019eau de source naturelle haut de gamme pour l\u2019entra\u00EEnement et la comp\u00E9tition d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'P', isEmpty: false },
+        { id: 10, tier: 'supporting', name: 'Heritage Print', nameFr: 'Imprimerie Heritage',
+          desc: 'Full-service printing, signage, and branding partner for Team Canada campaign materials.',
+          descFr: 'Partenaire d\u2019impression, de signal\u00E9tique et d\u2019image de marque complet pour les supports de campagne d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'H', isEmpty: false },
+        { id: 11, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 12, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 13, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 14, tier: 'contributor', name: 'Laurentian Dairy', nameFr: 'Laiterie Laurentienne',
+          desc: 'Family-owned dairy providing premium butter, cream, and cheeses to Team Canada\u2019s pastry kitchen.',
+          descFr: 'Laiterie familiale fournissant du beurre, de la cr\u00E8me et des fromages haut de gamme \u00E0 la cuisine p\u00E2tissi\u00E8re d\u2019\u00C9quipe Canada.',
+          website: '#', logo: 'L', isEmpty: false },
+        { id: 15, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
+        { id: 16, tier: 'inkind', name: 'Studio Ouest M\u00E9dia', nameFr: 'Studio Ouest M\u00E9dia',
+          desc: 'Photography and video production partner documenting Team Canada\u2019s journey to Lyon.',
+          descFr: 'Partenaire de production photo et vid\u00E9o documentant le parcours d\u2019\u00C9quipe Canada jusqu\u2019\u00E0 Lyon.',
+          website: '#', logo: 'S', isEmpty: false },
+        { id: 17, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true }
+      ];
+
+      var currentFilter = 'all';
+
+      function getTierLabel(tier, lang) {
+        var labels = {
+          en: { lead:'Lead Partner', premier:'Premier Partner', official:'Official Partner', supporting:'Supporting Partner', contributor:'Team Contributor', supporter:'Team Supporter', inkind:'In-Kind Partner' },
+          fr: { lead:'Partenaire majeur', premier:'Partenaire Premier', official:'Partenaire Officiel', supporting:'Partenaire de soutien', contributor:'Contributeur', supporter:'Supporteur', inkind:'Partenaire en nature' }
+        };
+        return (labels[lang] && labels[lang][tier]) || tier;
+      }
+
+      function getTierTagClass(tier) {
+        return 'tile-tier-tag tag-' + tier;
+      }
+
+      function getTileExtraClass(tier) {
+        if (tier === 'lead') return 'tile-lead sm:col-span-2';
+        if (tier === 'premier' || tier === 'official') return 'sm:col-span-1';
+        return '';
+      }
+
+      function getTileHeight(tier) {
+        if (tier === 'lead') return 'h-36 md:h-40';
+        if (tier === 'premier' || tier === 'official') return 'h-28';
+        if (tier === 'supporting' || tier === 'contributor') return 'h-20';
+        return 'h-16';
+      }
+
+      function buildGridCell(sponsor, index) {
+        var tier = sponsor.tier;
+        var isEmpty = sponsor.isEmpty;
+        var extraClass = getTileExtraClass(tier);
+        var height = getTileHeight(tier);
+
+        if (isEmpty) {
+          var ctaEn = 'Become a Partner';
+          var ctaFr = 'Devenez partenaire';
+          var phTextEn = 'Your Logo Here';
+          var phTextFr = 'Votre logo ici';
+
+          return '<div class="sponsor-tile placeholder-slot ' + extraClass + ' ' + height + ' flex flex-col items-center justify-center p-4 text-center gap-3" data-tier="' + tier + '" role="button" tabindex="0" aria-label="' + phTextEn + '">'
+            + '<svg class="w-6 h-6 text-gold/40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>'
+            + '<p class="text-text-muted text-xs font-display italic opacity-60"><span data-ph-en="' + phTextEn + '" data-ph-fr="' + phTextFr + '">' + phTextEn + '</span></p>'
+            + '<div class="absolute inset-0 flex items-end justify-center pb-3 opacity-0 hover:opacity-100 transition-opacity duration-300">'
+            + '<a href="#inquiry" class="placeholder-cta" onclick="event.stopPropagation();"><span data-ph-en="' + ctaEn + '" data-ph-fr="' + ctaFr + '">' + ctaEn + '</span></a>'
+            + '</div>'
+            + '</div>';
+        }
+
+        var name = (typeof currentLang !== 'undefined' && currentLang === 'fr') ? (sponsor.nameFr || sponsor.name) : sponsor.name;
+        var initial = sponsor.logo || name.charAt(0);
+
+        return '<div class="sponsor-tile glass-card ' + extraClass + ' ' + height + ' flex flex-col items-center justify-center p-4 text-center relative" data-tier="' + tier + '" data-sponsor-id="' + sponsor.id + '" role="button" tabindex="0" aria-label="' + name + '">'
+          + '<span class="' + getTierTagClass(tier) + ' absolute top-2 left-2 z-10"><span data-tier-label-en="' + getTierLabel(tier, 'en') + '" data-tier-label-fr="' + getTierLabel(tier, 'fr') + '">' + getTierLabel(tier, 'en') + '</span></span>'
+          + '<div class="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-2xl md:text-3xl font-display font-bold text-gold mb-2 tile-img" style="background:rgba(194,161,92,0.1); filter:grayscale(60%);">'
+          + initial
+          + '</div>'
+          + '<p class="text-cream text-sm font-semibold leading-tight max-w-full px-1 tile-img" style="filter:grayscale(40%);">' + name + '</p>'
+          + '</div>';
+      }
+
+      function renderGrid(filterTier) {
+        var filtered = sponsors;
+        if (filterTier !== 'all') {
+          filtered = sponsors.filter(function(s) { return s.tier === filterTier; });
+        }
+        if (filterTier === 'community') {
+          filtered = sponsors.filter(function(s) {
+            return s.tier === 'contributor' || s.tier === 'supporter' || s.tier === 'inkind';
+          });
+        }
+
+        var html = '';
+        for (var i = 0; i < filtered.length; i++) {
+          html += buildGridCell(filtered[i], i);
+        }
+        grid.innerHTML = html;
+
+        var tiles = grid.querySelectorAll('.sponsor-tile[data-sponsor-id]');
+        tiles.forEach(function(tile) {
+          tile.addEventListener('click', function() {
+            var id = parseInt(tile.getAttribute('data-sponsor-id'));
+            var sponsor = null;
+            for (var j = 0; j < sponsors.length; j++) {
+              if (sponsors[j].id === id) { sponsor = sponsors[j]; break; }
+            }
+            if (sponsor) {
+              var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+              var spName = isFr ? (sponsor.nameFr || sponsor.name) : sponsor.name;
+              var spDesc = isFr ? (sponsor.descFr || sponsor.desc) : sponsor.desc;
+              var spLink = sponsor.website || '#tiers';
+              openLogoModalDynamic(sponsor.tier, spName, spDesc, spLink);
+            }
+          });
+        });
+
+        var phTiles = grid.querySelectorAll('.sponsor-tile.placeholder-slot');
+        phTiles.forEach(function(tile) {
+          tile.addEventListener('click', function(e) {
+            window.location.href = '#inquiry';
+          });
+        });
+      }
+
+      function openLogoModalDynamic(tier, name, description, link) {
+        var overlay = document.getElementById('logo-modal-overlay');
+        if (!overlay) return;
+
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+        var tierLabel = getTierLabel(tier, isFr ? 'fr' : 'en');
+
+        document.getElementById('modal-tier-badge').textContent = tierLabel;
+        document.getElementById('modal-tier-badge').className = 'tier-badge ' + (tier === 'inkind' ? 'supporter' : tier);
+
+        var titleEl = document.getElementById('logo-modal-title');
+        if (titleEl) {
+          titleEl.textContent = name;
+          titleEl.removeAttribute('data-lang-en');
+          titleEl.removeAttribute('data-lang-fr');
+        }
+
+        document.getElementById('modal-description').textContent = description || '';
+
+        var linkEl = document.getElementById('modal-link');
+        if (link && link !== '#tiers' && linkEl) {
+          linkEl.href = link;
+          linkEl.style.display = 'inline-block';
+          if (isFr) {
+            linkEl.textContent = 'Visiter le site';
+          } else {
+            linkEl.textContent = 'Visit Website';
+          }
+        } else if (linkEl) {
+          linkEl.style.display = 'none';
+        }
+
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        var closeBtn = document.getElementById('logo-modal-close-btn');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      var filterPills = document.querySelectorAll('#sponsors .filter-pill');
+      filterPills.forEach(function(pill) {
+        pill.addEventListener('click', function() {
+          var filter = pill.getAttribute('data-filter');
+          currentFilter = filter;
+
+          filterPills.forEach(function(p) { p.classList.remove('active'); p.setAttribute('aria-selected', 'false'); });
+          pill.classList.add('active');
+          pill.setAttribute('aria-selected', 'true');
+
+          renderGrid(filter);
+        });
+      });
+
+      window.openLogoModalDynamic = openLogoModalDynamic;
+
+      renderGrid('all');
+    })();
+
+    /* --- 4. Impact Calculator Slider --- */
+    (function() {
+      var slider = document.getElementById('impact-slider');
+      var snapBtns = document.querySelectorAll('.slider-snap-btn');
+      var labelEls = document.querySelectorAll('#slider-labels span[data-index]');
+      var impactAmount = document.getElementById('impact-amount');
+      var impactDesc = document.getElementById('impact-description');
+      var impactIcons = document.getElementById('impact-icons');
+
+      if (!slider || !impactAmount) return;
+
+      var VALUE_TIERS = [100, 500, 1000, 5000];
+      var MAX_INDEX = VALUE_TIERS.length - 1;
+
+      var impactData = {
+        en: {
+          100: { desc: 'Provides 1 official Team Canada chef jacket for the competition.', icons: ['\uD83D\uDC54', 'Chef Jacket'] },
+          200: { desc: 'Funds 1 full day of intensive kitchen training for the team.', icons: ['\uD83C\uDFCB\uFE0F', '1 Day Training'] },
+          300: { desc: 'Covers premium ingredients for 1 complete competition rehearsal.', icons: ['\uD83E\uDD58', 'Ingredients'] },
+          400: { desc: 'Supplies team uniforms & aprons for 1 chef during training.', icons: ['\uD83D\uDC54', 'Uniforms'] },
+          500: { desc: 'Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket.', icons: ['\uD83C\uDF73', 'Ingredients', '\uD83D\uDC54', 'Chef Jacket', '\uD83C\uDFCB\uFE0F', 'Training'] },
+          600: { desc: 'Funds 1 chef travel kit including luggage, tools, and presentation materials.', icons: ['\uD83E\uDDF3', 'Travel Kit', '\uD83D\uDD2A', 'Tools'] },
+          700: { desc: 'Covers team freight costs for shipping equipment to Lyon.', icons: ['\uD83D\uDCE6', 'Freight'] },
+          800: { desc: 'Provides 3 days of kitchen access + ingredients for recipe development.', icons: ['\uD83C\uDF73', 'Kitchen', '\uD83D\uDCCB', 'Recipes'] },
+          900: { desc: 'Funds media content production for 1 full training session.', icons: ['\uD83D\uDCF8', 'Content', '\uD83C\uDFA5', 'Media'] },
+          1000: { desc: 'Funds 1 week of premium ingredients + full uniform set for 1 chef.', icons: ['\uD83C\uDF73', '1 Week Ingredients', '\uD83D\uDC54', 'Full Uniform'] },
+          1500: { desc: 'Covers 1 round-trip flight from Montréal to Lyon for 1 team member.', icons: ['\u2708\uFE0F', 'Flight', '\uD83C\uDDE8\uD83C\uDDE6', 'MTL→LYS'] },
+          2000: { desc: 'Funds 5 nights of accommodation in Lyon for 1 chef.', icons: ['\uD83C\uDFE8', '5 Nights Hotel', '\uD83C\uDDEB\uD83C\uDDF7', 'Lyon'] },
+          2500: { desc: 'Covers all ground transportation + per diem expenses for 1 chef during competition week.', icons: ['\uD83D\uDE97', 'Transport', '\uD83C\uDF7D\uFE0F', 'Per Diem'] },
+          3000: { desc: 'Provides complete competition kit: uniforms, tools, presentation ware & ingredients for 1 chef.', icons: ['\uD83E\uDDF0', 'Full Kit', '\uD83D\uDC54', 'Uniforms', '\uD83D\uDD2A', 'Tools'] },
+          4000: { desc: 'Funds 2 weeks of intensive pre-competition training with coaching staff.', icons: ['\uD83C\uDFCB\uFE0F', '2 Weeks Training', '\uD83C\uDF96\uFE0F', 'Coaching'] },
+          5000: { desc: 'Supports 1 chef travel & accommodation in Lyon + full competition program support.', icons: ['\u2708\uFE0F', 'Full Travel', '\uD83C\uDFE8', 'Accommodation', '\uD83C\uDFC6', 'Comp Support'] }
+        },
+        fr: {
+          100: { desc: "Fournit 1 veste officielle de chef \u00C9quipe Canada pour la comp\u00E9tition.", icons: ["\uD83D\uDC54", "Veste de chef"] },
+          200: { desc: "Finance 1 journ\u00E9e compl\u00E8te d\u2019entra\u00EEnement intensif en cuisine pour l\u2019\u00E9quipe.", icons: ["\uD83C\uDFCB\uFE0F", "1 jour entra\u00EEnement"] },
+          300: { desc: "Couvre les ingr\u00E9dients haut de gamme pour 1 r\u00E9p\u00E9tition compl\u00E8te de comp\u00E9tition.", icons: ["\uD83E\uDD58", "Ingr\u00E9dients"] },
+          400: { desc: "Fournit les uniformes et tabliers pour 1 chef pendant l\u2019entra\u00EEnement.", icons: ["\uD83D\uDC54", "Uniformes"] },
+          500: { desc: "Couvre les ingr\u00E9dients sp\u00E9cialis\u00E9s de comp\u00E9tition pour 2 s\u00E9ances d\u2019entra\u00EEnement + 1 veste officielle de chef \u00C9quipe Canada.", icons: ["\uD83C\uDF73", "Ingr\u00E9dients", "\uD83D\uDC54", "Veste", "\uD83C\uDFCB\uFE0F", "Entra\u00EEnement"] },
+          600: { desc: "Finance le kit de voyage d\u2019un chef incluant bagages, outils et mat\u00E9riel de pr\u00E9sentation.", icons: ["\uD83E\uDDF3", "Kit voyage", "\uD83D\uDD2A", "Outils"] },
+          700: { desc: "Couvre les frais de fret d\u2019\u00E9quipe pour l\u2019exp\u00E9dition du mat\u00E9riel \u00E0 Lyon.", icons: ["\uD83D\uDCE6", "Fret"] },
+          800: { desc: "Fournit 3 jours d\u2019acc\u00E8s cuisine + ingr\u00E9dients pour le d\u00E9veloppement de recettes.", icons: ["\uD83C\uDF73", "Cuisine", "\uD83D\uDCCB", "Recettes"] },
+          900: { desc: "Finance la production de contenu m\u00E9dia pour 1 s\u00E9ance d\u2019entra\u00EEnement compl\u00E8te.", icons: ["\uD83D\uDCF8", "Contenu", "\uD83C\uDFA5", "M\u00E9dia"] },
+          1000: { desc: "Finance 1 semaine d\u2019ingr\u00E9dients haut de gamme + ensemble d\u2019uniformes complet pour 1 chef.", icons: ["\uD83C\uDF73", "1 semaine ingr\u00E9dients", "\uD83D\uDC54", "Uniforme complet"] },
+          1500: { desc: "Couvre 1 vol aller-retour de Montr\u00E9al \u00E0 Lyon pour 1 membre de l\u2019\u00E9quipe.", icons: ["\u2708\uFE0F", "Vol", "\uD83C\uDDE8\uD83C\uDDE6", "MTL\u2192LYS"] },
+          2000: { desc: "Finance 5 nuits d\u2019h\u00E9bergement \u00E0 Lyon pour 1 chef.", icons: ["\uD83C\uDFE8", "5 nuits h\u00F4tel", "\uD83C\uDDEB\uD83C\uDDF7", "Lyon"] },
+          2500: { desc: "Couvre tous les transports terrestres + indemnit\u00E9s journali\u00E8res pour 1 chef pendant la semaine de comp\u00E9tition.", icons: ["\uD83D\uDE97", "Transport", "\uD83C\uDF7D\uFE0F", "Indemnit\u00E9s"] },
+          3000: { desc: "Fournit le kit de comp\u00E9tition complet : uniformes, outils, vaisselle de pr\u00E9sentation et ingr\u00E9dients pour 1 chef.", icons: ["\uD83E\uDDF0", "Kit complet", "\uD83D\uDC54", "Uniformes", "\uD83D\uDD2A", "Outils"] },
+          4000: { desc: "Finance 2 semaines d\u2019entra\u00EEnement intensif pr\u00E9-comp\u00E9tition avec l\u2019\u00E9quipe d\u2019encadrement.", icons: ["\uD83C\uDFCB\uFE0F", "2 semaines entra\u00EEnement", "\uD83C\uDF96\uFE0F", "Encadrement"] },
+          5000: { desc: "Soutient le voyage et l\u2019h\u00E9bergement d\u2019un chef \u00E0 Lyon + le soutien complet au programme de comp\u00E9tition.", icons: ["\u2708\uFE0F", "Voyage complet", "\uD83C\uDFE8", "H\u00E9bergement", "\uD83C\uDFC6", "Soutien comp"] }
+        }
+      };
+
+      function formatCurrency(val) {
+        return '$' + val.toLocaleString('en-CA');
+      }
+
+      function buildIconsHTML(iconsArr) {
+        var html = '';
+        for (var i = 0; i < iconsArr.length; i += 2) {
+          var emoji = iconsArr[i];
+          var label = iconsArr[i + 1] || '';
+          html += '<span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">' + emoji + '</span> ' + label + '</span>';
+        }
+        return html;
+      }
+
+      function updateSliderUI(index) {
+        var dollarValue = VALUE_TIERS[index];
+        if (dollarValue === undefined) return;
+
+        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
+        var lang = isFr ? 'fr' : 'en';
+        var data = impactData[lang][dollarValue];
+
+        slider.value = index;
+
+        impactAmount.textContent = formatCurrency(dollarValue);
+
+        if (data) {
+          impactDesc.textContent = data.desc;
+          impactIcons.innerHTML = buildIconsHTML(data.icons);
+        }
+
+        var pct = (index / MAX_INDEX) * 100;
+        slider.style.background = 'linear-gradient(to right, #c2a15c 0%, #c2a15c ' + pct + '%, rgba(244,238,221,0.12) ' + pct + '%, rgba(244,238,221,0.12) 100%)';
+
+        slider.setAttribute('aria-valuenow', dollarValue);
+        slider.setAttribute('aria-valuetext', formatCurrency(dollarValue));
+
+        snapBtns.forEach(function(btn) {
+          var btnVal = parseInt(btn.getAttribute('data-value'));
+          if (btnVal === dollarValue) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-checked', 'true');
+          } else {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-checked', 'false');
+          }
+        });
+      }
+
+      slider.addEventListener('input', function() {
+        updateSliderUI(parseInt(slider.value));
+      });
+
+      slider.addEventListener('change', function() {
+        updateSliderUI(parseInt(slider.value));
+      });
+
+      snapBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var dollarVal = parseInt(btn.getAttribute('data-value'));
+          var index = VALUE_TIERS.indexOf(dollarVal);
+          if (index === -1) return;
+          slider.value = index;
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+          slider.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+
+      labelEls.forEach(function(label) {
+        label.addEventListener('click', function() {
+          var index = parseInt(label.getAttribute('data-index'));
+          if (isNaN(index) || index < 0 || index > MAX_INDEX) return;
+          slider.value = index;
+          slider.dispatchEvent(new Event('input', { bubbles: true }));
+          slider.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+
+      updateSliderUI(1);
+    })();
+  </script>
+</body>
+</html>

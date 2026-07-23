@@ -1,0 +1,149 @@
+<!-- ===== IMPACT DASHBOARD ===== -->
+<section id="support" class="py-20 md:py-28 px-6 bg-ink text-cream relative overflow-hidden">
+  <!-- Subtle radial glow background -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px]"></div>
+    <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gold/3 rounded-full blur-[100px]"></div>
+  </div>
+
+  <div class="max-w-5xl mx-auto relative z-10">
+    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Your Impact" data-lang-fr="Votre impact">Your Impact</p>
+    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-center font-display text-cream" data-lang-en="Where Your Support Goes" data-lang-fr="Où va votre soutien">Where Your Support Goes</h2>
+    <p class="text-text-muted text-center max-w-2xl mx-auto mb-16 text-lg leading-relaxed" data-lang-en="Every dollar fuels a specific part of Team Canada's journey — from kitchen training in Montréal to the competition floor in Lyon." data-lang-fr="Chaque dollar finance une partie précise du parcours d'Équipe Canada — de l'entraînement en cuisine à Montréal jusqu'au parquet de compétition à Lyon.">Every dollar fuels a specific part of Team Canada's journey — from kitchen training in Montréal to the competition floor in Lyon.</p>
+
+    <!-- ═══ 1. METRIC COUNTERS ═══ -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-20">
+      <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+        <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="100" data-suffix="%" data-decimals="0">0%</div>
+        <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Volunteer-Driven" data-lang-fr="Équipe bénévole">Volunteer-Driven</p>
+        <p class="text-text-muted text-xs leading-relaxed" data-lang-en="No one on Team Canada draws a salary — every hour is donated." data-lang-fr="Personne chez Équipe Canada ne reçoit de salaire — chaque heure est donnée.">No one on Team Canada draws a salary — every hour is donated.</p>
+      </div>
+      <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+        <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="12" data-suffix="" data-decimals="0">0</div>
+        <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Young Chefs Mentored" data-lang-fr="Jeunes chefs mentorés">Young Chefs Mentored</p>
+        <p class="text-text-muted text-xs leading-relaxed" data-lang-en="Apprentices and junior cooks trained alongside the national team." data-lang-fr="Apprentis et jeunes cuisiniers formés aux côtés de l'équipe nationale.">Apprentices and junior cooks trained alongside the national team.</p>
+      </div>
+      <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+        <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="240" data-suffix="+" data-decimals="0">0+</div>
+        <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Hours of Training" data-lang-fr="Heures d'entraînement">Hours of Training</p>
+        <p class="text-text-muted text-xs leading-relaxed" data-lang-en="Intensive preparation across kitchens in Montréal before Lyon." data-lang-fr="Préparation intensive dans les cuisines de Montréal avant Lyon.">Intensive preparation across kitchens in Montréal before Lyon.</p>
+      </div>
+      <div class="impact-counter-card bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-5 md:p-6 text-center hover:border-gold/40 hover:bg-cream/8 transition-all duration-300 group">
+        <div class="counter-value font-mono text-3xl md:text-4xl font-bold text-gold mb-2" data-target="2" data-suffix="" data-decimals="0">0</div>
+        <p class="text-text-light text-sm md:text-base font-semibold mb-1" data-lang-en="Int'l Competitions" data-lang-fr="Compétitions int'les">Int'l Competitions</p>
+        <p class="text-text-muted text-xs leading-relaxed" data-lang-en="ICC Lyon 2027 is the primary target — with more to come." data-lang-fr="L'ICC Lyon 2027 est l'objectif principal — avec d'autres à venir.">ICC Lyon 2027 is the primary target — with more to come.</p>
+      </div>
+    </div>
+
+    <!-- ═══ 2. BUDGET ALLOCATION VISUALIZER ═══ -->
+    <div class="mb-20">
+      <h3 class="text-gold font-display text-lg md:text-xl mb-2 text-center" data-lang-en="Budget Allocation" data-lang-fr="Répartition du budget">Budget Allocation</h3>
+      <p class="text-text-muted text-sm text-center mb-10" data-lang-en="Hover or tap a category to see exactly where each dollar goes." data-lang-fr="Survolez ou touchez une catégorie pour voir exactement où va chaque dollar.">Hover or tap a category to see exactly where each dollar goes.</p>
+
+      <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+        <!-- Progress Bars -->
+        <div class="flex-1 space-y-5" role="list" aria-label="Budget allocation categories">
+          <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Training & Ingredients: 40 percent" data-category="training" data-pct="40">
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Training & Ingredients" data-lang-fr="Entraînement et ingrédients">Training & Ingredients</span>
+              <span class="font-mono text-lg font-bold text-gold tabular-nums">40%</span>
+            </div>
+            <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+              <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="40%" data-color="from-gold to-gold-light"></div>
+            </div>
+          </div>
+          <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Equipment & Uniforms: 25 percent" data-category="equipment" data-pct="25">
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Equipment & Uniforms" data-lang-fr="Équipement et uniformes">Equipment & Uniforms</span>
+              <span class="font-mono text-lg font-bold text-gold tabular-nums">25%</span>
+            </div>
+            <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+              <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="25%" data-color="from-gold-light to-gold"></div>
+            </div>
+          </div>
+          <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Travel & Logistics: 20 percent" data-category="travel" data-pct="20">
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Travel & Logistics" data-lang-fr="Voyage et logistique">Travel & Logistics</span>
+              <span class="font-mono text-lg font-bold text-gold tabular-nums">20%</span>
+            </div>
+            <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+              <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="20%" data-color="from-muted-gold to-gold"></div>
+            </div>
+          </div>
+          <div class="budget-category group cursor-pointer" role="listitem" tabindex="0" aria-label="Youth Mentorship: 15 percent" data-category="mentorship" data-pct="15">
+            <div class="flex justify-between items-baseline mb-2">
+              <span class="text-text-light font-semibold text-sm md:text-base transition-colors duration-300 group-hover:text-gold" data-lang-en="Youth Mentorship" data-lang-fr="Mentorat jeunesse">Youth Mentorship</span>
+              <span class="font-mono text-lg font-bold text-gold tabular-nums">15%</span>
+            </div>
+            <div class="budget-bar-track h-3 bg-cream/10 rounded-full overflow-hidden border border-border-dark">
+              <div class="budget-bar-fill h-full rounded-full transition-all duration-1000 ease-out" style="width:0%" data-width="15%" data-color="from-gold to-muted-gold"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Readout Card -->
+        <div class="lg:w-80 flex-shrink-0">
+          <div id="budget-detail-card" class="sticky top-24 bg-cream/5 backdrop-blur-md border border-border-dark rounded-lg p-6 transition-all duration-500 min-h-[260px] flex flex-col justify-center">
+            <div id="budget-detail-default" class="text-center">
+              <div class="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-gold/40 flex items-center justify-center">
+                <svg class="w-7 h-7 text-gold/60" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941"/></svg>
+              </div>
+              <p class="text-text-muted text-sm leading-relaxed" data-lang-en="Select a category to see the breakdown" data-lang-fr="Sélectionnez une catégorie pour voir le détail">Select a category to see the breakdown</p>
+            </div>
+            <div id="budget-detail-content" class="hidden">
+              <div class="w-14 h-14 mx-auto mb-4 rounded-full border-2 border-gold flex items-center justify-center bg-gold/10">
+                <span id="budget-detail-icon" class="text-2xl">🍳</span>
+              </div>
+              <h4 id="budget-detail-title" class="text-gold font-display text-xl font-bold text-center mb-2"></h4>
+              <p id="budget-detail-pct" class="font-mono text-3xl font-bold text-cream text-center mb-3"></p>
+              <p id="budget-detail-desc" class="text-text-muted text-sm leading-relaxed text-center"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 3. IMPACT CALCULATOR / DOLLAR SLIDER ═══ -->
+    <div class="bg-cream/5 backdrop-blur-sm border border-border-dark rounded-lg p-6 md:p-10">
+      <h3 class="text-gold font-display text-lg md:text-xl mb-2 text-center" data-lang-en="Impact Calculator" data-lang-fr="Calculateur d'impact">Impact Calculator</h3>
+      <p class="text-text-muted text-sm text-center mb-8" data-lang-en="Slide to see what your contribution makes possible." data-lang-fr="Glissez pour voir ce que votre contribution rend possible.">Slide to see what your contribution makes possible.</p>
+
+      <!-- Snap Buttons -->
+      <div class="flex justify-center gap-2 md:gap-3 mb-6 flex-wrap" role="radiogroup" aria-label="Donation amount presets">
+        <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="100" data-lang-en="$100" data-lang-fr="100 $" aria-checked="false" role="radio">$100</button>
+        <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="500" data-lang-en="$500" data-lang-fr="500 $" aria-checked="false" role="radio">$500</button>
+        <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="1000" data-lang-en="$1,000" data-lang-fr="1 000 $" aria-checked="false" role="radio">$1,000</button>
+        <button class="slider-snap-btn px-4 py-2 border border-border-dark text-text-muted text-sm font-medium rounded-md hover:border-gold hover:text-gold transition-all duration-200 focus:outline-none focus:border-gold" data-value="5000" data-lang-en="$5,000" data-lang-fr="5 000 $" aria-checked="false" role="radio">$5,000</button>
+      </div>
+
+      <!-- Slider -->
+      <div class="relative mb-8">
+        <input type="range" id="impact-slider" min="0" max="3" value="1" step="1"
+          class="w-full appearance-none h-2 rounded-full outline-none cursor-pointer"
+          style="background: linear-gradient(to right, #c2a15c 0%, #c2a15c 33.333%, rgba(244,238,221,0.12) 33.333%, rgba(244,238,221,0.12) 100%);"
+          aria-label="Contribution amount slider"
+          aria-valuemin="100" aria-valuemax="5000" aria-valuenow="500" aria-valuetext="$500">
+        <div class="flex justify-between w-full px-[14px] mt-2" id="slider-labels">
+          <span class="text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap text-center" style="width:0;" data-index="0">$100</span>
+          <span class="text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap text-center" style="width:0;" data-index="1">$500</span>
+          <span class="text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap text-center" style="width:0;" data-index="2">$1,000</span>
+          <span class="text-xs text-text-muted font-mono cursor-pointer select-none whitespace-nowrap text-center" style="width:0;" data-index="3">$5,000</span>
+        </div>
+      </div>
+
+      <!-- Dynamic Outcome Display -->
+      <div id="impact-output" class="text-center min-h-[140px] flex flex-col items-center justify-center transition-all duration-500">
+        <div class="font-mono text-4xl md:text-5xl font-bold text-gold mb-4" id="impact-amount">$500</div>
+        <p class="text-cream text-lg md:text-xl font-semibold max-w-xl leading-relaxed" id="impact-description" data-lang-en="Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket." data-lang-fr="Couvre les ingrédients spécialisés de compétition pour 2 séances d'entraînement + 1 veste officielle de chef Équipe Canada.">Covers specialized competition ingredients for 2 training sessions + 1 official Team Canada chef jacket.</p>
+        <div class="mt-6 flex flex-wrap justify-center gap-3" id="impact-icons">
+          <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">🥘</span> <span data-lang-en="Ingredients" data-lang-fr="Ingrédients">Ingredients</span></span>
+          <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">👨‍🍳</span> <span data-lang-en="Chef Jacket" data-lang-fr="Veste de chef">Chef Jacket</span></span>
+          <span class="inline-flex items-center gap-1.5 bg-gold/10 border border-gold/30 text-gold-light text-xs font-medium px-3 py-1.5 rounded-full"><span class="text-base">🏋️</span> <span data-lang-en="Training" data-lang-fr="Entraînement">Training</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="section-divider">
