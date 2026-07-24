@@ -62,19 +62,25 @@ html { scroll-behavior: smooth; }
 .hero-tier-card {
   position: relative; overflow: hidden;
   border-radius: 0.5rem;
-  background: linear-gradient(135deg, rgba(194,161,92,0.06) 0%, rgba(244,239,234,0.02) 50%, rgba(194,161,92,0.06) 100%);
 }
 .hero-tier-card::before {
-  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 0;
+  background: linear-gradient(135deg, rgba(194,161,92,0.07) 0%, rgba(244,239,234,0.03) 50%, rgba(194,161,92,0.07) 100%);
+  background-size: 300% 300%;
+  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+}
+.hero-tier-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 1;
   padding: 2px;
   background: linear-gradient(135deg, #c2a15c, #e8d5b5, #f4efea, #c2a15c, #e8d5b5);
   background-size: 300% 300%;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   animation: shimmer 3s linear infinite;
-  pointer-events: none; z-index: 0;
+  pointer-events: none;
 }
-.hero-tier-card > * { position: relative; z-index: 1; }
+.hero-tier-card > * { position: relative; z-index: 2; }
 .tier-top-border-gold { border-top: 4px solid #c2a15c; }
 .tier-top-border-gold-light { border-top: 4px solid #e8d5b5; }
 .tier-top-border-muted-gold { border-top: 4px solid #a17c33; }
