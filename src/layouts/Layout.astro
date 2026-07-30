@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ColorSwitcher from '../components/ColorSwitcher.astro';
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +13,9 @@ import '../styles/global.css';
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
   <slot />
+
+  <!-- Color palette switcher -->
+  <ColorSwitcher />
 
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
@@ -507,7 +511,7 @@ import '../styles/global.css';
 
         return '<div class="sponsor-tile glass-card ' + extraClass + ' ' + height + ' flex flex-col items-center justify-center p-4 text-center relative" data-tier="' + tier + '" data-sponsor-id="' + sponsor.id + '" role="button" tabindex="0" aria-label="' + name + '">'
           + '<span class="' + getTierTagClass(tier) + ' absolute top-2 left-2 z-10"><span data-tier-label-en="' + getTierLabel(tier, 'en') + '" data-tier-label-fr="' + getTierLabel(tier, 'fr') + '">' + getTierLabel(tier, 'en') + '</span></span>'
-          + '<div class="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-2xl md:text-3xl font-display font-bold text-gold mb-2 tile-img" style="background:rgba(194,161,92,0.1); filter:grayscale(60%);">'
+          + '<div class="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-2xl md:text-3xl font-display font-bold text-gold mb-2 tile-img sponsor-tile-avatar">'
           + initial
           + '</div>'
           + '<p class="text-cream text-sm font-semibold leading-tight max-w-full px-1 tile-img" style="filter:grayscale(40%);">' + name + '</p>'
@@ -699,7 +703,10 @@ import '../styles/global.css';
         }
 
         var pct = (index / MAX_INDEX) * 100;
-        slider.style.background = 'linear-gradient(to right, #c2a15c 0%, #c2a15c ' + pct + '%, rgba(244,239,234,0.12) ' + pct + '%, rgba(244,239,234,0.12) 100%)';
+        var cs = getComputedStyle(document.documentElement);
+        var goldColor = cs.getPropertyValue('--color-gold').trim();
+        var creamColor = cs.getPropertyValue('--color-cream').trim();
+        slider.style.background = 'linear-gradient(to right, ' + goldColor + ' 0%, ' + goldColor + ' ' + pct + '%, color-mix(in srgb, ' + creamColor + ' 12%, transparent) ' + pct + '%, color-mix(in srgb, ' + creamColor + ' 12%, transparent) 100%)';
 
         slider.setAttribute('aria-valuenow', dollarValue);
         slider.setAttribute('aria-valuetext', formatCurrency(dollarValue));
