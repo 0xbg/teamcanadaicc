@@ -1,0 +1,57 @@
+<!-- ===== PARTNERSHIP INQUIRY FORM ===== -->
+<section id="inquiry" class="py-20 md:py-28 px-6 bg-olive text-cream">
+  <div class="max-w-3xl mx-auto">
+    <p class="text-gold-light font-display italic text-lg mb-3 text-center" data-lang-en="Partnership Inquiries" data-lang-fr="Demandes de partenariat">Partnership Inquiries</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Join Team Canada" data-lang-fr="Rejoignez Équipe Canada">Join Team Canada</h2>
+    <p class="text-text-muted-alt text-center mb-4" data-lang-en="Partnerships start at $1,000 — with custom cash and in-kind opportunities available." data-lang-fr="Les partenariats débutent à 1 000 $ — avec des possibilités personnalisées en espèces et en nature.">Partnerships start at $1,000 — with custom cash and in-kind opportunities available.</p>
+    <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10 rounded-md">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <label for="name" class="block text-sm font-semibold text-body mb-2"><span data-lang-en="Full Name" data-lang-fr="Nom complet">Full Name</span> *</label>
+          <input type="text" id="name" name="name" required class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" data-lang-en-placeholder="Your full name" data-lang-fr-placeholder="Votre nom complet" placeholder="Your full name">
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-semibold text-body mb-2"><span data-lang-en="Email Address" data-lang-fr="Adresse courriel">Email Address</span> *</label>
+          <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" placeholder="you@example.com">
+        </div>
+      </div>
+      <div>
+        <label for="company" class="block text-sm font-semibold text-body mb-2" data-lang-en="Company / Organization" data-lang-fr="Entreprise / Organisation">Company / Organization</label>
+        <input type="text" id="company" name="company" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" data-lang-en-placeholder="Your company or organization name" data-lang-fr-placeholder="Nom de votre entreprise ou organisation" placeholder="Your company or organization name">
+      </div>
+      <div>
+        <label for="tier" class="block text-sm font-semibold text-body mb-2" data-lang-en="Partnership Tier of Interest" data-lang-fr="Niveau de partenariat souhaité">Partnership Tier of Interest</label>
+        <select id="tier" name="tier" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink focus:outline-none text-sm">
+          <option value="" data-lang-en="Select a tier (optional)" data-lang-fr="Choisir un niveau (optionnel)">Select a tier (optional)</option>
+          <option value="Lead Partner — $20,000" data-lang-en="Lead Partner — $20,000" data-lang-fr="Partenaire majeur — 20 000 $">Lead Partner — $20,000</option>
+          <option value="Premier Partner — $15,000" data-lang-en="Premier Partner — $15,000" data-lang-fr="Partenaire Premier — 15 000 $">Premier Partner — $15,000</option>
+          <option value="Official Partner — $10,000" data-lang-en="Official Partner — $10,000" data-lang-fr="Partenaire Officiel — 10 000 $">Official Partner — $10,000</option>
+          <option value="Supporting Partner — $5,000" data-lang-en="Supporting Partner — $5,000" data-lang-fr="Partenaire de soutien — 5 000 $">Supporting Partner — $5,000</option>
+          <option value="Team Contributor — $2,500" data-lang-en="Team Contributor — $2,500" data-lang-fr="Contributeur d'équipe — 2 500 $">Team Contributor — $2,500</option>
+          <option value="Team Supporter — $1,000" data-lang-en="Team Supporter — $1,000" data-lang-fr="Supporteur de l'équipe — 1 000 $">Team Supporter — $1,000</option>
+          <option value="In-Kind Partnership" data-lang-en="In-Kind Partnership" data-lang-fr="Partenariat en nature">In-Kind Partnership</option>
+          <option value="Custom Partnership" data-lang-en="Custom Partnership" data-lang-fr="Partenariat sur mesure">Custom Partnership</option>
+        </select>
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-semibold text-body mb-2" data-lang-en="Message" data-lang-fr="Message">Message</label>
+        <textarea id="message" name="message" rows="4" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm resize-y" data-lang-en-placeholder="Tell us about your interest in partnering with Team Canada..." data-lang-fr-placeholder="Parlez-nous de votre intérêt à devenir partenaire d'Équipe Canada..." placeholder="Tell us about your interest in partnering with Team Canada..."></textarea>
+      </div>
+      <div class="space-y-3 border border-gold/20 bg-olive/30 p-4 text-sm rounded-md">
+        <p class="font-semibold text-ink mb-2" data-lang-en="Privacy & Consent" data-lang-fr="Confidentialité et consentement">Privacy & Consent</p>
+        <label class="flex items-start gap-3 cursor-pointer">
+          <input type="checkbox" name="privacy_consent" required class="mt-1 w-4 h-4 accent-gold flex-shrink-0">
+          <span class="text-body-alt text-xs leading-relaxed" data-lang-en="I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC recueille et utilise mes renseignements personnels (nom, courriel, entreprise, message) afin de répondre à ma demande de partenariat et de m'envoyer des communications pertinentes liées au partenariat. Je comprends que je peux retirer mon consentement en tout temps en contactant <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>.`}>
+            I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.
+          </span>
+        </label>
+      </div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2"></div>
+      <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md"></div>
+      <button type="submit" class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed rounded-md" data-lang-en="Submit Inquiry" data-lang-fr="Envoyer la demande">Submit Inquiry</button>
+      <p class="text-muted text-xs text-center leading-relaxed" data-lang-en="By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href='#' onclick='openPrivacyModal();return false;' class='text-gold hover:text-gold-light underline'>Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`En soumettant ce formulaire, vous acceptez qu'Équipe Canada ICC recueille, utilise et conserve vos renseignements personnels tel que décrit dans notre <a href='#' onclick='openPrivacyModal();return false;' class='text-gold hover:text-gold-light underline'>Avis de confidentialité</a>. Vos données sont conservées de manière sécurisée et ne seront ni vendues, ni louées, ni partagées avec des tiers sans votre consentement. Vous pouvez demander l'accès, la correction ou la suppression de vos données en tout temps en contactant <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>.`}>
+        By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href="#" onclick="openPrivacyModal();return false;" class="text-gold hover:text-gold-light underline">Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.
+      </p>
+    </form>
+  </div>
+</section>

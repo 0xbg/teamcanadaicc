@@ -1,0 +1,210 @@
+/* ============================================================
+   PREVIEW-SCOPED POLISH STYLES — /preview only
+   Loaded after global.css inside PreviewLayout.astro.
+   Nothing here touches the live homepage; on merge, the useful
+   rules below get folded into the shared stylesheet.
+   All colors use var(--color-*) tokens so the 24-palette
+   switcher keeps working.
+   ============================================================ */
+
+/* Consistent focus-visible state across every interactive element */
+:where(a, button, input, select, textarea, [tabindex], [role="tab"], [role="radio"], [role="button"]):focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Typography rhythm: balanced headings, pretty paragraph wrapping */
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* No grey tap-highlight flash on mobile */
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/* Section eyebrows: keep the italic display voice, add gentle tracking */
+section p.font-display.italic {
+  letter-spacing: 0.02em;
+}
+
+/* CTA hierarchy: primary gold CTAs get a subtle lift + glow on hover */
+a.bg-gold, button.bg-gold {
+  box-shadow: 0 2px 10px -2px color-mix(in srgb, var(--color-gold) 35%, transparent);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+a.bg-gold:hover, button.bg-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px -2px color-mix(in srgb, var(--color-gold) 45%, transparent);
+}
+
+/* Cards: deepen the existing hover lift with a soft gold-tinted shadow */
+.team-card:hover, .tier-card:hover {
+  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--color-gold) 25%, transparent);
+}
+
+/* Contain the comparison table on narrow screens: the table's
+   min-content width would otherwise push the wrapper past the
+   viewport (pre-existing 12px horizontal overflow at 320px).
+   table-scroll keeps overflow-x:auto from global.css. */
+#tiers .mt-12,
+#comparison-table-wrap,
+.table-scroll {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Contain the Cloudflare Turnstile widget (renders at a 300px
+   min-width) inside the inquiry form on narrow screens — the
+   widget's overflow pushed the page 12px wide at 320px. */
+.cf-turnstile {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* ===== Sponsor marquee band (home page) ===== */
+.marquee { overflow: hidden; }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 32s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track { animation-play-state: paused; }
+.marquee-list {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  margin: 0;
+  list-style: none;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  color: var(--color-text-muted-alt);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.marquee-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
+  border-radius: 0.5rem;
+  color: var(--color-gold);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  background: color-mix(in srgb, var(--color-gold) 8%, transparent);
+}
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* ===== Partners board — tiered plaques (sponsor page) ===== */
+.sp-band-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+.sp-band-note {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+.sp-plaques {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.sp-plaque {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex: 0 1 11rem;
+  min-width: 0;
+  padding: 1.25rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 15%, transparent);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--color-cream) 5%, transparent);
+  text-align: center;
+  transition: border-color 250ms ease, background 250ms ease, transform 250ms ease;
+  cursor: default;
+}
+.sp-plaque:hover,
+.sp-plaque:focus-visible {
+  border-color: color-mix(in srgb, var(--color-gold) 55%, transparent);
+  background: color-mix(in srgb, var(--color-cream) 9%, transparent);
+  transform: translateY(-2px);
+}
+.sp-plaque-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1.5px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+  border-radius: 0.6rem;
+  color: var(--color-gold);
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 1.4rem;
+  background: color-mix(in srgb, var(--color-gold) 10%, transparent);
+}
+.sp-plaque-name {
+  color: var(--color-text-light);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+.sp-plaque-desc {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  transition: max-height 300ms ease, opacity 300ms ease, margin 300ms ease;
+}
+.sp-plaque:hover .sp-plaque-desc,
+.sp-plaque:focus-visible .sp-plaque-desc {
+  max-height: 7rem;
+  opacity: 1;
+  margin-top: 0.25rem;
+}
+.sp-plaque-empty {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+}
+.sp-plaque-empty:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+  background: color-mix(in srgb, var(--color-gold) 10%, transparent);
+}

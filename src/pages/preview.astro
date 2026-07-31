@@ -1,0 +1,39 @@
+---
+// ============================================================
+// STAGED HOME PAGE REVAMP — REVIEW COPY
+// Order mandated: Hero → The Cup → The Comeback → Team →
+// Sponsor marquee → Sponsor CTA. The full sales stack lives on
+// the dedicated sponsor page (src/pages/preview-sponsor.astro).
+// The live homepage (src/pages/index.astro) is untouched until
+// this page is reviewed and approved.
+// ============================================================
+import PreviewLayout from '../layouts/PreviewLayout.astro';
+import Header from '../components/preview/Header.astro';
+import Hero from '../components/preview/Hero.astro';
+import About from '../components/preview/About.astro';
+import Timeline from '../components/preview/Timeline.astro';
+import Team from '../components/preview/Team.astro';
+import SponsorMarquee from '../components/preview/SponsorMarquee.astro';
+import SponsorCTA from '../components/preview/SponsorCTA.astro';
+import Footer from '../components/preview/Footer.astro';
+// Shared, unchanged components (recent WIP kept as-is):
+import PrivacyModal from '../components/PrivacyModal.astro';
+import TermsModal from '../components/TermsModal.astro';
+import AccessibilityModal from '../components/AccessibilityModal.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+---
+
+<PreviewLayout>
+  <Header />
+  <Hero />
+  <About />
+  <Timeline />
+  <Team />
+  <SponsorMarquee />
+  <SponsorCTA />
+  <Footer />
+  <PrivacyModal />
+  <TermsModal />
+  <AccessibilityModal />
+  <CookieBanner />
+</PreviewLayout>

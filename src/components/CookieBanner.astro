@@ -1,0 +1,35 @@
+<!-- ===== COOKIE CONSENT BANNER ===== -->
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-ink border-t border-gold/30 p-4 md:p-5 hidden" role="alert" aria-live="polite">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <div class="flex-1 text-sm text-text-light leading-relaxed">
+      <p class="font-semibold text-gold mb-1" data-lang-en="Cookie Notice" data-lang-fr="Avis de témoins">Cookie Notice</p>
+      <p data-lang-en="This site uses Cloudflare Turnstile for spam protection, which may set essential security cookies. We also store your language and color palette preferences in your browser's local storage. No advertising, analytics, or third-party tracking cookies are used. By continuing to use this site, you acknowledge this notice. See our <a href='#' onclick='openPrivacyModal();return false;' class='text-gold hover:text-gold-light underline'>Privacy Notice</a> for details." data-lang-fr="Ce site utilise Cloudflare Turnstile pour la protection contre le spam, ce qui peut installer des témoins de sécurité essentiels. Nous stockons également vos préférences de langue et de palette de couleurs dans le stockage local de votre navigateur. Aucun témoin publicitaire, analytique ou de suivi tiers n'est utilisé. En continuant à utiliser ce site, vous reconnaissez cet avis. Consultez notre <a href='#' onclick='openPrivacyModal();return false;' class='text-gold hover:text-gold-light underline'>Avis de confidentialité</a> pour plus de détails.">This site uses Cloudflare Turnstile for spam protection, which may set essential security cookies. We also store your language and color palette preferences in your browser's local storage. No advertising, analytics, or third-party tracking cookies are used. By continuing to use this site, you acknowledge this notice. See our <a href="#" onclick="openPrivacyModal();return false;" class="text-gold hover:text-gold-light underline">Privacy Notice</a> for details.</p>
+    </div>
+    <button id="cookie-accept" class="bg-gold text-ink px-6 py-2 font-semibold text-sm hover:bg-gold-light transition-colors duration-200 rounded-md whitespace-nowrap flex-shrink-0" data-lang-en="Got it" data-lang-fr="J'ai compris">Got it</button>
+  </div>
+</div>
+
+<style>
+  #cookie-banner { display: none; }
+</style>
+
+<script>
+  (function() {
+    var KEY = 'tc-cookie-ack';
+    var banner = document.getElementById('cookie-banner');
+    var btn = document.getElementById('cookie-accept');
+    if (!banner || !btn) return;
+
+    var acknowledged = false;
+    try { acknowledged = localStorage.getItem(KEY) === '1'; } catch (_) {}
+
+    if (!acknowledged) {
+      banner.style.display = 'block';
+
+      btn.addEventListener('click', function() {
+        banner.style.display = 'none';
+        try { localStorage.setItem(KEY, '1'); } catch (_) {}
+      });
+    }
+  })();
+</script>

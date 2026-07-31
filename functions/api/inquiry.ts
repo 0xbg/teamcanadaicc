@@ -5,6 +5,7 @@ interface InquiryBody {
   tier?: string;
   message?: string;
   'cf-turnstile-response'?: string;
+  privacy_consent?: string | boolean;
 }
 
 interface Env {
@@ -51,6 +52,14 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       return new Response(
         JSON.stringify({ success: false, message: 'Security check failed. Please try again.' }),
         { status: 403, headers: { ...headers, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Validate consent (required under PIPEDA / Quebec Law 25)
+    if (!body.privacy_consent || body.privacy_consent !== 'on') {
+      return new Response(
+        JSON.stringify({ success: false, message: 'You must agree to the Privacy Notice before submitting your inquiry.' }),
+        { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
       );
     }
 

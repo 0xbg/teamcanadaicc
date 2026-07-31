@@ -1,0 +1,41 @@
+---
+// ============================================================
+// STAGED SPONSOR PAGE — REVIEW COPY
+// The full conversion stack: Why Partner → Tiers → Impact →
+// Sponsors → Inquiry. Staged at /preview-sponsor; on merge this
+// becomes /sponsor. The live homepage is untouched.
+// ============================================================
+import PreviewLayout from '../layouts/PreviewLayout.astro';
+import HeaderSponsor from '../components/preview/HeaderSponsor.astro';
+import Opportunity from '../components/preview/Opportunity.astro';
+import SponsorTiers from '../components/preview/SponsorTiers.astro';
+import ImpactDashboard from '../components/preview/ImpactDashboard.astro';
+import SponsorsWall from '../components/preview/SponsorsWall.astro';
+import InquiryForm from '../components/preview/InquiryForm.astro';
+import Footer from '../components/preview/Footer.astro';
+// Shared, unchanged components (recent WIP kept as-is):
+import PrivacyModal from '../components/PrivacyModal.astro';
+import TermsModal from '../components/TermsModal.astro';
+import AccessibilityModal from '../components/AccessibilityModal.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+---
+
+<PreviewLayout
+  title="Sponsorship — Team Canada · ICC · Lyon 2027 (Preview)"
+  titleEn="Sponsorship — Team Canada · ICC · Lyon 2027 (Preview)"
+  titleFr="Commandite — Équipe Canada · ICC · Lyon 2027 (Aperçu)"
+  descriptionEn="Sponsor Team Canada's return to the International Catering Cup in Lyon. Flagship tiers, impact, and partnership details — explore the sponsorship program."
+  descriptionFr="Commanditez le retour d'Équipe Canada à l'International Catering Cup à Lyon. Niveaux phares, impact et détails du partenariat — découvrez le programme de commandite."
+>
+  <HeaderSponsor />
+  <Opportunity />
+  <SponsorTiers />
+  <ImpactDashboard />
+  <SponsorsWall />
+  <InquiryForm />
+  <Footer />
+  <PrivacyModal />
+  <TermsModal />
+  <AccessibilityModal />
+  <CookieBanner />
+</PreviewLayout>
