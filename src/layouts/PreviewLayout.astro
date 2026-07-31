@@ -101,6 +101,11 @@ const {
         var errEn = 'Please fill in all required fields.';
         var errFr = 'Veuillez remplir tous les champs obligatoires.';
         if (!nm || !em) { showStatus(currentLang === 'fr' ? errFr : errEn, 'error'); return; }
+        var consentEl = form.querySelector('input[name="privacy_consent"]');
+        if (consentEl && !consentEl.checked) {
+          showStatus(currentLang === 'fr' ? 'Vous devez accepter l\'avis de confidentialité avant de soumettre votre demande.' : 'You must agree to the Privacy Notice before submitting your inquiry.', 'error');
+          return;
+        }
         submitBtn.disabled = true;
         submitBtn.textContent = currentLang === 'fr' ? 'Envoi en cours...' : 'Sending...';
         fstatus.className = 'hidden';
