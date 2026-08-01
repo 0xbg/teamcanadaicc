@@ -397,3 +397,9 @@ a.bg-gold:hover, button.bg-gold:hover {
   letter-spacing: 0.02em;
   text-transform: none;
 }
+
+/* The mobile menu FAB owns the bottom-right corner below 1024px —
+   hide the scroll-to-top button there to avoid overlap */
+@media (max-width: 1023.98px) {
+  .scroll-top-btn { display: none !important; }
+}

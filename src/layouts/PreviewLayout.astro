@@ -158,6 +158,7 @@ const {
       function toggle(open) {
         var isOpen = typeof open === 'boolean' ? open : !drawer.classList.contains('open');
         drawer.classList.toggle('open', isOpen);
+        drawer.inert = !isOpen;
         btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
         document.body.style.overflow = isOpen ? 'hidden' : '';
