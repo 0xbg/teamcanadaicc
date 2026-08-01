@@ -208,3 +208,71 @@ a.bg-gold:hover, button.bg-gold:hover {
   color: var(--color-gold-light);
   background: color-mix(in srgb, var(--color-gold) 10%, transparent);
 }
+
+/* ===== Vertical nav — right-side rail (desktop) ===== */
+.vertical-nav {
+  position: fixed;
+  top: 50%;
+  right: 1.75rem;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: none; /* mobile uses the hamburger menu */
+}
+@media (min-width: 1024px) {
+  .vertical-nav { display: block; }
+}
+.vn-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.25rem;
+  position: relative;
+}
+.vn-list::before {
+  content: '';
+  position: absolute;
+  top: 0.3125rem;
+  bottom: 0.3125rem;
+  right: 0.3125rem; /* center of the 0.625rem dots */
+  width: 1px;
+  background: color-mix(in srgb, var(--color-gold) 22%, transparent);
+}
+.vn-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+}
+.vn-link {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 200ms ease;
+  padding: 0.15rem 0;
+}
+.vn-link:hover { color: var(--color-gold-light); }
+/* Active state — the existing scroll-spy toggles .text-gold on .nav-link */
+.vn-link.text-gold { color: var(--color-gold); }
+.vn-link.text-gold ~ .vn-num { color: var(--color-gold); }
+.vn-link.text-gold ~ .vn-dot { border-color: var(--color-gold); background: var(--color-gold); }
+.vn-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  transition: color 200ms ease;
+}
+.vn-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
+  background: transparent;
+  transition: background 200ms ease, border-color 200ms ease;
+  flex-shrink: 0;
+}

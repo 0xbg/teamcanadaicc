@@ -1,0 +1,29 @@
+---
+// ===== VERTICAL NAV — RIGHT-SIDE RAIL =====
+interface Link {
+  href: string;
+  en: string;
+  fr: string;
+}
+
+interface Props {
+  links: Link[];
+}
+
+const { links } = Astro.props;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
+  <ul class="vn-list">
+    {
+      links.map((l, i) => (
+        <li class="vn-item">
+          <a href={l.href} class="vn-link nav-link" data-lang-en={l.en} data-lang-fr={l.fr}>{l.en}</a>
+          <span class="vn-num" aria-hidden="true">{num(i)}</span>
+          <span class="vn-dot" aria-hidden="true"></span>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

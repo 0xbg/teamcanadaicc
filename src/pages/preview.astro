@@ -9,6 +9,7 @@
 // ============================================================
 import PreviewLayout from '../layouts/PreviewLayout.astro';
 import Header from '../components/preview/Header.astro';
+import VerticalNav from '../components/preview/VerticalNav.astro';
 import Hero from '../components/preview/Hero.astro';
 import About from '../components/preview/About.astro';
 import Timeline from '../components/preview/Timeline.astro';
@@ -25,6 +26,14 @@ import CookieBanner from '../components/CookieBanner.astro';
 
 <PreviewLayout>
   <Header />
+  <VerticalNav
+    links={[
+      { href: '#cup', en: 'The Cup', fr: 'La Coupe' },
+      { href: '#comeback', en: 'The Comeback', fr: 'Le retour' },
+      { href: '#team', en: 'Team', fr: 'Équipe' },
+      { href: '/preview-sponsor', en: 'Sponsor', fr: 'Commanditer' },
+    ]}
+  />
   <Hero />
   <About />
   <Timeline />

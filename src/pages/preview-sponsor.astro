@@ -7,6 +7,7 @@
 // ============================================================
 import PreviewLayout from '../layouts/PreviewLayout.astro';
 import HeaderSponsor from '../components/preview/HeaderSponsor.astro';
+import VerticalNav from '../components/preview/VerticalNav.astro';
 import Opportunity from '../components/preview/Opportunity.astro';
 import SponsorTiers from '../components/preview/SponsorTiers.astro';
 import ImpactDashboard from '../components/preview/ImpactDashboard.astro';
@@ -28,6 +29,15 @@ import CookieBanner from '../components/CookieBanner.astro';
   descriptionFr="Commanditez le retour d'Équipe Canada à l'International Catering Cup à Lyon. Niveaux phares, impact et détails du partenariat — découvrez le programme de commandite."
 >
   <HeaderSponsor />
+  <VerticalNav
+    links={[
+      { href: '#opportunity', en: 'Why Partner', fr: 'Pourquoi' },
+      { href: '#tiers', en: 'Tiers', fr: 'Niveaux' },
+      { href: '#support', en: 'Impact', fr: 'Impact' },
+      { href: '#sponsors', en: 'Partners', fr: 'Partenaires' },
+      { href: '#inquiry', en: 'Contact', fr: 'Contact' },
+    ]}
+  />
   <Opportunity />
   <SponsorTiers />
   <ImpactDashboard />
