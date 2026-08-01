@@ -162,6 +162,9 @@ const {
         btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
         document.body.style.overflow = isOpen ? 'hidden' : '';
+        // hide the left language rail while the drawer is open (narrow screens)
+        var lr = document.querySelector('.lang-rail');
+        if (lr) lr.style.display = isOpen ? 'none' : '';
       }
       btn.addEventListener('click', function(e) { e.stopPropagation(); toggle(); });
       var closeBtn = document.getElementById('vn-close-btn');
