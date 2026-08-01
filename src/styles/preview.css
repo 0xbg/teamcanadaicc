@@ -281,27 +281,29 @@ a.bg-gold:hover, button.bg-gold:hover {
 /* The top navbar is gone — the rail is now the top chrome element */
 .vertical-nav { z-index: 50; }
 
-/* Floating language capsule (top-right) */
-.lang-capsule {
+/* Vertical language rail (left edge) */
+.lang-rail {
   position: fixed;
-  top: 1.25rem;
-  right: 1.5rem;
-  z-index: 50; /* below the mobile drawer (55) so it hides behind it when open */
+  top: 50%;
+  left: 1.5rem;
+  transform: translateY(-50%);
+  z-index: 50;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.25rem;
+  padding: 0.4rem 0.25rem;
   background: color-mix(in srgb, var(--color-ink) 88%, transparent);
   backdrop-filter: blur(8px);
   border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
   border-radius: 9999px;
   box-shadow: 0 6px 20px color-mix(in srgb, var(--color-ink) 35%, transparent);
 }
-.lang-capsule .lang-btn {
+.lang-rail .lang-btn {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.7rem;
   letter-spacing: 0.14em;
-  padding: 0.4rem 0.85rem;
+  padding: 0.55rem 0.45rem;
   border-radius: 9999px;
   border: none;
   background: transparent;
@@ -309,17 +311,22 @@ a.bg-gold:hover, button.bg-gold:hover {
   cursor: pointer;
   transition: background 250ms ease, color 250ms ease, transform 250ms ease;
 }
-.lang-capsule .lang-btn:hover:not(.active) { color: var(--color-gold-light); }
-.lang-capsule .lang-btn.active {
+.lang-rail .lang-btn:hover:not(.active) { color: var(--color-gold-light); }
+.lang-rail .lang-btn.active {
   background: var(--color-gold);
   color: var(--color-ink);
   font-weight: 700;
 }
-.lang-capsule .lang-btn:active { transform: scale(0.96); }
-.lang-capsule-sep {
+.lang-rail .lang-btn:active { transform: scale(0.94); }
+.lang-rail-sep {
+  width: 1.1rem;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+}
+/* The drawer's horizontal pill row keeps a vertical divider */
+.vn-lang .lang-rail-sep {
   width: 1px;
   height: 1rem;
-  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
 }
 
 /* Drawer language pills (mobile) */
