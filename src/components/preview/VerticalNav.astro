@@ -1,5 +1,5 @@
 ---
-// ===== VERTICAL NAV — RIGHT-SIDE RAIL =====
+// ===== VERTICAL NAV — RIGHT-SIDE RAIL + MOBILE DRAWER =====
 interface Link {
   href: string;
   en: string;
@@ -26,4 +26,36 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
       ))
     }
   </ul>
+  <div class="vn-lang" role="group" aria-label="Language">
+    <button id="lang-en" class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button id="lang-fr" class="lang-btn" onclick="setLang('fr')">FR</button>
+  </div>
 </nav>
+
+<!-- Mobile menu button (shown below 1024px) -->
+<button id="vn-menu-btn" class="vn-menu-btn" aria-label="Open menu" aria-expanded="false">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+
+<!-- Mobile drawer -->
+<div id="vn-drawer" class="vn-drawer" aria-hidden="true">
+  <div class="vn-drawer-head">
+    <span class="vn-drawer-wordmark">TEAM CANADA <span class="vn-drawer-sub">ICC · LYON 2027</span></span>
+    <button id="vn-close-btn" class="vn-close-btn" aria-label="Close menu">✕</button>
+  </div>
+  <ul class="vn-list">
+    {
+      links.map((l, i) => (
+        <li class="vn-item">
+          <span class="vn-num" aria-hidden="true">{num(i)}</span>
+          <a href={l.href} class="vn-link nav-link" data-lang-en={l.en} data-lang-fr={l.fr}>{l.en}</a>
+          <span class="vn-dot" aria-hidden="true"></span>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="vn-lang" role="group" aria-label="Language">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+  </div>
+</div>
