@@ -14,6 +14,13 @@ const { links } = Astro.props;
 const num = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
+<!-- Floating language capsule (top-right, all viewports) -->
+<div class="lang-capsule" role="group" aria-label="Language">
+  <button id="lang-en" class="lang-btn active" onclick="setLang('en')">EN</button>
+  <span class="lang-capsule-sep" aria-hidden="true"></span>
+  <button id="lang-fr" class="lang-btn" onclick="setLang('fr')">FR</button>
+</div>
+
 <nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
   <ul class="vn-list">
     {
@@ -26,10 +33,6 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
       ))
     }
   </ul>
-  <div class="vn-lang" role="group" aria-label="Language">
-    <button id="lang-en" class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button id="lang-fr" class="lang-btn" onclick="setLang('fr')">FR</button>
-  </div>
 </nav>
 
 <!-- Mobile menu button (shown below 1024px) -->
@@ -56,6 +59,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
   </ul>
   <div class="vn-lang" role="group" aria-label="Language">
     <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <span class="lang-capsule-sep" aria-hidden="true"></span>
     <button class="lang-btn" onclick="setLang('fr')">FR</button>
   </div>
 </div>
