@@ -455,3 +455,9 @@ a.bg-gold:hover, button.bg-gold:hover {
 @media (max-width: 1023.98px) {
   .scroll-top-btn { display: none !important; }
 }
+
+/* Mobile (<1024px): the drawer is the single language + nav surface,
+   so the left language rail hides on mobile (no duplicate switcher) */
+@media (max-width: 1023.98px) {
+  .lang-rail { display: none !important; }
+}
