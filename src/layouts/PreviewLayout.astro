@@ -17,9 +17,9 @@ interface Props {
 }
 
 const {
-  title = 'Team Canada — ICC · Lyon 2027 (Preview)',
-  titleEn = 'Team Canada — ICC · Lyon 2027 (Preview)',
-  titleFr = 'Équipe Canada — ICC · Lyon 2027 (Aperçu)',
+  title = 'Team Canada · ICC · Lyon 2027 (Preview)',
+  titleEn = 'Team Canada · ICC · Lyon 2027 (Preview)',
+  titleFr = 'Équipe Canada · ICC · Lyon 2027 (Aperçu)',
   description = 'After a ten-year absence, Canada returns to the International Catering Cup in Lyon. Become a partner and help bring Canada back to the world stage.',
   descriptionEn = description,
   descriptionFr = "Après dix ans d'absence, le Canada revient à l'International Catering Cup à Lyon. Devenez partenaire et aidez à ramener le Canada sur la scène mondiale.",
@@ -77,8 +77,8 @@ const {
       if (!md.getAttribute('data-lang-fr-desc')) md.setAttribute('data-lang-fr-desc', df);
       md.content = lang === 'fr' ? df : de;
       var te = document.querySelector('title');
-      var tEn = te.getAttribute('data-lang-en') || 'Team Canada — ICC · Lyon 2027';
-      var tFr = te.getAttribute('data-lang-fr') || 'Équipe Canada — ICC · Lyon 2027';
+      var tEn = te.getAttribute('data-lang-en') || 'Team Canada · ICC · Lyon 2027';
+      var tFr = te.getAttribute('data-lang-fr') || 'Équipe Canada · ICC · Lyon 2027';
       document.title = lang === 'fr' ? tFr : tEn;
       try { localStorage.setItem('tc-lang', lang); } catch(e) {}
     }
@@ -224,7 +224,7 @@ const {
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var m = document.getElementById('accessibility-modal'); if (m && !m.classList.contains('hidden')) closeAccessibilityModal(); } });
 
     /* 🇨🇦 */
-    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c— Team Canada %c🇨🇦',
+    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c· Team Canada %c🇨🇦',
       'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
     console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
 
@@ -269,7 +269,7 @@ const {
     }
 
     /* ═══════════════════════════════════════════════════════
-       IMPACT DASHBOARD — Interactive JavaScript
+       IMPACT DASHBOARD - Interactive JavaScript
        ═══════════════════════════════════════════════════════ */
 
     /* --- 1. Metric Counter Animations (Intersection Observer) --- */
@@ -444,7 +444,7 @@ const {
       });
     })();
 
-    /* ===== SPONSORS & PARTNERS — TIERED PARTNERS BOARD ===== */
+    /* ===== SPONSORS & PARTNERS - TIERED PARTNERS BOARD ===== */
     (function() {
       var board = document.getElementById('sponsor-board');
       if (!board) return;
