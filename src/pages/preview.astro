@@ -17,10 +17,8 @@ import SponsorMarquee from '../components/preview/SponsorMarquee.astro';
 import SponsorCTA from '../components/preview/SponsorCTA.astro';
 import Footer from '../components/preview/Footer.astro';
 // Shared, unchanged components (recent WIP kept as-is):
-import PrivacyModal from '../components/PrivacyModal.astro';
-import TermsModal from '../components/TermsModal.astro';
 import AccessibilityModal from '../components/AccessibilityModal.astro';
-import CookieBanner from '../components/CookieBanner.astro';
+import CookieBanner from '../components/preview/CookieBanner.astro';
 ---
 
 <PreviewLayout>
@@ -40,8 +38,6 @@ import CookieBanner from '../components/CookieBanner.astro';
   <SponsorMarquee />
   <SponsorCTA />
   <Footer ctaHref="/preview-sponsor" />
-  <PrivacyModal />
-  <TermsModal />
   <AccessibilityModal />
   <CookieBanner />
 </PreviewLayout>
