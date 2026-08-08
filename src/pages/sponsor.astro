@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import VerticalNav from '../components/VerticalNav.astro';
+import Opportunity from '../components/Opportunity.astro';
+import SponsorTiers from '../components/SponsorTiers.astro';
+import ImpactDashboard from '../components/ImpactDashboard.astro';
+import SponsorsWall from '../components/SponsorsWall.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import Footer from '../components/Footer.astro';
+import AccessibilityModal from '../components/AccessibilityModal.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+---
+
+<Layout
+  title="Sponsorship · Team Canada · ICC · Lyon 2027"
+  titleEn="Sponsorship · Team Canada · ICC · Lyon 2027"
+  titleFr="Commandite · Équipe Canada · ICC · Lyon 2027"
+  descriptionEn="Sponsor Team Canada's return to the International Catering Cup in Lyon. Flagship tiers, impact, and partnership details. Explore the sponsorship program."
+  descriptionFr="Commanditez le retour d'Équipe Canada à l'International Catering Cup à Lyon. Niveaux phares, impact et détails du partenariat. Découvrez le programme de commandite."
+>
+  <VerticalNav
+    links={[
+      { href: '#opportunity', en: 'Why Partner', fr: 'Pourquoi' },
+      { href: '#tiers', en: 'Tiers', fr: 'Niveaux' },
+      { href: '#support', en: 'Impact', fr: 'Impact' },
+      { href: '#sponsors', en: 'Partners', fr: 'Partenaires' },
+      { href: '#inquiry', en: 'Contact', fr: 'Contact' },
+      { href: '/', en: 'Home', fr: 'Accueil' },
+      { href: '/en/blog', en: 'Blog', fr: 'Blogue' },
+    ]}
+  />
+  <Opportunity />
+  <SponsorTiers />
+  <ImpactDashboard />
+  <SponsorsWall />
+  <InquiryForm />
+  <Footer />
+  <AccessibilityModal />
+  <CookieBanner />
+</Layout>

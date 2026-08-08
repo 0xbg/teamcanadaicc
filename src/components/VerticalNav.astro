@@ -16,9 +16,10 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 
 <!-- Vertical language rail (left edge, all viewports) -->
 <div class="lang-rail" role="group" aria-label="Language">
-  <button id="lang-en" class="lang-btn active" onclick="setLang('en')">EN</button>
+  <span class="lang-thumb" aria-hidden="true"></span>
+  <button id="lang-en" class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
   <span class="lang-rail-sep" aria-hidden="true"></span>
-  <button id="lang-fr" class="lang-btn" onclick="setLang('fr')">FR</button>
+  <button id="lang-fr" class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
 </div>
 
 <nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
@@ -58,8 +59,9 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     }
   </ul>
   <div class="vn-lang" role="group" aria-label="Language">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <span class="lang-thumb" aria-hidden="true"></span>
+    <button class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
     <span class="lang-rail-sep" aria-hidden="true"></span>
-    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
   </div>
 </div>
