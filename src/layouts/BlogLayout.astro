@@ -2,7 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations } from '../i18n/ui';
 import '../styles/global.css';
-import ColorSwitcher from '../components/ColorSwitcher.astro';
 
 interface Props {
   post?: CollectionEntry<'blog'>;
@@ -159,8 +158,6 @@ const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : 
       <p class="text-red/70 text-xs mt-2">Made with ❤️ in Montréal 🍁</p>
     </div>
   </footer>
-
-  <ColorSwitcher />
 
 </body>
 </html>

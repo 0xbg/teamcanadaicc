@@ -4,8 +4,6 @@
 
 /* ============================================================
    TAILWIND v4 @theme — BRAND COLOR PALETTE
-   Maps to CSS custom properties so ColorSwitcher can swap
-   the entire palette at runtime.
    ============================================================ */
 @theme {
   --color-red: var(--color-red);

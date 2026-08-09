@@ -3,7 +3,6 @@
 // scroll-to-top, and all interactive page scripts (form handling,
 // scroll spy, tier/comparison collapse, impact dashboard).
 import '../styles/global.css';
-import ColorSwitcher from '../components/ColorSwitcher.astro';
 
 interface Props {
   title?: string;
@@ -34,9 +33,6 @@ const {
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
   <slot />
-
-  <!-- Color palette switcher -->
-  <ColorSwitcher />
 
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
@@ -192,21 +188,6 @@ const {
         if (e.key === 'Escape' && drawer.classList.contains('open')) toggle(false);
       });
     })();
-
-    /* Accessibility modal */
-    function openAccessibilityModal() {
-      var modal = document.getElementById('accessibility-modal');
-      if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-    }
-    function closeAccessibilityModal() {
-      var modal = document.getElementById('accessibility-modal');
-      if (modal) { modal.classList.add('hidden'); document.body.style.overflow = ''; }
-    }
-    var am = document.getElementById('accessibility-modal');
-    if (am) {
-      am.addEventListener('click', function(e) { if (e.target === this) closeAccessibilityModal(); });
-    }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { var m = document.getElementById('accessibility-modal'); if (m && !m.classList.contains('hidden')) closeAccessibilityModal(); } });
 
     /* 🇨🇦 */
     console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c· Team Canada %c🇨🇦',
