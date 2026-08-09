@@ -1,9 +1,31 @@
+---
+interface Props {
+  eyebrowEn?: string;
+  eyebrowFr?: string;
+  headingEn?: string;
+  headingFr?: string;
+  introEn?: string;
+  introFr?: string;
+  showDivider?: boolean;
+}
+
+const {
+  eyebrowEn = 'Meet the Team',
+  eyebrowFr = "Rencontrez l'équipe",
+  headingEn = 'Three Chefs. One Kitchen. One Mission.',
+  headingFr = 'Trois chefs. Une cuisine. Une mission.',
+  introEn = 'Leadership, pastry artistry and executive experience, one brigade built for competition.',
+  introFr = 'Leadership, art de la pâtisserie et expérience de direction, une brigade bâtie pour la compétition.',
+  showDivider = true,
+} = Astro.props;
+---
+
 <!-- ===== MEET THE TEAM ===== -->
 <section id="team" class="py-20 md:py-28 px-6">
   <div class="max-w-6xl mx-auto">
-    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Meet the Team" data-lang-fr="Rencontrez l'équipe">Meet the Team</p>
-    <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3 text-center font-display" data-lang-en="Three Chefs. One Kitchen. One Mission." data-lang-fr="Trois chefs. Une cuisine. Une mission.">Three Chefs. One Kitchen. One Mission.</h2>
-    <p class="text-muted text-center max-w-2xl mx-auto mb-16" data-lang-en="Leadership, pastry artistry and executive experience, one brigade built for competition." data-lang-fr="Leadership, art de la pâtisserie et expérience de direction, une brigade bâtie pour la compétition.">Leadership, pastry artistry and executive experience, one brigade built for competition.</p>
+    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en={eyebrowEn} data-lang-fr={eyebrowFr}>{eyebrowEn}</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3 text-center font-display" data-lang-en={headingEn} data-lang-fr={headingFr}>{headingEn}</h2>
+    <p class="text-muted text-center max-w-2xl mx-auto mb-16" data-lang-en={introEn} data-lang-fr={introFr}>{introEn}</p>
 
     <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
 
@@ -59,7 +81,9 @@
       </div>
 
     </div>
+
+    <slot />
   </div>
 </section>
 
-<hr class="section-divider">
+{showDivider && <hr class="section-divider">}

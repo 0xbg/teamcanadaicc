@@ -1,0 +1,104 @@
+<!--
+  Static, hand-authored open-slot board. Zero fabricated sponsor names by design:
+  the previous version of this section rendered placeholder company names as if
+  they were real partners. Once the first partner signs, replace this static
+  markup with data mapped from a typed source (e.g. src/data/partners.ts,
+  { id, tier, name, nameFr, blurbEn, blurbFr, website, logo }), computing open-slot
+  counts as TIER_LIMITS - filled so the availability copy can never go stale.
+-->
+<section id="partners" class="py-20 md:py-28 px-6 bg-ink text-cream">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Founding Partners" data-lang-fr="Partenaires fondateurs">Founding Partners</p>
+    <h2 class="text-3xl md:text-5xl font-bold mb-6 font-display text-center" data-lang-en="Eight Founding Slots. All Still Open." data-lang-fr="Huit places fondatrices. Toutes encore disponibles.">Eight Founding Slots. All Still Open.</h2>
+    <p class="text-text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-14 text-center" data-lang-en="Team Canada ICC has not yet announced a flagship partner. The companies that fill these slots first will define how Canada's return to Lyon looks and sounds." data-lang-fr="Équipe Canada ICC n'a encore annoncé aucun partenaire phare. Les entreprises qui occuperont ces places en premier définiront l'image et le ton du retour du Canada à Lyon.">Team Canada ICC has not yet announced a flagship partner. The companies that fill these slots first will define how Canada's return to Lyon looks and sounds.</p>
+
+    <div class="space-y-10 md:space-y-14">
+
+      <!-- Lead -->
+      <div class="sp-band">
+        <div class="sp-band-head">
+          <h3 class="text-xl md:text-2xl font-bold font-display text-gold" data-lang-en="Lead Partners" data-lang-fr="Partenaires majeurs">Lead Partners</h3>
+          <span class="sp-band-note" data-lang-en="2 of 2 slots open" data-lang-fr="2 places sur 2 disponibles">2 of 2 slots open</span>
+        </div>
+        <div class="sp-plaques">
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Premier -->
+      <div class="sp-band">
+        <div class="sp-band-head">
+          <h3 class="text-xl md:text-2xl font-bold font-display text-gold-light" data-lang-en="Premier Partners" data-lang-fr="Partenaires Premier">Premier Partners</h3>
+          <span class="sp-band-note" data-lang-en="3 of 3 slots open" data-lang-fr="3 places sur 3 disponibles">3 of 3 slots open</span>
+        </div>
+        <div class="sp-plaques">
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Official -->
+      <div class="sp-band">
+        <div class="sp-band-head">
+          <h3 class="text-xl md:text-2xl font-bold font-display text-muted-gold" data-lang-en="Official Partners" data-lang-fr="Partenaires officiels">Official Partners</h3>
+          <span class="sp-band-note" data-lang-en="3 of 3 slots open" data-lang-fr="3 places sur 3 disponibles">3 of 3 slots open</span>
+        </div>
+        <div class="sp-plaques">
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+          <a class="sp-plaque sp-plaque-empty" href="#inquiry">
+            <span class="sp-plaque-mono" aria-hidden="true">+</span>
+            <span class="sp-plaque-name" data-lang-en="Founding slot open" data-lang-fr="Place fondatrice disponible">Founding slot open</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Already Behind Us: real backing, deliberately not styled as a paid plaque -->
+      <div class="sp-band">
+        <div class="sp-band-head">
+          <h3 class="text-xl md:text-2xl font-bold font-display text-cream" data-lang-en="Already Behind Us" data-lang-fr="Déjà à nos côtés">Already Behind Us</h3>
+          <span class="sp-band-note" data-lang-en="Institutional support" data-lang-fr="Soutien institutionnel">Institutional support</span>
+        </div>
+        <div class="border border-gold/25 bg-cream/5 rounded-lg p-6 md:p-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+          <div class="w-14 h-14 flex-shrink-0 rounded-lg border-2 border-gold/45 bg-gold/10 flex items-center justify-center text-gold font-mono font-bold text-lg">BG</div>
+          <div>
+            <p class="text-text-light font-semibold mb-1" data-lang-en="Bar George, Montréal" data-lang-fr="Bar George, Montréal">Bar George, Montréal</p>
+            <p class="text-text-muted text-sm leading-relaxed" data-lang-en="The team's home kitchen and training base, ahead of any sponsorship agreement." data-lang-fr="La cuisine d'attache et la base d'entraînement de l'équipe, en amont de toute entente de commandite.">The team's home kitchen and training base, ahead of any sponsorship agreement.</p>
+          </div>
+        </div>
+        <p class="text-text-muted text-sm mt-4" data-lang-en="Have ingredients, equipment, travel or printing to offer instead of cash? See the in-kind options in the tiers above." data-lang-fr="Vous avez des ingrédients, de l'équipement, du transport ou de l'impression à offrir plutôt que de l'argent ? Consultez les options en nature dans les niveaux ci-dessus.">Have ingredients, equipment, travel or printing to offer instead of cash? See the in-kind options in the tiers above.</p>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-14 pt-8 border-t border-border-dark">
+      <p class="text-text-muted text-sm mb-6 max-w-xl mx-auto" data-lang-en="Every slot above is open right now. Be the first name on this board." data-lang-fr="Chaque place ci-dessus est disponible dès maintenant. Soyez le premier nom sur ce tableau.">Every slot above is open right now. Be the first name on this board.</p>
+      <a href="#inquiry" class="inline-block bg-red hover:bg-red-dark text-white px-8 py-3 font-semibold text-sm transition-colors duration-200 rounded-md" data-lang-en="Become a Founding Partner" data-lang-fr="Devenez partenaire fondateur">Become a Founding Partner</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">

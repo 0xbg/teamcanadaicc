@@ -1,7 +1,7 @@
 ---
 // Production layout: vertical-nav rail + EN/FR language toggle,
 // scroll-to-top, and all interactive page scripts (form handling,
-// scroll spy, tier/comparison collapse, impact dashboard, sponsor board).
+// scroll spy, tier/comparison collapse, impact dashboard).
 import '../styles/global.css';
 import ColorSwitcher from '../components/ColorSwitcher.astro';
 
@@ -82,7 +82,6 @@ const {
         var fr = el.getAttribute('data-lang-fr-placeholder'), en = el.getAttribute('data-lang-en-placeholder');
         el.placeholder = (lang === 'fr' && fr) ? fr : en;
       });
-      if (typeof window.__renderBoard === 'function') window.__renderBoard();
       var md = document.querySelector('meta[name="description"]');
       var de = md.getAttribute('data-lang-en-desc') || md.getAttribute('content');
       if (!md.getAttribute('data-lang-en-desc')) md.setAttribute('data-lang-en-desc', de);
@@ -258,55 +257,7 @@ const {
        IMPACT DASHBOARD - Interactive JavaScript
        ═══════════════════════════════════════════════════════ */
 
-    /* --- 1. Metric Counter Animations (Intersection Observer) --- */
-    (function() {
-      var counterEls = document.querySelectorAll('.impact-counter-card .counter-value');
-      if (!counterEls.length) return;
-
-      var counted = new WeakSet();
-
-      function animateCounter(el) {
-        if (counted.has(el)) return;
-        counted.add(el);
-
-        var target = parseFloat(el.getAttribute('data-target')) || 0;
-        var suffix = el.getAttribute('data-suffix') || '';
-        var decimals = parseInt(el.getAttribute('data-decimals')) || 0;
-        var duration = 1800;
-        var startTime = null;
-        var startVal = 0;
-
-        function step(timestamp) {
-          if (!startTime) startTime = timestamp;
-          var progress = Math.min((timestamp - startTime) / duration, 1);
-          var eased = 1 - (1 - progress) * (1 - progress);
-          var current = startVal + (target - startVal) * eased;
-          el.textContent = (decimals > 0 ? current.toFixed(decimals) : Math.round(current)) + suffix;
-          if (progress < 1) {
-            requestAnimationFrame(step);
-          } else {
-            el.textContent = (decimals > 0 ? target.toFixed(decimals) : Math.round(target)) + suffix;
-            var card = el.closest('.impact-counter-card');
-            if (card) card.classList.add('counted');
-          }
-        }
-
-        requestAnimationFrame(step);
-      }
-
-      var counterObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            animateCounter(entry.target);
-            counterObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      counterEls.forEach(function(el) { counterObserver.observe(el); });
-    })();
-
-    /* --- 2. Budget Bar Fill Animations (Intersection Observer) --- */
+    /* --- 1. Budget Bar Fill Animations (Intersection Observer) --- */
     (function() {
       var bars = document.querySelectorAll('.budget-bar-fill');
       if (!bars.length) return;
@@ -325,7 +276,7 @@ const {
       bars.forEach(function(bar) { barObserver.observe(bar); });
     })();
 
-    /* --- 3. Budget Category Hover/Click → Detail Card Update --- */
+    /* --- 2. Budget Category Hover/Click → Detail Card Update --- */
     (function() {
       var categories = document.querySelectorAll('.budget-category');
       var detailDefault = document.getElementById('budget-detail-default');
@@ -430,92 +381,6 @@ const {
       });
     })();
 
-    /* ===== SPONSORS & PARTNERS - TIERED PARTNERS BOARD ===== */
-    (function() {
-      var board = document.getElementById('sponsor-board');
-      if (!board) return;
-
-      var sponsors = [
-        { id: 1, tier: 'lead', name: 'Acme Foods', nameFr: 'Aliments Acme',
-          desc: 'Canada’s premier food distributor, supplying kitchens from coast to coast with premium ingredients.',
-          descFr: 'Le principal distributeur alimentaire du Canada, approvisionnant les cuisines d’un océan à l’autre en ingrédients haut de gamme.',
-          website: '#', logo: 'A', isEmpty: false },
-        { id: 2, tier: 'lead', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 3, tier: 'premier', name: 'Maple Supply Co.', nameFr: 'Approvisionnement Maple',
-          desc: 'Premium kitchen equipment and uniform supplier trusted by Canada’s top restaurants.',
-          descFr: 'Fournisseur d’équipement de cuisine et d’uniformes haut de gamme reconnu par les meilleurs restaurants du Canada.',
-          website: '#', logo: 'M', isEmpty: false },
-        { id: 4, tier: 'premier', name: 'Gourmet Express', nameFr: 'Gourmet Express',
-          desc: 'Nationwide logistics and freight partner specializing in temperature-controlled culinary transport.',
-          descFr: 'Partenaire logistique et de fret à l’échelle nationale spécialisé dans le transport culinaire à température contrôlée.',
-          website: '#', logo: 'G', isEmpty: false },
-        { id: 5, tier: 'premier', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 6, tier: 'official', name: 'Nordic Kitchenware', nameFr: 'Articles de cuisine Nordic',
-          desc: 'Crafting professional-grade cookware trusted by competition chefs worldwide.',
-          descFr: 'Fabricant d’ustensiles de cuisine de qualité professionnelle reconnu par les chefs de compétition du monde entier.',
-          website: '#', logo: 'N', isEmpty: false },
-        { id: 7, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 8, tier: 'official', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 9, tier: 'supporting', name: 'PureSpring Water', nameFr: 'Eau PureSpring',
-          desc: 'Official hydration partner providing premium natural spring water for Team Canada’s training and competition.',
-          descFr: 'Partenaire officiel d’hydratation fournissant de l’eau de source naturelle haut de gamme pour l’entraînement et la compétition d’Équipe Canada.',
-          website: '#', logo: 'P', isEmpty: false },
-        { id: 10, tier: 'supporting', name: 'Heritage Print', nameFr: 'Imprimerie Heritage',
-          desc: 'Full-service printing, signage, and branding partner for Team Canada campaign materials.',
-          descFr: 'Partenaire d’impression, de signalétique et d’image de marque complet pour les supports de campagne d’Équipe Canada.',
-          website: '#', logo: 'H', isEmpty: false },
-        { id: 11, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 12, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 13, tier: 'supporting', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 14, tier: 'contributor', name: 'Laurentian Dairy', nameFr: 'Laiterie Laurentienne',
-          desc: 'Family-owned dairy providing premium butter, cream, and cheeses to Team Canada’s pastry kitchen.',
-          descFr: 'Laiterie familiale fournissant du beurre, de la crème et des fromages haut de gamme à la cuisine pâtissière d’Équipe Canada.',
-          website: '#', logo: 'L', isEmpty: false },
-        { id: 15, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true },
-        { id: 16, tier: 'inkind', name: 'Studio Ouest Média', nameFr: 'Studio Ouest Média',
-          desc: 'Photography and video production partner documenting Team Canada’s journey to Lyon.',
-          descFr: 'Partenaire de production photo et vidéo documentant le parcours d’Équipe Canada jusqu’à Lyon.',
-          website: '#', logo: 'S', isEmpty: false },
-        { id: 17, tier: 'supporter', name: '', nameFr: '', desc: '', descFr: '', website: '', logo: '', isEmpty: true }
-      ];
-
-      var TIER_ORDER = ['lead', 'premier', 'official', 'community'];
-      var COMMUNITY_TIERS = ['supporting', 'contributor', 'supporter', 'inkind'];
-
-      function renderPlaque(sponsor) {
-        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
-        if (sponsor.isEmpty) {
-          var phText = isFr ? 'Votre logo ici' : 'Your Logo Here';
-          return '<a class="sp-plaque sp-plaque-empty" href="#inquiry" data-sponsor-id="' + sponsor.id + '">'
-            + '<span class="sp-plaque-mono" aria-hidden="true">+</span>'
-            + '<span class="sp-plaque-name">' + phText + '</span>'
-            + '</a>';
-        }
-        var name = isFr ? (sponsor.nameFr || sponsor.name) : sponsor.name;
-        var desc = isFr ? (sponsor.descFr || sponsor.desc) : sponsor.desc;
-        var initial = sponsor.logo || name.charAt(0);
-        var descHtml = desc ? '<p class="sp-plaque-desc">' + desc + '</p>' : '';
-        return '<div class="sp-plaque" data-sponsor-id="' + sponsor.id + '">'
-          + '<span class="sp-plaque-mono" aria-hidden="true">' + initial + '</span>'
-          + '<span class="sp-plaque-name">' + name + '</span>'
-          + descHtml
-          + '</div>';
-      }
-
-      function renderBoard() {
-        TIER_ORDER.forEach(function(tier) {
-          var wrap = board.querySelector('.sp-plaques[data-tier="' + tier + '"]');
-          if (!wrap) return;
-          wrap.innerHTML = '';
-          sponsors.filter(function(s) {
-            return tier === 'community' ? COMMUNITY_TIERS.indexOf(s.tier) !== -1 : s.tier === tier;
-          }).forEach(function(s) { wrap.insertAdjacentHTML('beforeend', renderPlaque(s)); });
-        });
-      }
-
-      window.__renderBoard = renderBoard;
-      renderBoard();
-    })();
   </script>
 </body>
 </html>

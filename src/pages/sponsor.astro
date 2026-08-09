@@ -2,9 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import VerticalNav from '../components/VerticalNav.astro';
 import Opportunity from '../components/Opportunity.astro';
+import Team from '../components/Team.astro';
+import Progress from '../components/Progress.astro';
 import SponsorTiers from '../components/SponsorTiers.astro';
+import FoundingPartners from '../components/FoundingPartners.astro';
 import ImpactDashboard from '../components/ImpactDashboard.astro';
-import SponsorsWall from '../components/SponsorsWall.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Footer from '../components/Footer.astro';
 import AccessibilityModal from '../components/AccessibilityModal.astro';
@@ -21,18 +23,30 @@ import CookieBanner from '../components/CookieBanner.astro';
   <VerticalNav
     links={[
       { href: '#opportunity', en: 'Why Partner', fr: 'Pourquoi' },
+      { href: '#team', en: 'The Team', fr: "L'équipe" },
+      { href: '#progress', en: 'Progress', fr: 'Parcours' },
       { href: '#tiers', en: 'Tiers', fr: 'Niveaux' },
+      { href: '#partners', en: 'Open Slots', fr: 'Places' },
       { href: '#support', en: 'Impact', fr: 'Impact' },
-      { href: '#sponsors', en: 'Partners', fr: 'Partenaires' },
       { href: '#inquiry', en: 'Contact', fr: 'Contact' },
       { href: '/', en: 'Home', fr: 'Accueil' },
-      { href: '/en/blog', en: 'Blog', fr: 'Blogue' },
     ]}
   />
   <Opportunity />
+  <Team
+    eyebrowEn="Who You're Backing"
+    eyebrowFr="Qui vous soutenez"
+    headingEn="The Chefs Building This Program"
+    headingFr="Les chefs qui bâtissent ce programme"
+    introEn="Real, verifiable pedigree, from the Ritz-Carlton to a national pastry title, all built out of Bar George in Montréal."
+    introFr="Un parcours réel et vérifiable, du Ritz-Carlton à un titre national de pâtisserie, bâti au Bar George à Montréal."
+  >
+    <p class="text-muted text-sm text-center max-w-2xl mx-auto mt-10" data-lang-en="These three are leading the program today. The full competition roster is still being finalized ahead of Lyon 2027." data-lang-fr="Ces trois chefs dirigent le programme dès aujourd'hui. L'effectif complet de compétition est encore en cours de finalisation avant Lyon 2027.">These three are leading the program today. The full competition roster is still being finalized ahead of Lyon 2027.</p>
+  </Team>
+  <Progress />
   <SponsorTiers />
+  <FoundingPartners />
   <ImpactDashboard />
-  <SponsorsWall />
   <InquiryForm />
   <Footer />
   <AccessibilityModal />
