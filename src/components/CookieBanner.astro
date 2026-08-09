@@ -1,4 +1,3 @@
----
 <!-- ===== COOKIE CONSENT BANNER ===== -->
 <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[90] bg-ink border-t border-gold/30 p-4 md:p-5 hidden" role="alert" aria-live="polite">
   <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -17,8 +16,8 @@
 <script>
   (function() {
     var KEY = 'tc-cookie-ack';
-    var banner = document.getElementById('cookie-banner');
-    var btn = document.getElementById('cookie-accept');
+    const banner = document.getElementById('cookie-banner');
+    const btn = document.getElementById('cookie-accept');
     if (!banner || !btn) return;
 
     var acknowledged = false;

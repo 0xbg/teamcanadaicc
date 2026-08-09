@@ -29,7 +29,7 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-lang-en={titleEn} data-lang-fr={titleFr}>{title}</title>
   <meta name="description" content={description} data-lang-en-desc={descriptionEn} data-lang-fr-desc={descriptionFr}>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
   <slot />
@@ -99,6 +99,18 @@ const {
       window.addEventListener('load', function() { positionLangThumbs(true); });
       window.addEventListener('resize', function() { positionLangThumbs(true); });
     })();
+
+    /* In-page anchor links scroll smoothly without ever touching the URL bar/hash */
+    document.addEventListener('click', function(e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      var id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      var target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     /* Form handling */
     var form = document.getElementById('inquiry-form');
@@ -248,7 +260,8 @@ const {
           if (entry.isIntersecting) {
             var bar = entry.target;
             var targetWidth = bar.getAttribute('data-width') || '0%';
-            bar.style.width = targetWidth;
+            var scale = parseFloat(targetWidth) / 100;
+            bar.style.transform = 'scaleX(' + scale + ')';
             barObserver.unobserve(bar);
           }
         });
