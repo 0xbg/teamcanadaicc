@@ -2,10 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import VerticalNav from '../components/VerticalNav.astro';
 import Hero from '../components/Hero.astro';
+import Opportunity from '../components/Opportunity.astro';
 import About from '../components/About.astro';
 import Timeline from '../components/Timeline.astro';
 import Team from '../components/Team.astro';
-import SponsorCTA from '../components/SponsorCTA.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 ---
@@ -14,17 +14,17 @@ import CookieBanner from '../components/CookieBanner.astro';
   <VerticalNav
     links={[
       { href: '#cup', en: 'The Cup', fr: 'La Coupe' },
-      { href: '#comeback', en: 'The Comeback', fr: 'Le retour' },
       { href: '#team', en: 'Team', fr: 'Équipe' },
+      { href: '#comeback', en: 'The Comeback', fr: 'Le retour' },
       { href: '/sponsor', en: 'Sponsor', fr: 'Commanditer' },
       { href: '/en/blog', en: 'Blog', fr: 'Blogue' },
     ]}
   />
   <Hero />
   <About />
-  <Timeline />
   <Team />
-  <SponsorCTA />
+  <Timeline />
+  <Opportunity />
   <Footer ctaHref="/sponsor" />
   <CookieBanner />
 </Layout>
