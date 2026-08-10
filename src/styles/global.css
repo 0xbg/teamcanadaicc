@@ -108,6 +108,42 @@ html { scroll-behavior: smooth; }
   .scroll-cue-steam span { animation: none; opacity: 0.6; }
 }
 
+/* ---------- Running Border (light travelling around a panel) ---------- */
+@property --border-run-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -50deg;
+}
+@keyframes border-run {
+  from { --border-run-angle: -50deg; }
+  to { --border-run-angle: 310deg; }
+}
+.border-run { position: relative; }
+.border-run::before {
+  content: ''; position: absolute; inset: -1px; z-index: 2;
+  padding: 1.5px; border-radius: inherit; pointer-events: none;
+  background: conic-gradient(
+    from var(--border-run-angle),
+    transparent 0deg,
+    transparent 304deg,
+    color-mix(in srgb, var(--color-gold) 5%, transparent) 309deg,
+    color-mix(in srgb, var(--color-gold) 45%, transparent) 317deg,
+    var(--color-gold-light) 328deg,
+    color-mix(in srgb, var(--color-gold) 90%, transparent) 337deg,
+    color-mix(in srgb, var(--color-gold) 22%, transparent) 346deg,
+    transparent 355deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: border-run var(--border-run-speed, 6s) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .border-run::before { animation: none; }
+}
+
 /* Tier cards */
 .tier-card { border-radius: 0.375rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
 .tier-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(15, 17, 21, 0.12); }
@@ -376,6 +412,82 @@ html { scroll-behavior: smooth; }
 .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 .collapsible-content.open { max-height: 2000px; }
 .team-card { border-radius: 0.5rem; }
+
+/* ---------- Hero: fit the viewport that is actually visible ----------
+   100vh on mobile browsers means the viewport WITHOUT the collapsible URL
+   bar, so a 100vh hero is taller than what the user sees on load and its
+   lower edge is cut off. svh is the small viewport: it always fits. */
+header.hero-viewport {
+  min-height: 100vh; /* fallback for browsers without svh */
+  min-height: 100svh;
+  /* Reserve the footprint of the pinned scroll cue (bottom-8 + its own
+     height) so the vertically centred content never runs underneath it
+     on short screens. */
+  padding-bottom: 7rem;
+}
+/* Short viewports (landscape phones): the content no longer fits a single
+   screen, so let the hero grow and unpin the scroll cue, which would
+   otherwise sit on top of the stats row. */
+/* Short portrait screens: tighten the vertical rhythm so the whole hero,
+   scroll cue included, clears the fold instead of spilling a few pixels. */
+@media (max-height: 700px) and (orientation: portrait) {
+  header.hero-viewport {
+    padding-top: 3.5rem;
+    padding-bottom: 5.5rem;
+  }
+  header.hero-viewport .grid-cols-3 { margin-top: 2rem; }
+  header.hero-viewport .relative.z-10 > p:nth-of-type(3) { margin-bottom: 1.5rem; }
+}
+
+@media (max-height: 660px) and (orientation: landscape) {
+  header.hero-viewport {
+    min-height: 0;
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
+  }
+  header.hero-viewport .scroll-cue {
+    position: static;
+    transform: none;
+    margin-top: 2rem;
+  }
+}
+
+/* ---------- Team card: full-bleed portrait, name set over the fade ---------- */
+.team-card-portrait {
+  position: relative;
+  height: 21rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.team-card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  background: var(--color-body-alt);
+}
+.team-card-portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--color-ink-card) 6%,
+    color-mix(in srgb, var(--color-ink-card) 72%, transparent) 38%,
+    transparent 68%
+  );
+}
+.team-card-caption {
+  position: relative;
+  z-index: 1;
+  padding: 0 1.5rem 1.4rem;
+}
+@media (min-width: 1024px) {
+  .team-card-portrait { height: 22.5rem; }
+}
 .form-input { border-radius: 0.375rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
 .form-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 15%, transparent); }
 .lang-btn { border-radius: 0.125rem; transition: all 0.2s ease; }
@@ -1118,17 +1230,17 @@ a.bg-gold:hover, button.bg-gold:hover {
 /* Mobile drawer */
 .vn-drawer {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: min(20rem, 85vw);
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
   z-index: 55;
   background: var(--color-ink);
-  border-left: 1px solid color-mix(in srgb, var(--color-gold) 25%, transparent);
-  padding: 1.75rem 1.5rem;
+  /* clear the close button parked in the bottom-right corner */
+  padding: 1.75rem 1.5rem 5.5rem;
   transform: translateX(100%);
   transition: transform 300ms ease;
   overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -1160,21 +1272,36 @@ a.bg-gold:hover, button.bg-gold:hover {
   color: var(--color-gold);
   margin-top: 0.25rem;
 }
+/* Close button: geometry cloned from .vn-menu-btn so the icon stays put
+   between the closed and open states */
 .vn-close-btn {
-  background: none;
-  border: 1px solid transparent;
-  color: var(--color-text-muted);
-  font-size: 1.1rem;
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 61;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: var(--color-ink);
+  color: var(--color-gold);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   line-height: 1;
   cursor: pointer;
-  padding: 0.35rem 0.55rem;
-  border-radius: 0.25rem;
-  transition: color 200ms ease, border-color 200ms ease;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--color-ink) 40%, transparent);
+  transition: background 200ms ease, color 200ms ease, transform 200ms ease;
 }
-.vn-close-btn:hover { color: var(--color-gold-light); border-color: color-mix(in srgb, var(--color-gold) 35%, transparent); }
+.vn-close-btn:hover { background: var(--color-gold); color: var(--color-ink); transform: scale(1.05); }
+
+/* The drawer owns that corner while open: retire the hamburger so the two
+   never stack on the same spot */
+body.vn-open .vn-menu-btn { opacity: 0; pointer-events: none; }
 
 /* Drawer list: left-aligned, no hairline, larger display type */
-.vn-drawer .vn-list { align-items: flex-start; gap: 1.5rem; }
+.vn-drawer .vn-list { align-items: flex-start; gap: 1.5rem; margin-block: auto; }
 .vn-drawer .vn-list::before { display: none; }
 .vn-drawer .vn-item { gap: 0.9rem; }
 .vn-drawer .vn-link {

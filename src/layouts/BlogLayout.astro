@@ -22,6 +22,7 @@ const otherLangLabel = lang === 'en' ? 'FR' : 'EN';
 
 // Translated URL: if a translated slug is provided, use it; otherwise fall back to the other language's blog listing
 const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : `/${otherLang}/blog`;
+import Icon from '../components/Icon.astro';
 ---
 
 <!DOCTYPE html>
@@ -155,7 +156,12 @@ const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : 
     <div class="max-w-3xl mx-auto">
       <p class="text-gold text-sm font-bold mb-2">TEAM CANADA · ICC 2027 · LYON</p>
       <p class="text-text-muted text-xs">© 2026 Team Canada ICC. <span>{lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span></p>
-      <p class="text-red/70 text-xs mt-2">Made with ❤️ in Montréal 🍁</p>
+      <p class="text-red/70 text-xs mt-2 flex items-center justify-center gap-1.5">
+        <span>Made with</span>
+        <Icon name="heart" size={12} />
+        <span>in Montréal</span>
+        <Icon name="maple" size={12} />
+      </p>
     </div>
   </footer>
 

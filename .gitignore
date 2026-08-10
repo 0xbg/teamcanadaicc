@@ -1,6 +1,62 @@
+# Dependencies
 node_modules/
-.wrangler/
+.pnp
+.pnp.js
+
+# Build output
 dist/
+.output/
+.vercel/
+.netlify/
+
+# Astro generated types and cache
 .astro/
+
+# Cloudflare Workers / Pages
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Environment
 .env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# Caches
+.cache/
+.temp/
+.tmp/
+*.tsbuildinfo
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# AI / agent tooling: local state, not shared config
 .aider*
+.claude/
+.reasonix/
+.agents/skills/web-design-guidelines/
+.continue/skills/web-design-guidelines/
+
+# Local working files (source material, transfers, exports)
+wetransfer_*
+*.zip

@@ -10,13 +10,14 @@ const posts = await getCollection('blog', ({ data }) => data.lang === lang);
 
 // Sort by pubDate descending
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+import Icon from '../../../components/Icon.astro';
 ---
 
 <BlogLayout lang={lang} title={t.blogTitle} description={t.blogDescription}>
   {
     posts.length === 0 ? (
       <div class="text-center py-16">
-        <div class="text-6xl mb-4">🍁</div>
+        <div class="mb-4 text-gold flex justify-center"><Icon name="maple" size={64} /></div>
         <p class="text-muted text-lg">{t.noPosts}</p>
       </div>
     ) : (

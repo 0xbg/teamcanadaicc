@@ -5,6 +5,7 @@ interface Props {
 }
 
 const { ctaHref = '#inquiry' } = Astro.props;
+import Icon from './Icon.astro';
 ---
 <footer class="py-20 md:py-28 px-6 bg-ink text-cream">
   <div class="max-w-3xl mx-auto text-center">
@@ -17,7 +18,7 @@ const { ctaHref = '#inquiry' } = Astro.props;
     <div class="grid gap-10 sm:grid-cols-3 text-left">
       <div>
         <div class="flex items-center gap-2 mb-3">
-          <span class="text-xl leading-none" aria-hidden="true">🍁</span>
+          <span class="text-gold leading-none" aria-hidden="true"><Icon name="maple" size={20} /></span>
           <p class="text-gold text-base font-bold tracking-wide">TEAM CANADA</p>
         </div>
         <p class="text-text-muted text-sm">ICC 2027 · Lyon</p>
@@ -57,7 +58,12 @@ const { ctaHref = '#inquiry' } = Astro.props;
 
     <div class="border-t border-border-dark mt-12 pt-6 text-center">
       <p class="text-text-muted text-xs">© 2026 Team Canada ICC. <span data-lang-en="All rights reserved." data-lang-fr="Tous droits réservés.">All rights reserved.</span></p>
-      <p class="text-red/70 text-xs mt-2" data-lang-en="Made with ❤️ in Montréal 🍁" data-lang-fr="Fait avec ❤️ à Montréal 🍁">Made with ❤️ in Montréal 🍁</p>
+      <p class="text-red/70 text-xs mt-2 flex items-center justify-center gap-1.5">
+        <span data-lang-en="Made with" data-lang-fr="Fait avec">Made with</span>
+        <Icon name="heart" size={12} />
+        <span data-lang-en="in Montréal" data-lang-fr="à Montréal">in Montréal</span>
+        <Icon name="maple" size={12} />
+      </p>
     </div>
   </div>
 </footer>
