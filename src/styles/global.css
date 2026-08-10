@@ -417,9 +417,12 @@ html { scroll-behavior: smooth; }
    100vh on mobile browsers means the viewport WITHOUT the collapsible URL
    bar, so a 100vh hero is taller than what the user sees on load and its
    lower edge is cut off. svh is the small viewport: it always fits. */
+.min-h-viewport,
 header.hero-viewport {
   min-height: 100vh; /* fallback for browsers without svh */
   min-height: 100svh;
+}
+header.hero-viewport {
   /* Reserve the footprint of the pinned scroll cue (bottom-8 + its own
      height) so the vertically centred content never runs underneath it
      on short screens. */
@@ -428,6 +431,13 @@ header.hero-viewport {
 /* Short viewports (landscape phones): the content no longer fits a single
    screen, so let the hero grow and unpin the scroll cue, which would
    otherwise sit on top of the stats row. */
+/* Sponsor hero stacks image over text on mobile; on short screens the pair
+   runs past the fold and takes the "Begin reading" link with it. */
+@media (max-height: 700px) and (orientation: portrait) {
+  .s2-hero-media { height: 30svh; }
+  .s2-hero-text { padding-top: 2rem; padding-bottom: 2rem; }
+}
+
 /* Short portrait screens: tighten the vertical rhythm so the whole hero,
    scroll cue included, clears the fold instead of spilling a few pixels. */
 @media (max-height: 700px) and (orientation: portrait) {
