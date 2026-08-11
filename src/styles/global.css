@@ -600,79 +600,242 @@ header.hero-viewport {
 .scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
 .scroll-top-btn svg { width: 1.25rem; height: 1.25rem; }
 
-/* ---------- Vertical Timeline ---------- */
-.timeline {
-  list-style: none; padding: 0; margin: 0;
-  display: flex; flex-direction: column; gap: 0;
+/* ============================================================
+   THE COMEBACK — dormant-to-live spine
+   A ten-year arc rendered as one rail: dotted and dim from 2017,
+   ignited at 2026, solid gold to the end. Mobile-first — the rail
+   runs vertically down the nodes and only becomes the horizontal
+   spine at lg, where there is room for five columns side by side.
+   ============================================================ */
+.cb-spine {
+  --cb-gap: 1.5rem;
+  --cb-dot: 0.6rem;
+  --cb-dead: color-mix(in srgb, var(--color-gold) 30%, transparent);
 }
-.tl-stage {
-  display: flex; gap: 2rem; position: relative;
+
+/* The horizontal rail is a desktop device; below lg each node carries
+   its own segment so the dormant-to-live read survives. */
+.cb-rail { display: none; }
+
+.cb-nodes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
 }
-.tl-rail {
-  display: flex; flex-direction: column; align-items: center;
-  width: 3rem; flex-shrink: 0; position: relative;
+
+.cb-node {
+  position: relative;
+  padding-left: 1.75rem;
+  padding-bottom: 2.25rem;
 }
-.tl-line {
-  width: 2px; flex: 1;
+.cb-node:last-child { padding-bottom: 0; }
+
+/* Vertical segment, running from this node's dot to the next one */
+.cb-node::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--cb-dot) / 2);
+  top: 0.6rem;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--color-gold);
+}
+.cb-node--past::before,
+.cb-node--void::before {
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--cb-dead) 0 3px, transparent 3px 8px);
+}
+.cb-node:last-child::before {
+  bottom: auto;
+  height: 2.5rem;
   background: linear-gradient(to bottom, var(--color-gold), transparent);
 }
-.tl-num {
-  width: 3rem; height: 3rem; border-radius: 50%;
-  border: 2px solid var(--color-gold); background: var(--color-ink);
-  display: flex; align-items: center; justify-content: center;
+/* Hairline width has to win over the .cb-node::before base for the
+   dormant nodes even when one of them is last in the list. */
+.cb-node--past:last-child::before,
+.cb-node--void:last-child::before { width: 1px; }
+
+/* Node dot */
+.cb-node::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: var(--cb-dot);
+  height: var(--cb-dot);
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 4px var(--color-ink);
+}
+.cb-node--past::after {
+  background: transparent;
+  border: 1px solid var(--cb-dead);
+}
+/* The empty years get a line but no marker — nothing happened there. */
+.cb-node--void::after { display: none; }
+
+.cb-year {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.875rem; font-weight: 700; color: var(--color-gold);
-  flex-shrink: 0; z-index: 1; transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--color-gold);
 }
-.tl-stage:hover .tl-num {
-  border-color: var(--color-gold-light); box-shadow: 0 0 24px color-mix(in srgb, var(--color-gold) 25%, transparent);
-  color: var(--color-gold-light);
-}
-.tl-content {
-  flex: 1; display: grid; grid-template-columns: 1fr 1fr;
-  gap: 2rem; padding-bottom: 4rem;
-}
-.tl-body { display: flex; flex-direction: column; justify-content: center; }
-.tl-label {
+.cb-where {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--color-gold); margin-bottom: 0.5rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: 0.5rem;
 }
-.tl-body h3 {
-  font-size: 1.5rem; font-weight: 700; font-family: "Playfair Display", Georgia, serif;
-  color: var(--color-cream); margin-bottom: 0.75rem; line-height: 1.2;
+.cb-phase {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-cream);
+  margin-top: 0.85rem;
 }
-.tl-body p {
-  color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem;
+.cb-copy {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-top: 0.6rem;
 }
-.tl-meta {
-  font-family: "JetBrains Mono", monospace; font-size: 0.65rem;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-gold-light);
-  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;
+
+/* 2017 is over: quieter year, unemphatic title, hollow marker. */
+.cb-node--past .cb-year { color: var(--color-muted-gold); }
+.cb-node--past .cb-phase {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-muted-alt);
 }
-.tl-meta::before, .tl-meta::after {
-  content: ''; height: 1px; flex: 1; max-width: 4rem;
-  background: color-mix(in srgb, var(--color-gold) 25%, transparent);
+
+.cb-void-span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
 }
-.tl-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.tl-tag {
-  display: inline-block; font-family: "JetBrains Mono", monospace;
-  font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.25rem 0.6rem;
-  border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent); color: var(--color-gold);
-  border-radius: 0.375rem;
+.cb-void-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: 0.4rem;
 }
-.tl-visual {
-  border-radius: 0.375rem; overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  aspect-ratio: 16 / 9; background: #1a1610;
-  transition: border-color 0.3s ease;
+
+@media (min-width: 1024px) {
+  .cb-rail {
+    display: grid;
+    grid-template-columns: 0.6fr 0.45fr 1fr 1fr 1fr;
+    column-gap: var(--cb-gap);
+    height: var(--cb-dot);
+    margin-bottom: 2.6rem;
+  }
+  .cb-mark { position: relative; }
+  .cb-dot {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    width: var(--cb-dot);
+    height: var(--cb-dot);
+    border-radius: 50%;
+    background: var(--color-gold);
+    transform: translate(-50%, -50%);
+  }
+  /* Each marker owns the segment running to the next column's left edge,
+     so the rail stays continuous whatever the column gap resolves to. */
+  .cb-mark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: calc(-1 * var(--cb-gap));
+    height: 2px;
+    background: var(--color-gold);
+    transform-origin: left center;
+  }
+  /* The dead run is a hairline; the live run is twice its weight. The
+     difference in stroke is doing as much work here as the colour. */
+  .cb-mark--past::after,
+  .cb-mark--void::after { height: 1px; }
+  /* Short drop from each dot into the column it labels */
+  .cb-mark::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1px;
+    height: 3.1rem;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--color-gold) 50%, transparent), transparent);
+  }
+
+  .cb-mark--past .cb-dot {
+    background: transparent;
+    border: 1px solid var(--cb-dead);
+  }
+  .cb-mark--past::after,
+  .cb-mark--void::after {
+    background: repeating-linear-gradient(to right, var(--cb-dead) 0 3px, transparent 3px 8px);
+  }
+  .cb-mark--past::before,
+  .cb-mark--void::before {
+    background: linear-gradient(to bottom, var(--cb-dead), transparent);
+  }
+
+  /* The ignition: bigger, lit, the one loud element in the section */
+  .cb-mark--ignite .cb-dot {
+    width: calc(var(--cb-dot) * 1.7);
+    height: calc(var(--cb-dot) * 1.7);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-gold) 12%, transparent),
+                0 0 22px color-mix(in srgb, var(--color-gold) 55%, transparent);
+  }
+  .cb-mark--last::after {
+    background: linear-gradient(to right, var(--color-gold), transparent);
+  }
+
+  /* Scroll reveal. .is-armed is set by script, so with no JS or with
+     reduced motion the rail simply renders lit. */
+  .cb-spine.is-armed .cb-mark--ignite::after,
+  .cb-spine.is-armed .cb-mark--live::after { transform: scaleX(0); }
+  .cb-spine.is-armed .cb-mark--ignite .cb-dot {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  .cb-spine.is-armed.is-lit .cb-mark--ignite::after,
+  .cb-spine.is-armed.is-lit .cb-mark--live::after {
+    transform: scaleX(1);
+    transition: transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+  .cb-spine.is-armed.is-lit .cb-mark--live::after { transition-delay: 480ms; }
+  .cb-spine.is-armed.is-lit .cb-mark--last::after { transition-delay: 960ms; }
+  .cb-spine.is-armed.is-lit .cb-mark--ignite .cb-dot {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 350ms ease, transform 500ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  .cb-nodes {
+    grid-template-columns: 0.6fr 0.45fr 1fr 1fr 1fr;
+    column-gap: var(--cb-gap);
+  }
+  .cb-node {
+    padding-left: 1.1rem;
+    padding-bottom: 0;
+  }
+  .cb-node::before,
+  .cb-node::after { display: none; }
 }
-.tl-stage:hover .tl-visual { border-color: color-mix(in srgb, var(--color-gold) 25%, transparent); }
-.tl-visual img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.5s ease; filter: brightness(0.85);
-}
-.tl-stage:hover .tl-visual img { transform: scale(1.04); filter: brightness(1); }
 
 /* ============================================================
    BLOG-STYLE TYPOGRAPHY
@@ -706,11 +869,6 @@ header.hero-viewport {
    MOBILE RESPONSIVENESS
    ============================================================ */
 @media (max-width: 768px) {
-  .tl-stage { gap: 1rem; }
-  .tl-content { grid-template-columns: 1fr; gap: 1rem; padding-bottom: 2.5rem; }
-  .tl-visual { order: -1; }
-  .tl-body h3 { font-size: 1.25rem; }
-
   .blog-content h1 { font-size: 1.85rem; }
   .blog-content h2 { font-size: 1.4rem; }
   .blog-content h3 { font-size: 1.15rem; }
@@ -722,13 +880,9 @@ header.hero-viewport {
   .filter-pill { font-size: 0.6rem; padding: 0.4rem 0.75rem; }
   .sponsor-tile:hover { transform: translateY(-1px); }
 
-  .tl-rail { width: 2.5rem; }
-  .tl-num { width: 2.25rem; height: 2.25rem; font-size: 0.7rem; }
-  .tl-body h3 { font-size: 1.1rem; }
-  .tl-body p { font-size: 0.8rem; }
-  .tl-tag { font-size: 0.55rem; padding: 0.2rem 0.45rem; }
-  .tl-label { font-size: 0.6rem; }
-  .tl-meta { font-size: 0.55rem; }
+  .cb-phase { font-size: 1.15rem; }
+  .cb-copy { font-size: 0.85rem; }
+  .cb-year { font-size: 0.85rem; }
 
   .scroll-top-btn { bottom: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; }
   .scroll-top-btn svg { width: 1rem; height: 1rem; }
@@ -752,8 +906,6 @@ header.hero-viewport {
 
   footer h2 { font-size: 1.5rem !important; }
   footer .text-lg { font-size: 0.9rem !important; }
-
-  .tl-visual { aspect-ratio: 4/3; }
 
   nav .px-6 { padding-left: 1rem; padding-right: 1rem; }
 
