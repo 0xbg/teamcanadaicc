@@ -1,30 +1,103 @@
-<!-- ===== S2 HERO: split-screen, text left / portrait right ===== -->
-<header class="s2-hero min-h-viewport relative flex flex-col md:flex-row bg-ink text-cream overflow-hidden pt-14">
+---
+// ===== SPONSOR HERO: the brigade =====
+// The hero copy says "three chefs are rebuilding Canada's seat" — so it
+// shows them rather than telling it. The three panels run edge to edge and
+// bleed off the bottom of the viewport, read as one polyptych rather than
+// three cards, and are graded to a common tone: Donnel and Nicolas were shot
+// in warm panelled rooms, Kevin against bright marble, and ungraded they
+// refuse to sit together.
+const brigade = [
+  {
+    img: '/assets/Bio Photo Chef Donnel.JPG',
+    cls: 'sp-face--donnel',
+    name: 'Donnel English',
+    alt: 'Donnel English, Team Captain and Chef de Cuisine at Bar George',
+    roleEn: 'Team Captain',
+    roleFr: "Capitaine d'équipe",
+    credEn: 'Ritz-Carlton · Maison Boulud · NoMad New York',
+    credFr: 'Ritz-Carlton · Maison Boulud · NoMad New York',
+  },
+  {
+    img: '/assets/Bio Photo Chef Nicolas.JPG',
+    cls: 'sp-face--nicolas',
+    name: 'Nicolas Parsy',
+    alt: 'Nicolas Parsy, Pastry Chef, with his 2025 national pastry trophy',
+    roleEn: 'Pastry Chef',
+    roleFr: 'Chef pâtissier',
+    credEn: '2025 National Pastry Chef, Québec',
+    credFr: 'Chef pâtissier national 2025, Québec',
+  },
+  {
+    img: '/assets/Bio Photo Chef Kevin.JPG',
+    cls: 'sp-face--kevin',
+    name: 'Kevin Ramasawmy',
+    alt: 'Kevin Ramasawmy, Team Coach and Executive Chef at Bar George',
+    roleEn: 'Team Coach',
+    roleFr: 'Entraîneur',
+    credEn: 'Daniel NYC · Maison Boulud · Bar George',
+    credFr: 'Daniel NYC · Maison Boulud · Bar George',
+  },
+];
+---
 
-  <!-- Text column -->
-  <div class="s2-hero-text relative z-10 order-2 md:order-1 flex items-center md:w-[55%] pl-6 pr-6 md:pl-28 md:pr-16 py-16 md:py-0">
-    <div class="max-w-xl">
-      <p class="font-mono text-xs md:text-sm tracking-[0.35em] uppercase text-gold mb-6" data-lang-en="Sponsorship Dossier · ICC Lyon 2027" data-lang-fr="Dossier de commandite · ICC Lyon 2027">Sponsorship Dossier · ICC Lyon 2027</p>
-      <h1 class="font-display font-bold leading-[0.95] text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-8">
+<header class="s2-hero min-h-viewport relative flex flex-col bg-ink text-cream overflow-hidden">
+  <!-- Same gold dot grid the homepage hero uses -->
+  <div class="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true" style="background-image: radial-gradient(circle at 50% 50%, #c2a15c 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+  <!-- Text block -->
+  <!-- lg:pr-56 reserves the strip the fixed nav rail occupies, so the gap
+       marker below never runs underneath it. -->
+  <div class="relative z-10 flex-1 flex items-center px-6 md:px-16 lg:pl-24 lg:pr-60 pt-20 pb-8">
+    <div class="w-full flex items-center gap-12 xl:gap-20">
+    <div class="w-full max-w-3xl lg:max-w-2xl flex-1">
+      <p class="text-gold-light font-display italic text-lg md:text-xl mb-5 tracking-wide" data-lang-en="Sponsorship Dossier · ICC Lyon 2027" data-lang-fr="Dossier de commandite · ICC Lyon 2027">Sponsorship Dossier · ICC Lyon 2027</p>
+      <h1 class="s2-hero-title font-display font-bold leading-[0.95] mb-6">
         <span class="block" data-lang-en="Canada is" data-lang-fr="Le Canada">Canada is</span>
         <span class="block text-gold" data-lang-en="coming back." data-lang-fr="revient.">coming back.</span>
       </h1>
-      <p class="text-text-light text-lg md:text-xl leading-relaxed mb-10" data-lang-en="After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. This is the case for backing them." data-lang-fr="Après dix ans d'absence, trois chefs rebâtissent la place du Canada à l'International Catering Cup à Lyon. Voici pourquoi les soutenir.">After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. This is the case for backing them.</p>
-      <a href="#story" class="inline-flex items-center gap-2 text-gold-light text-sm font-mono tracking-widest uppercase border-b border-gold/40 pb-1 hover:border-gold hover:text-gold transition-colors duration-200">
-        <span data-lang-en="Begin reading" data-lang-fr="Commencer la lecture">Begin reading</span>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-      </a>
+      <p class="text-text-muted text-lg md:text-xl leading-relaxed mb-8 max-w-xl" data-lang-en="After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. This is the case for backing them." data-lang-fr="Après dix ans d'absence, trois chefs rebâtissent la place du Canada à l'International Catering Cup à Lyon. Voici pourquoi les soutenir.">After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. This is the case for backing them.</p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 rounded-md text-center whitespace-nowrap" data-lang-en="Partner With Us" data-lang-fr="Devenez partenaire">Partner With Us</a>
+        <a href="#story" class="inline-block border border-gold text-gold px-8 py-4 font-semibold text-lg hover:bg-gold hover:text-ink transition-colors duration-200 rounded-md text-center whitespace-nowrap" data-lang-en="Read the case" data-lang-fr="Lire le dossier">Read the case</a>
+      </div>
+    </div>
+
+    <!-- The absence, stated rather than alluded to. The dotted run is the ten
+         empty years themselves — the same device the homepage's Comeback
+         spine uses, so the two pages argue this in one visual language. -->
+    <aside class="s2-gap hidden lg:block" aria-label="Canada's ten-year absence from the competition">
+      <ol class="s2-gap-list">
+        <li class="s2-gap-node s2-gap-node--past">
+          <p class="s2-gap-year">2017</p>
+          <p class="s2-gap-label" data-lang-en="last Canadian entry" data-lang-fr="dernière inscription">last Canadian entry</p>
+        </li>
+        <li class="s2-gap-node s2-gap-node--void">
+          <p class="s2-gap-span" data-lang-en="ten years" data-lang-fr="dix ans">ten years</p>
+          <p class="s2-gap-label" data-lang-en="no Canadian entry" data-lang-fr="aucune inscription">no Canadian entry</p>
+        </li>
+        <li class="s2-gap-node s2-gap-node--live">
+          <p class="s2-gap-year s2-gap-year--live">2027</p>
+          <p class="s2-gap-label" data-lang-en="Lyon · Sirha" data-lang-fr="Lyon · Sirha">Lyon · Sirha</p>
+        </li>
+      </ol>
+    </aside>
     </div>
   </div>
 
-  <!-- Gutter rule (desktop only) -->
-  <div class="hidden md:block absolute top-0 bottom-0 left-[55%] w-px bg-gold/25 z-10"></div>
-
-  <!-- Image column -->
-  <div class="s2-hero-media relative order-1 md:order-2 h-[45svh] md:h-auto md:w-[45%] overflow-hidden">
-    <img src="/assets/hero-chef.jpg" alt="Chef Kevin Ramasawmy in the kitchen, on Team Canada's road to ICC Lyon 2027" class="absolute inset-0 w-full h-full object-cover">
-    <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-transparent to-transparent"></div>
-    <div class="absolute inset-0 bg-gold/10 mix-blend-multiply"></div>
+  <!-- The brigade -->
+  <div class="s2-brigade relative z-10">
+    {brigade.map((c) => (
+      <figure class="sp-face">
+        <img src={c.img} alt={c.alt} class={`sp-face-img ${c.cls}`} />
+        <figcaption class="sp-face-cap">
+          <p class="sp-face-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>
+          <p class="sp-face-name">{c.name}</p>
+          <p class="sp-face-cred" data-lang-en={c.credEn} data-lang-fr={c.credFr}>{c.credEn}</p>
+        </figcaption>
+      </figure>
+    ))}
   </div>
 
+  <!-- Right-edge scrim so the fixed nav rail stays legible over the panels -->
+  <div class="s2-hero-scrim absolute inset-y-0 right-0 z-20 pointer-events-none" aria-hidden="true"></div>
 </header>

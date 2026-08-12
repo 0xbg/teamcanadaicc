@@ -1,0 +1,28 @@
+<!-- ===== READING PROGRESS =====
+     A bare hairline pinned to the top edge. The sponsor page is the one
+     long-form read on the site, so it keeps the progress cue the old TopBar
+     carried — without the bar chrome, which conflicted with the site's
+     nav rail. -->
+<span id="reading-progress" class="reading-progress" aria-hidden="true"></span>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    var ticking = false;
+    function update() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+      ticking = false;
+    }
+    function request() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    update();
+  })();
+</script>

@@ -1,62 +1,71 @@
-<!-- ===== S2 LEDGER: tiers as a plain table, not cards ===== -->
-<section id="ledger" class="py-24 md:py-32 px-6 md:px-16 bg-ink text-cream">
-  <div class="max-w-4xl mx-auto">
-    <p class="font-mono text-xs tracking-[0.25em] uppercase text-gold mb-4" data-lang-en="The Investment" data-lang-fr="L'investissement">The Investment</p>
-    <h2 class="font-display font-bold text-3xl md:text-5xl mb-6" data-lang-en="Six ways in." data-lang-fr="Six façons d'y entrer.">Six ways in.</h2>
-    <p class="text-text-muted max-w-2xl mb-12 leading-relaxed" data-lang-en="No fine print games. This is the full list, in order, with what's actually left." data-lang-fr="Sans jeux de petits caractères. Voici la liste complète, en ordre, avec ce qu'il reste réellement.">No fine print games. This is the full list, in order, with what's actually left.</p>
+<!-- ===== SPONSOR LEDGER: tiers as a plain table, not cards =====
+     A table is the honest form for six comparable tiers, so it stays one —
+     but it now uses .comparison-table, the site's existing table primitive,
+     instead of hand-rolled utility classes. -->
+<section id="ledger" class="py-20 md:py-28 px-6 bg-ink text-cream">
+  <!-- max-w-5xl, matching Story and Terms: at max-w-6xl the panel's border
+       runs under the fixed nav rail on wide screens. -->
+  <div class="max-w-5xl mx-auto">
+    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="The Investment" data-lang-fr="L'investissement">The Investment</p>
+    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-center font-display" data-lang-en="Six ways in." data-lang-fr="Six façons d'y entrer.">Six ways in.</h2>
+    <p class="text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-14 text-center" data-lang-en="No fine print games. This is the full list, in order, with what's actually left." data-lang-fr="Sans jeux de petits caractères. Voici la liste complète, en ordre, avec ce qu'il reste réellement.">No fine print games. This is the full list, in order, with what's actually left.</p>
 
-    <div class="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
-      <table class="w-full text-left border-collapse text-sm md:text-base min-w-[640px]">
-        <thead>
-          <tr class="border-b border-gold/30">
-            <th class="py-3 pr-4 font-mono text-xs uppercase tracking-wider text-gold" data-lang-en="Tier" data-lang-fr="Niveau">Tier</th>
-            <th class="py-3 pr-4 font-mono text-xs uppercase tracking-wider text-gold" data-lang-en="Investment" data-lang-fr="Investissement">Investment</th>
-            <th class="py-3 pr-4 font-mono text-xs uppercase tracking-wider text-gold" data-lang-en="Availability" data-lang-fr="Disponibilité">Availability</th>
-            <th class="py-3 font-mono text-xs uppercase tracking-wider text-gold" data-lang-en="Signature Benefit" data-lang-fr="Avantage phare">Signature Benefit</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-border-dark">
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Lead Partner" data-lang-fr="Partenaire majeur">Lead Partner</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="2 of 2 open" data-lang-fr="2 sur 2 disponibles">2 of 2 open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Top logo placement, chef jackets, lead press recognition, category exclusivity" data-lang-fr="Placement logo principal, vestes des chefs, reconnaissance presse de premier plan, exclusivité de catégorie">Top logo placement, chef jackets, lead press recognition, category exclusivity</td>
-          </tr>
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Premier Partner" data-lang-fr="Partenaire Premier">Premier Partner</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="3 of 3 open" data-lang-fr="3 sur 3 disponibles">3 of 3 open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Prominent logo placement, dedicated social post, category exclusivity where agreed" data-lang-fr="Logo bien visible, publication sociale dédiée, exclusivité de catégorie convenue">Prominent logo placement, dedicated social post, category exclusivity where agreed</td>
-          </tr>
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Official Partner" data-lang-fr="Partenaire Officiel">Official Partner</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="3 of 3 open" data-lang-fr="3 sur 3 disponibles">3 of 3 open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Logo on selected materials, dedicated partner spotlight" data-lang-fr="Logo sur certains supports, mise en avant dédiée">Logo on selected materials, dedicated partner spotlight</td>
-          </tr>
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Supporting Partner" data-lang-fr="Partenaire de soutien">Supporting Partner</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Logo on sponsor page, inclusion in a grouped post" data-lang-fr="Logo sur la page commanditaires, inclusion dans une publication groupée">Logo on sponsor page, inclusion in a grouped post</td>
-          </tr>
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Team Contributor" data-lang-fr="Contributeur d'équipe">Team Contributor</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Logo on sponsor page, recognition in campaign recap" data-lang-fr="Logo sur la page commanditaires, reconnaissance dans le récapitulatif">Logo on sponsor page, recognition in campaign recap</td>
-          </tr>
-          <tr>
-            <td class="py-4 pr-4 font-display font-bold" data-lang-en="Team Supporter" data-lang-fr="Supporteur de l'équipe">Team Supporter</td>
-            <td class="py-4 pr-4 font-mono text-gold" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
-            <td class="py-4 pr-4 text-text-muted font-mono text-xs" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
-            <td class="py-4 text-text-muted" data-lang-en="Name or logo on the digital sponsor page" data-lang-fr="Nom ou logo sur la page numérique des commanditaires">Name or logo on the digital sponsor page</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="border border-gold/15 rounded-lg overflow-hidden">
+      <div class="table-scroll">
+        <table class="comparison-table sp-ledger-table">
+          <thead>
+            <tr>
+              <th data-lang-en="Tier" data-lang-fr="Niveau">Tier</th>
+              <th data-lang-en="Investment" data-lang-fr="Investissement">Investment</th>
+              <th data-lang-en="Availability" data-lang-fr="Disponibilité">Availability</th>
+              <th data-lang-en="Signature Benefit" data-lang-fr="Avantage phare">Signature Benefit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-lang-en="Lead Partner" data-lang-fr="Partenaire majeur">Lead Partner</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="2 of 2 open" data-lang-fr="2 sur 2 disponibles">2 of 2 open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Top logo placement, chef jackets, lead press recognition, category exclusivity" data-lang-fr="Placement logo principal, vestes des chefs, reconnaissance presse de premier plan, exclusivité de catégorie">Top logo placement, chef jackets, lead press recognition, category exclusivity</td>
+            </tr>
+            <tr>
+              <td data-lang-en="Premier Partner" data-lang-fr="Partenaire Premier">Premier Partner</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="3 of 3 open" data-lang-fr="3 sur 3 disponibles">3 of 3 open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Prominent logo placement, dedicated social post, category exclusivity where agreed" data-lang-fr="Logo bien visible, publication sociale dédiée, exclusivité de catégorie convenue">Prominent logo placement, dedicated social post, category exclusivity where agreed</td>
+            </tr>
+            <tr>
+              <td data-lang-en="Official Partner" data-lang-fr="Partenaire Officiel">Official Partner</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="3 of 3 open" data-lang-fr="3 sur 3 disponibles">3 of 3 open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Logo on selected materials, dedicated partner spotlight" data-lang-fr="Logo sur certains supports, mise en avant dédiée">Logo on selected materials, dedicated partner spotlight</td>
+            </tr>
+            <tr>
+              <td data-lang-en="Supporting Partner" data-lang-fr="Partenaire de soutien">Supporting Partner</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Logo on sponsor page, inclusion in a grouped post" data-lang-fr="Logo sur la page commanditaires, inclusion dans une publication groupée">Logo on sponsor page, inclusion in a grouped post</td>
+            </tr>
+            <tr>
+              <td data-lang-en="Team Contributor" data-lang-fr="Contributeur d'équipe">Team Contributor</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Logo on sponsor page, recognition in campaign recap" data-lang-fr="Logo sur la page commanditaires, reconnaissance dans le récapitulatif">Logo on sponsor page, recognition in campaign recap</td>
+            </tr>
+            <tr>
+              <td data-lang-en="Team Supporter" data-lang-fr="Supporteur de l'équipe">Team Supporter</td>
+              <td class="sp-ledger-price" data-lang-en="On request" data-lang-fr="Sur demande">On request</td>
+              <td class="sp-ledger-avail" data-lang-en="Open" data-lang-fr="Disponible">Open</td>
+              <td class="sp-ledger-benefit" data-lang-en="Name or logo on the digital sponsor page" data-lang-fr="Nom ou logo sur la page numérique des commanditaires">Name or logo on the digital sponsor page</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <p class="md:hidden font-mono text-[0.65rem] tracking-[0.2em] uppercase text-text-muted mt-2" data-lang-en="Swipe to see all columns →" data-lang-fr="Glissez pour voir toutes les colonnes →">Swipe to see all columns →</p>
+    <p class="md:hidden font-mono text-[0.65rem] tracking-[0.2em] uppercase text-text-muted mt-3 text-center" data-lang-en="Swipe to see all columns →" data-lang-fr="Glissez pour voir toutes les colonnes →">Swipe to see all columns →</p>
 
-    <p class="text-text-muted text-sm mt-8 max-w-2xl leading-relaxed" data-lang-en="The first partner to fill each flagship tier (Lead, Premier, Official) is recognized as a Founding Partner of the 2027 campaign. Prefer ingredients, equipment, travel or a custom mix instead of cash? Note it in the form below." data-lang-fr="Le premier partenaire à occuper chaque niveau phare (majeur, Premier, officiel) est reconnu comme partenaire fondateur de la campagne 2027. Vous préférez offrir des ingrédients, de l'équipement, du transport ou un mélange sur mesure plutôt que de l'argent ? Indiquez-le dans le formulaire ci-dessous.">The first partner to fill each flagship tier (Lead, Premier, Official) is recognized as a Founding Partner of the 2027 campaign. Prefer ingredients, equipment, travel or a custom mix instead of cash? Note it in the form below.</p>
+    <p class="text-text-muted text-sm mt-8 max-w-3xl mx-auto text-center leading-relaxed" data-lang-en="The first partner to fill each flagship tier (Lead, Premier, Official) is recognized as a Founding Partner of the 2027 campaign. Prefer ingredients, equipment, travel or a custom mix instead of cash? Note it in the form below." data-lang-fr="Le premier partenaire à occuper chaque niveau phare (majeur, Premier, officiel) est reconnu comme partenaire fondateur de la campagne 2027. Vous préférez offrir des ingrédients, de l'équipement, du transport ou un mélange sur mesure plutôt que de l'argent ? Indiquez-le dans le formulaire ci-dessous.">The first partner to fill each flagship tier (Lead, Premier, Official) is recognized as a Founding Partner of the 2027 campaign. Prefer ingredients, equipment, travel or a custom mix instead of cash? Note it in the form below.</p>
   </div>
 </section>
+
+<hr class="section-divider">

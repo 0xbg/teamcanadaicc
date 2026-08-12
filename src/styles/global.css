@@ -1110,6 +1110,342 @@ a.bg-gold:hover, button.bg-gold:hover {
   overflow: hidden;
 }
 
+/* ===== Sponsor hero =====
+   Fluid display size, capped so the longer headline line always holds a
+   single line inside the 55% text column. */
+.s2-hero-title {
+  /* The text block is now full-width rather than a 55% column, so the
+     display can carry more weight and still hold two lines. */
+  font-size: clamp(2.75rem, 6.4vw, 6rem);
+}
+/* ---- The ten-year gap, as a vertical rail ----
+   Dotted and unmarked through the empty years, lit at 2027. Same grammar as
+   the homepage Comeback spine, at a smaller scale. */
+.s2-gap { flex: 0 0 auto; }
+.s2-gap-list {
+  --gap-dot: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.s2-gap-node {
+  position: relative;
+  padding-left: 1.5rem;
+  padding-bottom: 2.25rem;
+}
+.s2-gap-node:last-child { padding-bottom: 0; }
+/* The empty run is the longest segment on purpose: the length of the dotted
+   rail is the length of the absence. */
+.s2-gap-node--void { padding-bottom: 3.75rem; }
+/* Each node owns the rail segment running down to the next marker */
+.s2-gap-node::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--gap-dot) / 2);
+  top: 0.45rem;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-gold) 40%, transparent) 0 3px,
+    transparent 3px 8px
+  );
+}
+.s2-gap-node:last-child::before { display: none; }
+/* Marker */
+.s2-gap-node::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  width: var(--gap-dot);
+  height: var(--gap-dot);
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+}
+/* The empty years get rail but no marker — nothing happened there. */
+.s2-gap-node--void::after { display: none; }
+/* 2027 is the one lit thing in the group. */
+.s2-gap-node--live::after {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 12%, transparent),
+              0 0 14px color-mix(in srgb, var(--color-gold) 55%, transparent);
+}
+.s2-gap-year {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--color-muted-gold);
+}
+.s2-gap-year--live { color: var(--color-gold); }
+.s2-gap-span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+.s2-gap-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-top: 0.45rem;
+  white-space: nowrap;
+}
+
+/* ---- The brigade: three panels, edge to edge, bleeding off the bottom ---- */
+.s2-brigade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;                      /* the gap is the hairline between panels */
+  background: color-mix(in srgb, var(--color-gold) 30%, transparent);
+  /* Sized so the whole hero, captions included, clears 100svh. */
+  height: clamp(12rem, 33svh, 20rem);
+}
+.sp-face {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  background: var(--color-ink);
+}
+.sp-face-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Graded to a common tone. Without this the warm panelled rooms and the
+     bright marble kitchen read as three unrelated photographs. The sepia
+     pass is what actually unifies them — desaturating alone just made the
+     marble frame read as black and white next to two warm ones. */
+  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.76);
+}
+/* Per-frame: each was shot at a different distance, so centre each face. */
+.sp-face--donnel  { object-position: 50% 27%; }
+.sp-face--nicolas { object-position: 44% 26%; }
+/* Kevin's frame is high-key marble against two dark panelled rooms, so it
+   needs a heavier hand to sit level with them. */
+.sp-face--kevin {
+  object-position: 50% 36%;
+  filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.5);
+}
+
+/* A shared vignette does more to bind the three frames than the per-image
+   grading does: it gives them one light source regardless of the room. */
+.sp-face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 38%,
+    transparent 30%,
+    color-mix(in srgb, var(--color-ink) 55%, transparent) 100%
+  );
+}
+
+/* Caption sits over a fade from the panel's own bottom edge, the same device
+   the homepage team cards use. */
+.sp-face-cap {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 3.5rem 1.25rem 1.25rem;
+  background: linear-gradient(to top, var(--color-ink) 4%, color-mix(in srgb, var(--color-ink) 70%, transparent) 45%, transparent 100%);
+}
+.sp-face-role {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 0.3rem;
+}
+.sp-face-name {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+  line-height: 1.15;
+  color: var(--color-cream);
+}
+/* Absorbed from the Story filmstrip this hero replaced. Hidden on phones,
+   where the panel is ~130px wide and the line would break to three rows. */
+.sp-face-cred {
+  display: none;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  max-width: 15rem;
+}
+@media (min-width: 768px) {
+  /* Reserve two lines whether or not this credential needs them. The
+     captions are bottom-anchored, so a credential that wrapped pushed its
+     name and role up out of line with the other two panels. */
+  .sp-face-cred { display: block; min-height: 2.02rem; }
+}
+@media (max-width: 640px) {
+  .sp-face-cap { padding: 2.5rem 0.6rem 0.85rem; }
+  .sp-face-role { font-size: 0.5rem; letter-spacing: 0.14em; }
+}
+
+/* Right-edge scrim, only as wide as the fixed nav rail, so the rail stays
+   legible over whichever panel sits beneath it. */
+.s2-hero-scrim {
+  width: 16rem;
+  background: linear-gradient(
+    to left,
+    var(--color-ink) 0%,
+    color-mix(in srgb, var(--color-ink) 80%, transparent) 22%,
+    transparent 100%
+  );
+}
+@media (max-width: 1023.98px) {
+  /* No rail below lg, so no scrim is needed. */
+  .s2-hero-scrim { display: none; }
+}
+
+/* ===== Reading progress hairline (sponsor page) =====
+   Replaces the fixed TopBar the sponsor page used to carry. The bar chrome
+   fought the site's nav rail; the hairline alone keeps the long-form reading
+   cue without competing with anything. */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 45;
+  height: 2px;
+  width: 0;
+  background: var(--color-gold);
+  pointer-events: none;
+}
+
+/* ===== Sponsor timeline track =====
+   Done steps carry a solid gold marker and rail, the ones still ahead a
+   hollow marker and a dashed hairline — the same dormant-versus-live
+   grammar the Comeback spine uses on the homepage, on a cream ground. */
+.sp-track {
+  --sp-dot: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sp-step {
+  position: relative;
+  padding-left: 2rem;
+  padding-bottom: 2rem;
+}
+.sp-step:last-child { padding-bottom: 0; }
+
+/* Each step owns the rail segment running down to the next marker */
+.sp-step::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--sp-dot) / 2);
+  top: 0.6rem;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--color-gold);
+}
+.sp-step--todo::before {
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-gold) 45%, transparent) 0 3px,
+    transparent 3px 8px
+  );
+}
+.sp-step:last-child::before { display: none; }
+
+/* Marker */
+.sp-step::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45rem;
+  width: var(--sp-dot);
+  height: var(--sp-dot);
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 4px var(--color-cream);
+}
+.sp-step--todo::after {
+  background: var(--color-cream);
+  border: 1.5px solid color-mix(in srgb, var(--color-gold) 50%, transparent);
+}
+/* Lyon is the destination, not another milestone: red, and lit. */
+.sp-step--event::after {
+  background: var(--color-red);
+  box-shadow: 0 0 0 4px var(--color-cream),
+              0 0 16px color-mix(in srgb, var(--color-red) 45%, transparent);
+}
+
+.sp-step-date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-gold-dark);
+  margin-bottom: 0.35rem;
+}
+.sp-step-date--todo { color: var(--color-muted); }
+.sp-step-date--event { color: var(--color-red); }
+.sp-step-copy {
+  color: var(--color-body-alt);
+  line-height: 1.7;
+}
+.sp-step-copy--event {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* ===== Sponsor ledger table =====
+   Rides .comparison-table, which is centred and compact by default; the
+   ledger reads as prose, so its rows are left-aligned and roomier. */
+.sp-ledger-table th,
+.sp-ledger-table td {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-left: none;
+  border-right: none;
+}
+.sp-ledger-table thead th:first-child,
+.sp-ledger-table tbody td:first-child { padding-left: 1.5rem; }
+.sp-ledger-table thead th:last-child,
+.sp-ledger-table tbody td:last-child { padding-right: 1.5rem; }
+.sp-ledger-table tbody td:first-child {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-cream);
+  white-space: nowrap;
+}
+.sp-ledger-price {
+  font-family: "JetBrains Mono", monospace;
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+.sp-ledger-avail {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.sp-ledger-benefit {
+  color: var(--color-text-muted);
+  min-width: 18rem;
+}
+
 /* ===== Partners board — tiered plaques (sponsor page) ===== */
 .sp-band-head {
   display: flex;
@@ -1301,10 +1637,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   color: var(--color-text-muted);
   cursor: pointer;
   transition: color 250ms ease, transform 250ms ease;
-}
-/* Pages with a fixed full-width TopBar (e.g. /sponsor) need the chip below it, not overlapping the wordmark */
-@media (min-width: 1024px) {
-  .lang-rail--topbar { top: 5rem; }
 }
 .lang-rail .lang-btn:hover:not(.active) { color: var(--color-gold-light); }
 .lang-rail .lang-btn.active {
