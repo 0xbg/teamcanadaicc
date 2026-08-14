@@ -23,6 +23,11 @@ const otherLangLabel = lang === 'en' ? 'FR' : 'EN';
 // Translated URL: if a translated slug is provided, use it; otherwise fall back to the other language's blog listing
 const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : `/${otherLang}/blog`;
 import Icon from '../components/Icon.astro';
+// This layout is standalone — it never wraps Layout.astro — so the two
+// persistent conversion bands have to be mounted here as well. Blog routes
+// are already per-locale, so they render in one language via `static`.
+import StatusStrip from '../components/StatusStrip.astro';
+import StickyCta from '../components/StickyCta.astro';
 ---
 
 <!DOCTYPE html>
@@ -35,8 +40,10 @@ import Icon from '../components/Icon.astro';
 </head>
 <body class="bg-cream text-body font-sans antialiased">
 
-  <!-- Blog Header Nav -->
-  <nav class="bg-white/80 backdrop-blur-sm border-b border-border-light sticky top-0 z-40">
+  <StatusStrip static={lang} />
+
+  <!-- Blog Header Nav — sticks below the status strip, not under it -->
+  <nav class="bg-white/80 backdrop-blur-sm border-b border-border-light sticky z-40" style="top: var(--status-strip-h)">
     <div class="max-w-5xl mx-auto px-4 md:px-6">
       <div class="flex items-center justify-between h-14 md:h-16">
         <a href="/" class="flex items-center gap-2 group">
@@ -50,8 +57,8 @@ import Icon from '../components/Icon.astro';
             {t.blog}
           </a>
           <div class="flex items-center gap-1">
-            <a href="/en/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold rounded-sm transition-colors ${lang === 'en' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>EN</a>
-            <a href="/fr/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold rounded-sm transition-colors ${lang === 'fr' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>FR</a>
+            <a href="/en/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'en' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>EN</a>
+            <a href="/fr/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'fr' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>FR</a>
           </div>
         </div>
       </div>
@@ -164,6 +171,9 @@ import Icon from '../components/Icon.astro';
       </p>
     </div>
   </footer>
+
+  <!-- Persistent CTA, mobile only -->
+  <StickyCta href="/sponsor" static={lang} />
 
 </body>
 </html>

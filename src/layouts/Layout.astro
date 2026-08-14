@@ -3,8 +3,13 @@
 // scroll-to-top, and all interactive page scripts (form handling,
 // scroll spy, tier/comparison collapse, impact dashboard).
 import '../styles/global.css';
+import StatusStrip from '../components/StatusStrip.astro';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
+  /** Where the status strip and the persistent mobile CTA point. Pages that
+      already are the sponsor page pass an in-page anchor instead. */
+  ctaHref?: string;
   title?: string;
   titleEn?: string;
   titleFr?: string;
@@ -14,6 +19,7 @@ interface Props {
 }
 
 const {
+  ctaHref = '/sponsor',
   title = 'Team Canada · ICC · Lyon 2027',
   titleEn = 'Team Canada · ICC · Lyon 2027',
   titleFr = 'Équipe Canada · ICC · Lyon 2027',
@@ -32,7 +38,12 @@ const {
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
+  <StatusStrip href={ctaHref} />
+
   <slot />
+
+  <!-- Persistent CTA, mobile only -->
+  <StickyCta href={ctaHref} />
 
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
@@ -246,6 +257,20 @@ const {
         btn.classList.add('expanded');
       }
     }
+
+    /* ===== Sponsor FAQ accordion =====
+       Delegated so it costs nothing on pages without a FAQ. Each trigger
+       owns the .collapsible-content that follows it. */
+    document.addEventListener('click', function(e) {
+      var trigger = e.target.closest('.faq-trigger');
+      if (!trigger) return;
+      var panel = trigger.nextElementSibling;
+      if (!panel || !panel.classList.contains('collapsible-content')) return;
+      var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      trigger.classList.toggle('expanded', !isOpen);
+      panel.classList.toggle('open', !isOpen);
+    });
 
     /* ═══════════════════════════════════════════════════════
        IMPACT DASHBOARD - Interactive JavaScript

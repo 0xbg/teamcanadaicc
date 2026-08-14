@@ -1,0 +1,53 @@
+---
+// ===== PERSISTENT MOBILE CTA BAR =====
+// Below 1024px the vertical nav rail is replaced by a hamburger, which
+// leaves no standing route to the ask. This bar is that route. Desktop
+// hides it — the rail already covers that case.
+//
+// It shares the bottom of the screen with #scroll-top-btn; the collision
+// is resolved in global.css via --sticky-cta-h, which both rules read.
+interface Props {
+  href?: string;
+  labelEn?: string;
+  labelFr?: string;
+  noteEn?: string;
+  noteFr?: string;
+  /** Render one language only (blog layouts, which are already per-locale). */
+  static?: 'en' | 'fr';
+}
+
+const {
+  href = '/sponsor',
+  labelEn = 'Become a partner',
+  labelFr = 'Devenir partenaire',
+  noteEn = 'No obligation · Reply within 2 business days',
+  noteFr = "Sans engagement · Réponse en 2 jours ouvrables",
+  static: staticLang,
+} = Astro.props;
+
+const isStatic = staticLang === 'en' || staticLang === 'fr';
+const fr = staticLang === 'fr';
+---
+
+<a class="sticky-cta" href={href}>
+  {
+    isStatic ? (
+      <span class="sticky-cta-label">
+        {fr ? labelFr : labelEn}
+        <span class="sticky-cta-arrow" aria-hidden="true">→</span>
+      </span>
+    ) : (
+      <span class="sticky-cta-label">
+        <span data-lang-en={labelEn} data-lang-fr={labelFr}>{labelEn}</span>
+        <span class="sticky-cta-arrow" aria-hidden="true">→</span>
+      </span>
+    )
+  }
+  {
+    isStatic ? (
+      <span class="sticky-cta-note">{fr ? noteFr : noteEn}</span>
+    ) : (
+      <span class="sticky-cta-note" data-lang-en={noteEn} data-lang-fr={noteFr}>{noteEn}</span>
+    )
+  }
+</a>

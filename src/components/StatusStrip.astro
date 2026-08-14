@@ -1,0 +1,64 @@
+---
+// ===== CAMPAIGN STATUS STRIP =====
+// A thin fixed band above everything: what's open, when, and one way in.
+// Fixed rather than in-flow so the offsets it forces on the language rail
+// and the hamburger stay correct at every scroll position.
+//
+// The copy splits into a short head and a detail tail; the tail is hidden
+// below 768px so the strip is always exactly one line tall and its height
+// (--status-strip-h) can be trusted by the rules that dodge it.
+//
+// Strings are props rather than hardcoded because BlogLayout resolves its
+// copy through src/i18n/ui at build time, while Layout swaps it at runtime
+// via data-lang-*. Passing `static` covers the first case.
+interface Props {
+  href?: string;
+  headEn?: string;
+  headFr?: string;
+  detailEn?: string;
+  detailFr?: string;
+  ctaEn?: string;
+  ctaFr?: string;
+  /** Render one language only (blog layouts, which are already per-locale). */
+  static?: 'en' | 'fr';
+}
+
+const {
+  href = '/sponsor',
+  headEn = '8 founding slots open',
+  headFr = '8 places fondatrices',
+  detailEn = 'Lyon · January 2027',
+  detailFr = 'Lyon · janvier 2027',
+  ctaEn = 'Become a partner',
+  ctaFr = 'Devenir partenaire',
+  static: staticLang,
+} = Astro.props;
+
+const isStatic = staticLang === 'en' || staticLang === 'fr';
+const fr = staticLang === 'fr';
+---
+
+<div class="status-strip">
+  <span class="status-strip-dot" aria-hidden="true"></span>
+  {
+    isStatic ? (
+      <>
+        <span class="status-strip-head">{fr ? headFr : headEn}</span>
+        <span class="status-strip-detail">{fr ? detailFr : detailEn}</span>
+        <a class="status-strip-cta" href={href}>
+          <span>{fr ? ctaFr : ctaEn}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </>
+    ) : (
+      <>
+        <span class="status-strip-head" data-lang-en={headEn} data-lang-fr={headFr}>{headEn}</span>
+        <span class="status-strip-detail" data-lang-en={detailEn} data-lang-fr={detailFr}>{detailEn}</span>
+        <a class="status-strip-cta" href={href}>
+          <span data-lang-en={ctaEn} data-lang-fr={ctaFr}>{ctaEn}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </>
+    )
+  }
+</div>

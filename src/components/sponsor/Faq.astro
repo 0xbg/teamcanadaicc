@@ -1,0 +1,127 @@
+---
+// ===== SPONSOR FAQ: the objections, answered before the ask =====
+// Built on the site's existing accordion primitive (.collapse-trigger /
+// .collapsible-content in global.css) rather than a second system.
+// Answers that depend on facts we don't have yet carry a bracketed TBD,
+// the same convention Terms.astro uses for the incorporated entity.
+interface Item {
+  q: { en: string; fr: string };
+  a: { en: string; fr: string };
+}
+
+const items: Item[] = [
+  {
+    q: {
+      en: 'What does a partner actually receive?',
+      fr: 'Que reçoit concrètement un partenaire ?',
+    },
+    a: {
+      en: 'Every tier is listed in full in the investment table above, with its price, how many slots remain and its signature benefit. Broadly: logo placement scaled to tier, presence on chef jackets and campaign materials for the Lead and Premier tiers, dedicated social coverage, and a post-campaign recap documenting where your brand actually appeared. Nothing is held back for a follow-up call.',
+      fr: "Chaque niveau est détaillé dans le tableau d'investissement ci-dessus, avec son prix, le nombre de places restantes et son avantage phare. En résumé : placement du logo proportionnel au niveau, présence sur les vestes des chefs et les supports de campagne pour les niveaux majeur et Premier, couverture sociale dédiée, et un bilan post-campagne documentant où votre marque est réellement apparue. Rien n'est gardé pour un appel de suivi.",
+    },
+  },
+  {
+    q: {
+      en: 'When and how is payment made?',
+      fr: 'Quand et comment le paiement se fait-il ?',
+    },
+    a: {
+      en: 'Partnerships are confirmed by a written agreement before any invoice is issued. [Payment schedule and instalment options — TBD.] If a specific structure works better for your fiscal year, say so in your enquiry; we would rather fit your calendar than lose the partnership over timing.',
+      fr: "Les partenariats sont confirmés par une entente écrite avant l'émission de toute facture. [Calendrier de paiement et options de versements — à venir.] Si une structure particulière convient mieux à votre exercice financier, mentionnez-le dans votre demande ; nous préférons nous adapter à votre calendrier que perdre le partenariat pour une question d'échéancier.",
+    },
+  },
+  {
+    q: {
+      en: 'Is a sponsorship tax-receiptable?',
+      fr: 'La commandite donne-t-elle droit à un reçu fiscal ?',
+    },
+    a: {
+      en: 'Sponsorship of Team Canada ICC is a marketing expenditure, not a donation: you receive defined promotional benefits in return, so it is normally treated as a business expense rather than a charitable gift. [Receipt format and charitable status — TBD.] Confirm the treatment with your own accountant before you commit.',
+      fr: "La commandite d'Équipe Canada ICC est une dépense de marketing, et non un don : vous recevez des avantages promotionnels définis en contrepartie, elle est donc normalement traitée comme une dépense d'entreprise plutôt que comme un don de bienfaisance. [Format du reçu et statut d'organisme de bienfaisance — à venir.] Validez le traitement fiscal auprès de votre comptable avant de vous engager.",
+    },
+  },
+  {
+    q: {
+      en: "What happens if the team doesn't place, or can't compete?",
+      fr: "Que se passe-t-il si l'équipe ne se classe pas, ou ne peut pas concourir ?",
+    },
+    a: {
+      en: 'Your deliverables are visibility-based, not results-based. Logo placement, content, campaign materials and the sponsor wall are delivered across the full campaign regardless of where Canada finishes in Lyon. In the event the team cannot compete at all, remaining unspent funds are returned pro rata, and you receive the same documented recap of everything that did run.',
+      fr: "Vos livrables reposent sur la visibilité, et non sur les résultats. Le placement du logo, le contenu, les supports de campagne et le mur des commanditaires sont livrés sur toute la durée de la campagne, quel que soit le classement du Canada à Lyon. Si l'équipe ne pouvait pas concourir du tout, les fonds non dépensés seraient remboursés au prorata, et vous recevriez le même bilan documenté de tout ce qui a bel et bien eu lieu.",
+    },
+  },
+  {
+    q: {
+      en: 'Can we contribute in-kind instead of cash?',
+      fr: "Pouvons-nous contribuer en nature plutôt qu'en argent ?",
+    },
+    a: {
+      en: 'Yes, and it is genuinely useful. Ingredients, kitchen equipment, uniforms, freight, travel, photography and media production all offset real line items in the budget. In-kind contributions are valued at fair market cost and recognised at the equivalent cash tier. Select <em>In-kind partnership</em> in the enquiry form below.',
+      fr: "Oui, et c'est réellement utile. Ingrédients, équipement de cuisine, uniformes, fret, déplacements, photographie et production médias compensent tous des postes réels du budget. Les contributions en nature sont évaluées à leur juste valeur marchande et reconnues au niveau en argent équivalent. Choisissez <em>Partenariat en nature</em> dans le formulaire ci-dessous.",
+    },
+  },
+  {
+    q: {
+      en: 'Who owns the photography and video, and how may we use it?',
+      fr: 'À qui appartiennent les photos et vidéos, et comment pouvons-nous les utiliser ?',
+    },
+    a: {
+      en: 'Team Canada ICC produces and owns the campaign media. Partners receive a usage licence covering their own marketing channels for the duration of the campaign and afterwards. [Licence scope, territory and term — TBD.] Assets are delivered as a shared library, not on request one file at a time.',
+      fr: "Équipe Canada ICC produit et détient les contenus de la campagne. Les partenaires reçoivent une licence d'utilisation couvrant leurs propres canaux marketing pendant et après la campagne. [Portée, territoire et durée de la licence — à venir.] Les fichiers sont livrés sous forme de bibliothèque partagée, et non un à la fois sur demande.",
+    },
+  },
+  {
+    q: {
+      en: 'Is category exclusivity real, and how is it enforced?',
+      fr: "L'exclusivité de catégorie est-elle réelle, et comment est-elle appliquée ?",
+    },
+    a: {
+      en: 'It is written into the agreement. Lead and Premier partners lock their industry category for the full campaign; Official partners may hold exclusivity where agreed in advance. Once a category is taken we decline competing enquiries in it, which is the main reason the founding slots are worth moving on early.',
+      fr: "Elle est inscrite dans l'entente. Les partenaires majeurs et Premier verrouillent leur catégorie d'activité pour toute la campagne ; les partenaires officiels peuvent obtenir une exclusivité convenue à l'avance. Une fois une catégorie attribuée, nous refusons les demandes concurrentes dans ce secteur, ce qui est la principale raison d'agir tôt sur les places fondatrices.",
+    },
+  },
+  {
+    q: {
+      en: 'How quickly will someone respond?',
+      fr: 'En combien de temps obtiendrons-nous une réponse ?',
+    },
+    a: {
+      en: 'Within two business days, from a person, not an autoresponder. Enquiring costs nothing and commits you to nothing: most conversations start with a call to work out what would actually be useful to your business before any tier is chosen.',
+      fr: "Dans les deux jours ouvrables, par une personne et non par un répondeur automatique. Faire une demande ne coûte rien et n'engage à rien : la plupart des échanges commencent par un appel pour cerner ce qui serait réellement utile à votre entreprise, avant même de choisir un niveau.",
+    },
+  },
+];
+---
+
+<!-- ===== SPONSOR FAQ ===== -->
+<section id="faq" class="py-20 md:py-28 px-6 bg-cream text-body">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-gold font-display italic text-lg mb-3 text-center" data-lang-en="Before You Ask" data-lang-fr="Avant de demander">Before You Ask</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-ink font-display mb-4 text-center" data-lang-en="The questions partners actually ask." data-lang-fr="Les questions que les partenaires posent vraiment.">The questions partners actually ask.</h2>
+    <p class="text-muted text-lg leading-relaxed max-w-3xl mx-auto mb-12 text-center" data-lang-en="Answered here rather than saved for a sales call. Anything still open, put it in the enquiry below." data-lang-fr="Répondues ici plutôt que gardées pour un appel de vente. S'il reste une question, posez-la dans la demande ci-dessous.">Answered here rather than saved for a sales call. Anything still open, put it in the enquiry below.</p>
+
+    <ul class="faq-list max-w-3xl mx-auto">
+      {
+        items.map((item, i) => (
+          <li class="faq-item">
+            <button
+              type="button"
+              class="collapse-trigger faq-trigger"
+              aria-expanded="false"
+              aria-controls={`faq-panel-${i}`}
+              id={`faq-trigger-${i}`}
+            >
+              <span class="faq-q" data-lang-en={item.q.en} data-lang-fr={item.q.fr}>{item.q.en}</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="collapsible-content" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`}>
+              <p class="faq-a" data-lang-en={item.a.en} data-lang-fr={item.a.fr} set:html={item.a.en} />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<hr class="section-divider">

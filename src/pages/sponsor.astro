@@ -6,12 +6,14 @@ import Hero from '../components/sponsor/Hero.astro';
 import Story from '../components/sponsor/Story.astro';
 import Ledger from '../components/sponsor/Ledger.astro';
 import Terms from '../components/sponsor/Terms.astro';
+import Faq from '../components/sponsor/Faq.astro';
 import InquiryForm from '../components/InquiryForm.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 ---
 
 <Layout
+  ctaHref="#inquiry"
   title="Sponsorship Dossier · Team Canada · ICC · Lyon 2027"
   titleEn="Sponsorship Dossier · Team Canada · ICC · Lyon 2027"
   titleFr="Dossier de commandite · Équipe Canada · ICC · Lyon 2027"
@@ -26,6 +28,7 @@ import CookieBanner from '../components/CookieBanner.astro';
       { href: '#story', en: 'Story', fr: 'Le récit' },
       { href: '#ledger', en: 'Investment', fr: 'Investissement' },
       { href: '#terms', en: 'Terms', fr: 'Modalités' },
+      { href: '#faq', en: 'FAQ', fr: 'FAQ' },
       { href: '#inquiry', en: 'Partner', fr: 'Partenaire' },
       { href: '/', en: 'Home', fr: 'Accueil' },
     ]}
@@ -35,6 +38,7 @@ import CookieBanner from '../components/CookieBanner.astro';
   <Story />
   <Ledger />
   <Terms />
+  <Faq />
   <InquiryForm />
   <Footer ctaHref="#inquiry" />
   <CookieBanner />

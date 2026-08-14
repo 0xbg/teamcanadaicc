@@ -58,7 +58,41 @@
   --color-border-light: #d0c9b6;
   --color-border-dark: #3a3325;
   --color-border-dark-alt: #5a5241;
+
+  /* ── Button geometry ──
+     One radius for every interactive control on the site: text CTAs,
+     icon-only controls (hamburger, close, scroll-top), language
+     toggles. Sharp corners, matching the editorial direction set by
+     the homepage hero. Change here, changes everywhere. */
+  --radius-btn: 0;
 }
+
+/* ============================================================
+   BUTTON SHAPE — single source of truth
+   Every control below is a button in the user's eyes, so every one
+   takes --radius-btn. Do not set border-radius on a control outside
+   this rule; add its selector here instead.
+   ============================================================ */
+.btn-cta,
+.h2x .h2-btn,
+.vn-menu-btn,
+.vn-close-btn,
+.scroll-top-btn,
+.lang-btn,
+.lang-rail,
+.lang-rail .lang-btn,
+.vn-lang .lang-btn,
+.lang-thumb,
+.lang-switch-btn,
+.collapse-trigger,
+.form-input,
+button[type="submit"] {
+  border-radius: var(--radius-btn);
+}
+
+/* Shared text CTA — the padding/typography stay in the markup, but the
+   shape is owned by the token above. */
+.btn-cta { text-decoration: none; }
 
 /* ============================================================
    GLOBAL / SHARED STYLES (from Layout.astro & BlogLayout.astro)
@@ -404,7 +438,7 @@ html { scroll-behavior: smooth; }
   color: var(--color-gold); font-family: "JetBrains Mono", monospace;
   font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 0.5rem 1rem; border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
-  border-radius: 0.25rem; transition: all 0.2s ease; background: transparent;
+  transition: all 0.2s ease; background: transparent;
 }
 .collapse-trigger:hover { background: color-mix(in srgb, var(--color-gold) 8%, transparent); border-color: var(--color-gold); }
 .collapse-trigger svg { width: 0.875rem; height: 0.875rem; transition: transform 0.3s ease; }
@@ -413,14 +447,177 @@ html { scroll-behavior: smooth; }
 .collapsible-content.open { max-height: 2000px; }
 .team-card { border-radius: 0.5rem; }
 
+/* ---------- Sponsor FAQ ----------
+   Same accordion mechanics as the comparison table above, but the rows are
+   full-width questions in the body face rather than mono pills, so the
+   trigger overrides the pill shape instead of getting a second system. */
+/* margin-block only — a shorthand `margin: 0` here outranks the `mx-auto`
+   utility in the markup and knocks the list off centre. */
+.faq-list { list-style: none; margin-block: 0; padding: 0; }
+.faq-item { border-bottom: 1px solid var(--color-border-light); }
+.faq-item:first-child { border-top: 1px solid var(--color-border-light); }
+.faq-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 1.25rem 0.25rem;
+  border: none;
+  border-radius: 0;
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.faq-trigger:hover { background: transparent; color: var(--color-gold-dark); }
+.faq-trigger svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+  color: var(--color-gold);
+}
+.faq-trigger:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.faq-a {
+  color: var(--color-body-alt);
+  line-height: 1.7;
+  padding: 0 2.5rem 1.5rem 0.25rem;
+  margin: 0;
+}
+.faq-a em { color: var(--color-ink); font-style: normal; font-weight: 600; }
+
+/* ============================================================
+   CAMPAIGN STATUS STRIP + PERSISTENT MOBILE CTA
+   Two fixed bands, top and bottom. Every rule that has to dodge them
+   reads these two custom properties, so the geometry can only be wrong
+   in one place.
+   ============================================================ */
+:root {
+  --status-strip-h: 2.25rem;
+  --sticky-cta-h: 0rem; /* desktop: the bar is not rendered */
+}
+@media (max-width: 1023.98px) {
+  :root { --sticky-cta-h: 3.75rem; }
+}
+
+.status-strip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 52; /* above the nav rail and lang rail (50), below the mobile drawer (55) so an open drawer covers it */
+  height: var(--status-strip-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  background: var(--color-olive);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  white-space: nowrap;
+}
+@media (min-width: 768px) {
+  .status-strip { font-size: 0.6875rem; gap: 0.75rem; }
+}
+.status-strip-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+.status-strip-head { flex-shrink: 1; overflow: hidden; text-overflow: ellipsis; }
+.status-strip-detail {
+  display: none;
+  color: color-mix(in srgb, var(--color-gold-light) 70%, transparent);
+}
+@media (min-width: 768px) { .status-strip-detail { display: inline; } }
+.status-strip-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+.status-strip-cta:hover { color: #fff; }
+.status-strip-cta:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* The strip is fixed, so the document has to make room for it. */
+body { padding-top: var(--status-strip-h); }
+
+/* ...and anchor targets have to stop short of it, or every in-page jump
+   parks its own heading behind the strip. */
+[id] { scroll-margin-top: calc(var(--status-strip-h) + 0.5rem); }
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 45;
+  display: none; /* desktop uses the vertical nav rail */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  height: calc(var(--sticky-cta-h) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--color-ink);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
+  box-shadow: 0 -6px 20px color-mix(in srgb, var(--color-ink) 35%, transparent);
+  text-decoration: none;
+  text-align: center;
+}
+@media (max-width: 1023.98px) { .sticky-cta { display: flex; } }
+.sticky-cta-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+.sticky-cta-arrow { transition: transform 0.2s ease; }
+.sticky-cta:hover .sticky-cta-arrow { transform: translateX(0.2rem); }
+.sticky-cta-note {
+  color: var(--color-text-muted);
+  font-size: 0.6875rem;
+  line-height: 1.2;
+}
+.sticky-cta:focus-visible { outline: 2px solid var(--color-gold); outline-offset: -4px; }
+
+/* Below the bar's breakpoint the document also has to clear its footprint,
+   or the bar covers the footer's last row. */
+@media (max-width: 1023.98px) {
+  body { padding-bottom: calc(var(--sticky-cta-h) + env(safe-area-inset-bottom, 0px)); }
+}
+
 /* ---------- Hero: fit the viewport that is actually visible ----------
    100vh on mobile browsers means the viewport WITHOUT the collapsible URL
    bar, so a 100vh hero is taller than what the user sees on load and its
-   lower edge is cut off. svh is the small viewport: it always fits. */
+   lower edge is cut off. svh is the small viewport: it always fits.
+   The two fixed bands come off the top of that, or the hero no longer
+   fits the space it is meant to fill. */
 .min-h-viewport,
 header.hero-viewport {
-  min-height: 100vh; /* fallback for browsers without svh */
-  min-height: 100svh;
+  min-height: calc(100vh - var(--status-strip-h) - var(--sticky-cta-h)); /* fallback for browsers without svh */
+  min-height: calc(100svh - var(--status-strip-h) - var(--sticky-cta-h));
 }
 header.hero-viewport {
   /* Reserve the footprint of the pinned scroll cue (bottom-8 + its own
@@ -498,9 +695,44 @@ header.hero-viewport {
 @media (min-width: 1024px) {
   .team-card-portrait { height: 22.5rem; }
 }
-.form-input { border-radius: 0.375rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.form-input { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
 .form-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 15%, transparent); }
-.lang-btn { border-radius: 0.125rem; transition: all 0.2s ease; }
+
+/* ---------- Tier chips (inquiry form) ----------
+   Real radios, visually hidden but still focusable, with the <label> doing
+   the drawing — keyboard and screen-reader behaviour comes free that way. */
+.tier-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tier-chip input {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden; white-space: nowrap;
+  clip: rect(0 0 0 0); clip-path: inset(50%);
+}
+.tier-chip label {
+  display: inline-block;
+  cursor: pointer;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-btn);
+  background: #fff;
+  color: var(--color-body-alt);
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.tier-chip label:hover { border-color: var(--color-gold); color: var(--color-ink); }
+.tier-chip input:checked + label {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.tier-chip input:focus-visible + label {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+.lang-btn { transition: all 0.2s ease; }
 .lang-btn.active { background-color: var(--color-gold); color: var(--color-ink); }
 
 @keyframes saute-up {
@@ -588,8 +820,13 @@ header.hero-viewport {
 
 /* Scroll-to-top */
 .scroll-top-btn {
-  position: fixed; bottom: 2rem; right: 2rem; z-index: 40;
-  width: 3rem; height: 3rem; border-radius: 50%;
+  /* Lifted clear of the persistent CTA bar; --sticky-cta-h is 0 on desktop,
+     so this collapses back to a plain 2rem there. */
+  position: fixed;
+  bottom: calc(2rem + var(--sticky-cta-h) + env(safe-area-inset-bottom, 0px));
+  right: 2rem;
+  z-index: 40;
+  width: 3rem; height: 3rem;
   background-color: var(--color-gold); color: var(--color-ink);
   display: flex; align-items: center; justify-content: center; cursor: pointer;
   opacity: 0; visibility: hidden; transform: translateY(1rem);
@@ -860,7 +1097,7 @@ header.hero-viewport {
 .blog-card { border-radius: 0.5rem; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 1px solid color-mix(in srgb, var(--color-gold) 15%, transparent); background: white; }
 .blog-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(15,17,21,0.1); }
 
-.lang-switch-btn { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1px solid var(--color-gold); color: var(--color-gold); background: transparent; border-radius: 0.25rem; cursor: pointer; transition: all 0.2s ease; font-weight: 700; }
+.lang-switch-btn { font-family: "JetBrains Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.75rem; border: 1px solid var(--color-gold); color: var(--color-gold); background: transparent; cursor: pointer; transition: all 0.2s ease; font-weight: 700; }
 .lang-switch-btn:hover { background: var(--color-gold); color: var(--color-ink); }
 
 .tag-pill { display: inline-block; font-family: "JetBrains Mono", monospace; font-size: 0.6rem; letter-spacing: 0.05em; padding: 0.2rem 0.55rem; border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent); color: var(--color-muted-gold); border-radius: 0.375rem; background: color-mix(in srgb, var(--color-gold) 6%, transparent); margin-right: 0.4rem; margin-bottom: 0.4rem; }
@@ -884,7 +1121,14 @@ header.hero-viewport {
   .cb-copy { font-size: 0.85rem; }
   .cb-year { font-size: 0.85rem; }
 
-  .scroll-top-btn { bottom: 1rem; right: 1rem; width: 2.5rem; height: 2.5rem; }
+  /* Keep the CTA-bar clearance in the calc — a bare `bottom: 1rem` here puts
+     the button back on top of the bar. */
+  .scroll-top-btn {
+    bottom: calc(1rem + var(--sticky-cta-h) + env(safe-area-inset-bottom, 0px));
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
   .scroll-top-btn svg { width: 1rem; height: 1rem; }
 
   .tier-card { padding-left: 1rem; padding-right: 1rem; padding-top: 1.5rem; padding-bottom: 1.5rem; }
@@ -1610,7 +1854,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 /* Language switcher — small horizontal chip, top-left corner */
 .lang-rail {
   position: fixed;
-  top: 1.75rem;
+  top: calc(1.75rem + var(--status-strip-h));
   left: 1.75rem;
   z-index: 50;
   display: flex;
@@ -1621,7 +1865,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   background: color-mix(in srgb, var(--color-ink) 82%, transparent);
   backdrop-filter: blur(8px);
   border: 1px solid color-mix(in srgb, var(--color-gold) 28%, transparent);
-  border-radius: 9999px;
   box-shadow: 0 4px 14px color-mix(in srgb, var(--color-ink) 30%, transparent);
 }
 .lang-rail .lang-btn {
@@ -1631,7 +1874,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   padding: 0.4rem 0.6rem;
-  border-radius: 9999px;
   border: none;
   background: transparent;
   color: var(--color-text-muted);
@@ -1657,7 +1899,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 9999px;
   background: var(--color-gold);
   box-shadow: 0 2px 10px color-mix(in srgb, var(--color-gold) 45%, transparent);
   transition: transform 320ms cubic-bezier(0.65, 0, 0.35, 1);
@@ -1684,7 +1925,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   padding: 0.4rem 0.85rem;
-  border-radius: 9999px;
   border: none;
   background: transparent;
   color: var(--color-text-muted);
@@ -1701,11 +1941,10 @@ a.bg-gold:hover, button.bg-gold:hover {
 .vn-menu-btn {
   position: fixed;
   right: 1.25rem;
-  top: 1.25rem;
+  top: calc(1.25rem + var(--status-strip-h));
   z-index: 60;
   width: 3rem;
   height: 3rem;
-  border-radius: 9999px;
   background: var(--color-ink);
   color: var(--color-gold);
   border: 1.5px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
@@ -1776,7 +2015,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   z-index: 61;
   width: 3rem;
   height: 3rem;
-  border-radius: 9999px;
   background: var(--color-ink);
   color: var(--color-gold);
   border: 1.5px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
