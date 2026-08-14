@@ -12,15 +12,12 @@ interface Props {
 
 const { links } = Astro.props;
 const num = (i: number) => String(i + 1).padStart(2, '0');
+import LangRail from './LangRail.astro';
 ---
 
-<!-- Vertical language rail (left edge, all viewports) -->
-<div class="lang-rail" role="group" aria-label="Language">
-  <span class="lang-thumb" aria-hidden="true"></span>
-  <button id="lang-en" class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
-  <span class="lang-rail-sep" aria-hidden="true"></span>
-  <button id="lang-fr" class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
-</div>
+<!-- Vertical language rail (left edge, all viewports). Lives in its own
+     component so pages without a section nav can still render it. -->
+<LangRail />
 
 <nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
   <ul class="vn-list">

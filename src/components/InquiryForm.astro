@@ -1,72 +1,76 @@
-<!-- ===== PARTNERSHIP INQUIRY FORM ===== -->
-<section id="inquiry" class="py-20 md:py-28 px-6 bg-olive text-cream">
-  <div class="max-w-3xl mx-auto">
-    <p class="text-gold-light font-display italic text-lg mb-3 text-center" data-lang-en="Partnership Inquiries" data-lang-fr="Demandes de partenariat">Partnership Inquiries</p>
-    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Join Team Canada" data-lang-fr="Rejoignez Équipe Canada">Join Team Canada</h2>
-    <p class="text-text-muted-alt text-center mb-4" data-lang-en="Tell us which tier interests you and we'll email you the partnership package, rates included, as a PDF. Custom cash and in-kind arrangements are available." data-lang-fr="Dites-nous quel niveau vous intéresse et nous vous enverrons le dossier de partenariat par courriel, tarifs inclus, en PDF. Des ententes personnalisées, en argent ou en nature, sont possibles.">Tell us which tier interests you and we'll email you the partnership package, rates included, as a PDF. Custom cash and in-kind arrangements are available.</p>
-    <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10 rounded-md">
-      <div class="grid md:grid-cols-2 gap-6">
-        <div>
-          <label for="name" class="block text-sm font-semibold text-body mb-2"><span data-lang-en="Full Name" data-lang-fr="Nom complet">Full Name</span> *</label>
-          <input type="text" id="name" name="name" required class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" data-lang-en-placeholder="Your full name" data-lang-fr-placeholder="Votre nom complet" placeholder="Your full name">
-        </div>
-        <div>
-          <label for="email" class="block text-sm font-semibold text-body mb-2"><span data-lang-en="Email Address" data-lang-fr="Adresse courriel">Email Address</span> *</label>
-          <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" placeholder="you@example.com">
-        </div>
+---
+// ===== PARTNERSHIP INQUIRY FORM =====
+// A compact card, built to sit in the sponsor hero's right column rather than
+// as its own band — /sponsor is a squeeze page now and the form is the CTA.
+//
+// The element IDs below (inquiry-form, name, email, form-status, and the submit
+// button) are bound by ID in Layout.astro's inline script. Renaming any of them
+// silently breaks submission.
+//
+// The consent checkbox and the closing privacy paragraph are compliance, not
+// decoration; they move wherever the form moves.
+const tiers = [
+  { value: 'Lead Partner', en: 'Lead', fr: 'Majeur' },
+  { value: 'Premier Partner', en: 'Premier', fr: 'Premier' },
+  { value: 'Official Partner', en: 'Official', fr: 'Officiel' },
+  { value: 'Supporting Partner', en: 'Supporting', fr: 'Soutien' },
+  { value: 'Team Contributor', en: 'Contributor', fr: 'Contributeur' },
+  { value: 'Team Supporter', en: 'Supporter', fr: 'Supporteur' },
+  { value: 'In-Kind Partnership', en: 'In-kind', fr: 'En nature' },
+  { value: 'Not sure yet', en: 'Not sure yet', fr: 'Pas encore certain' },
+];
+---
+
+<div id="inquiry" class="s2-form-card">
+  <p class="s2-form-eyebrow" data-lang-en="Free · No obligation" data-lang-fr="Gratuit · Sans engagement">Free · No obligation</p>
+  <h2 class="s2-form-title" data-lang-en="Get the partnership package" data-lang-fr="Recevez le dossier de partenariat">Get the partnership package</h2>
+  <p class="s2-form-sub" data-lang-en="Tiers, benefits and rates, as a PDF in your inbox." data-lang-fr="Niveaux, avantages et tarifs, en PDF dans votre boîte de réception.">Tiers, benefits and rates, as a PDF in your inbox.</p>
+
+  <form id="inquiry-form" class="s2-form">
+    <div class="s2-form-row">
+      <div>
+        <label for="name" class="s2-form-label"><span data-lang-en="Full name" data-lang-fr="Nom complet">Full name</span> *</label>
+        <input type="text" id="name" name="name" required class="form-input s2-form-input" data-lang-en-placeholder="Your full name" data-lang-fr-placeholder="Votre nom complet" placeholder="Your full name">
       </div>
       <div>
-        <label for="company" class="block text-sm font-semibold text-body mb-2" data-lang-en="Company / Organization" data-lang-fr="Entreprise / Organisation">Company / Organization</label>
-        <input type="text" id="company" name="company" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm" data-lang-en-placeholder="Your company or organization name" data-lang-fr-placeholder="Nom de votre entreprise ou organisation" placeholder="Your company or organization name">
+        <label for="email" class="s2-form-label"><span data-lang-en="Email" data-lang-fr="Courriel">Email</span> *</label>
+        <input type="email" id="email" name="email" required class="form-input s2-form-input" placeholder="you@example.com">
       </div>
-      <!-- Tier as chips, not a dropdown: eight radios named "tier" produce the
-           same FormData string the API already reads, but the options stay
-           visible so the price ladder is part of the form rather than hidden
-           behind a click. "Not sure yet" exists to catch the prospects who
-           would otherwise leave the field empty. -->
-      <fieldset>
-        <legend class="block text-sm font-semibold text-body mb-2" data-lang-en="Partnership Tier of Interest" data-lang-fr="Niveau de partenariat souhaité">Partnership Tier of Interest</legend>
-        <div class="tier-chips">
-          {
-            [
-              { value: 'Lead Partner', en: 'Lead', fr: 'Majeur' },
-              { value: 'Premier Partner', en: 'Premier', fr: 'Premier' },
-              { value: 'Official Partner', en: 'Official', fr: 'Officiel' },
-              { value: 'Supporting Partner', en: 'Supporting', fr: 'Soutien' },
-              { value: 'Team Contributor', en: 'Contributor', fr: 'Contributeur' },
-              { value: 'Team Supporter', en: 'Supporter', fr: 'Supporteur' },
-              { value: 'In-Kind Partnership', en: 'In-kind', fr: 'En nature' },
-              { value: 'Not sure yet', en: 'Not sure yet', fr: 'Pas encore certain' },
-            ].map((t, i) => (
-              <div class="tier-chip">
-                <input type="radio" id={`tier-${i}`} name="tier" value={t.value} />
-                <label for={`tier-${i}`} data-lang-en={t.en} data-lang-fr={t.fr}>{t.en}</label>
-              </div>
-            ))
-          }
-        </div>
-        <p class="text-muted text-xs mt-2" data-lang-en="Optional. Nothing here is binding." data-lang-fr="Optionnel. Rien ici n'est contraignant.">Optional. Nothing here is binding.</p>
-      </fieldset>
-      <div>
-        <label for="message" class="block text-sm font-semibold text-body mb-2" data-lang-en="Message" data-lang-fr="Message">Message</label>
-        <textarea id="message" name="message" rows="4" class="form-input w-full px-4 py-3 border border-border-light bg-white text-ink placeholder-muted focus:outline-none text-sm resize-y" data-lang-en-placeholder="Tell us about your interest in partnering with Team Canada..." data-lang-fr-placeholder="Parlez-nous de votre intérêt à devenir partenaire d'Équipe Canada..." placeholder="Tell us about your interest in partnering with Team Canada..."></textarea>
+    </div>
+
+    <div>
+      <label for="company" class="s2-form-label" data-lang-en="Company / organization" data-lang-fr="Entreprise / organisation">Company / organization</label>
+      <input type="text" id="company" name="company" class="form-input s2-form-input" data-lang-en-placeholder="Your company" data-lang-fr-placeholder="Votre entreprise" placeholder="Your company">
+    </div>
+
+    <fieldset>
+      <legend class="s2-form-label" data-lang-en="Tier of interest (optional)" data-lang-fr="Niveau souhaité (optionnel)">Tier of interest (optional)</legend>
+      <div class="tier-chips">
+        {
+          tiers.map((t, i) => (
+            <div class="tier-chip">
+              <input type="radio" id={`tier-${i}`} name="tier" value={t.value} />
+              <label for={`tier-${i}`} data-lang-en={t.en} data-lang-fr={t.fr}>{t.en}</label>
+            </div>
+          ))
+        }
       </div>
-      <div class="space-y-3 border border-gold/20 bg-olive/30 p-4 text-sm rounded-md">
-        <p class="font-semibold text-ink mb-2" data-lang-en="Privacy & Consent" data-lang-fr="Confidentialité et consentement">Privacy & Consent</p>
-        <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" name="privacy_consent" required class="mt-1 w-4 h-4 accent-gold flex-shrink-0">
-          <span class="text-body-alt text-xs leading-relaxed" data-lang-en="I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC recueille et utilise mes renseignements personnels (nom, courriel, entreprise, message) afin de répondre à ma demande de partenariat et de m'envoyer des communications pertinentes liées au partenariat. Je comprends que je peux retirer mon consentement en tout temps en contactant <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>.`}>
-            I consent to Team Canada ICC collecting and using my personal information (name, email, company, message) for the purpose of responding to my partnership inquiry and sending relevant partnership-related communications. I understand I may withdraw consent at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.
-          </span>
-        </label>
-      </div>
-      <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2"></div>
-      <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md" role="status" aria-live="polite"></div>
-      <button type="submit" class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed btn-cta" data-lang-en="Submit Inquiry" data-lang-fr="Envoyer la demande">Submit Inquiry</button>
-      <p class="text-body-alt text-sm text-center font-medium" data-lang-en="No obligation · A person replies within 2 business days with the partnership PDF" data-lang-fr="Sans engagement · Une personne vous répond en 2 jours ouvrables avec le PDF de partenariat">No obligation · A person replies within 2 business days with the partnership PDF</p>
-      <p class="text-muted text-xs text-center leading-relaxed" data-lang-en="By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href='/privacy' class='text-gold hover:text-gold-light underline'>Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`En soumettant ce formulaire, vous acceptez qu'Équipe Canada ICC recueille, utilise et conserve vos renseignements personnels tel que décrit dans notre <a href='/privacy' class='text-gold hover:text-gold-light underline'>Avis de confidentialité</a>. Vos données sont conservées de manière sécurisée et ne seront ni vendues, ni louées, ni partagées avec des tiers sans votre consentement. Vous pouvez demander l'accès, la correction ou la suppression de vos données en tout temps en contactant <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>.`}>
-        By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href="/privacy" class="text-gold hover:text-gold-light underline">Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.
-      </p>
-    </form>
-  </div>
-</section>
+    </fieldset>
+
+    <label class="s2-form-consent">
+      <input type="checkbox" name="privacy_consent" required class="mt-0.5 w-4 h-4 accent-gold flex-shrink-0">
+      <span data-lang-en="I consent to Team Canada ICC using my name, email and company to answer this enquiry and send partnership communications. I can withdraw at any time via <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC utilise mon nom, mon courriel et mon entreprise pour répondre à cette demande et m'envoyer des communications liées au partenariat. Je peux retirer mon consentement en tout temps à <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>.`}>
+        I consent to Team Canada ICC using my name, email and company to answer this enquiry and send partnership communications. I can withdraw at any time via <a href="mailto:privacy@teamcanadaicc.ca">privacy@teamcanadaicc.ca</a>.
+      </span>
+    </label>
+
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2"></div>
+    <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md" role="status" aria-live="polite"></div>
+
+    <button type="submit" class="s2-form-submit btn-cta" data-lang-en="Send me the package" data-lang-fr="Envoyez-moi le dossier">Send me the package</button>
+    <p class="s2-form-note" data-lang-en="A person replies within 2 business days with the PDF attached." data-lang-fr="Une personne vous répond en 2 jours ouvrables, PDF en pièce jointe.">A person replies within 2 business days with the PDF attached.</p>
+    <p class="s2-form-legal" data-lang-en="Your data is stored securely and is never sold, rented or shared. See our <a href='/privacy'>Privacy Notice</a>." data-lang-fr={`Vos données sont conservées de façon sécurisée et ne sont jamais vendues, louées ni partagées. Consultez notre <a href='/privacy'>Avis de confidentialité</a>.`}>
+      Your data is stored securely and is never sold, rented or shared. See our <a href="/privacy">Privacy Notice</a>.
+    </p>
+  </form>
+</div>

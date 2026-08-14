@@ -1,0 +1,21 @@
+---
+// ===== EN/FR RAIL (fixed, left edge, all viewports) =====
+// Extracted from VerticalNav so pages that drop the section nav — /sponsor,
+// which is a squeeze page — keep their language switcher. Both this and the
+// drawer's pill row are driven by setLang/positionLangThumbs in Layout.astro,
+// which query `.lang-rail, .vn-lang`; nothing here owns behaviour.
+interface Props {
+  /** Set on pages with no mobile drawer. The rail is normally hidden below
+      1024px because the drawer carries the switcher there — without this, a
+      page that drops VerticalNav has no way to change language on a phone. */
+  solo?: boolean;
+}
+const { solo = false } = Astro.props;
+---
+
+<div class:list={['lang-rail', solo && 'lang-rail--solo']} role="group" aria-label="Language">
+  <span class="lang-thumb" aria-hidden="true"></span>
+  <button id="lang-en" class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
+  <span class="lang-rail-sep" aria-hidden="true"></span>
+  <button id="lang-fr" class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
+</div>

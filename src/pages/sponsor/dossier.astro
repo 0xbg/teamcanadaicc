@@ -1,0 +1,54 @@
+---
+// The long-form case, moved off /sponsor when that page became a squeeze page.
+// Nothing here is new: Story, Ledger and Terms are the same components, in the
+// same order they ran in before. This page keeps the nav rail and the reading
+// progress hairline, because unlike /sponsor it actually is a long read.
+import Layout from '../../layouts/Layout.astro';
+import VerticalNav from '../../components/VerticalNav.astro';
+import ReadingProgress from '../../components/sponsor/ReadingProgress.astro';
+import Story from '../../components/sponsor/Story.astro';
+import Ledger from '../../components/sponsor/Ledger.astro';
+import Terms from '../../components/sponsor/Terms.astro';
+import Footer from '../../components/Footer.astro';
+import CookieBanner from '../../components/CookieBanner.astro';
+---
+
+<Layout
+  ctaHref="/sponsor"
+  title="The Full Case · Team Canada · ICC · Lyon 2027"
+  titleEn="The Full Case · Team Canada · ICC · Lyon 2027"
+  titleFr="Le dossier complet · Équipe Canada · ICC · Lyon 2027"
+  descriptionEn="The long-form case for backing Team Canada's return to the International Catering Cup in Lyon: the story, the tiers, and where the money goes."
+  descriptionFr="Le dossier complet pour soutenir le retour d'Équipe Canada à l'International Catering Cup à Lyon : le récit, les niveaux et l'utilisation des fonds."
+>
+  <VerticalNav
+    links={[
+      { href: '#story', en: 'Story', fr: 'Le récit' },
+      { href: '#ledger', en: 'Tiers', fr: 'Niveaux' },
+      { href: '#terms', en: 'Terms', fr: 'Modalités' },
+      { href: '/sponsor', en: 'Partner', fr: 'Partenaire' },
+      { href: '/', en: 'Home', fr: 'Accueil' },
+    ]}
+  />
+  <ReadingProgress />
+
+  <header class="pt-28 pb-14 px-6 bg-ink text-cream text-center">
+    <p class="text-gold-light font-display italic text-lg mb-4" data-lang-en="The Full Case" data-lang-fr="Le dossier complet">The Full Case</p>
+    <h1 class="text-4xl md:text-6xl font-bold font-display mb-5" data-lang-en="Why back the comeback." data-lang-fr="Pourquoi soutenir ce retour.">Why back the comeback.</h1>
+    <p class="text-text-muted text-lg max-w-2xl mx-auto leading-relaxed" data-lang-en="The story, every tier, and exactly where the money goes. When you're ready, the partnership package comes by email as a PDF." data-lang-fr="Le récit, chaque niveau, et l'utilisation exacte des fonds. Quand vous serez prêt, le dossier de partenariat vous parvient par courriel en PDF.">The story, every tier, and exactly where the money goes. When you're ready, the partnership package comes by email as a PDF.</p>
+  </header>
+
+  <Story />
+  <Ledger />
+  <Terms />
+
+  <section class="py-20 md:py-24 px-6 bg-olive text-cream text-center">
+    <h2 class="text-3xl md:text-4xl font-bold font-display mb-4" data-lang-en="Seen enough?" data-lang-fr="Vous en avez assez vu ?">Seen enough?</h2>
+    <p class="text-text-muted-alt text-lg max-w-xl mx-auto mb-8 leading-relaxed" data-lang-en="Tell us which tier interests you and the full package, rates included, lands in your inbox." data-lang-fr="Dites-nous quel niveau vous intéresse et le dossier complet, tarifs inclus, arrive dans votre boîte de réception.">Tell us which tier interests you and the full package, rates included, lands in your inbox.</p>
+    <a href="/sponsor#inquiry" class="inline-block bg-gold text-ink px-8 py-4 font-semibold text-lg hover:bg-gold-light transition-colors duration-200 btn-cta" data-lang-en="Get the partnership package" data-lang-fr="Recevoir le dossier de partenariat">Get the partnership package</a>
+    <p class="text-text-muted text-xs mt-4" data-lang-en="Free · No obligation · Reply within 2 business days" data-lang-fr="Gratuit · Sans engagement · Réponse en 2 jours ouvrables">Free · No obligation · Reply within 2 business days</p>
+  </section>
+
+  <Footer ctaHref="/sponsor#inquiry" />
+  <CookieBanner />
+</Layout>

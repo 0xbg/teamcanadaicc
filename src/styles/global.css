@@ -722,7 +722,7 @@ header.hero-viewport {
 /* ---------- Tier chips (inquiry form) ----------
    Real radios, visually hidden but still focusable, with the <label> doing
    the drawing — keyboard and screen-reader behaviour comes free that way. */
-.tier-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tier-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .tier-chip input {
   position: absolute;
   width: 1px; height: 1px;
@@ -733,7 +733,7 @@ header.hero-viewport {
 .tier-chip label {
   display: inline-block;
   cursor: pointer;
-  padding: 0.55rem 0.9rem;
+  padding: 0.65rem 1rem;
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-btn);
   background: #fff;
@@ -1383,201 +1383,173 @@ a.bg-gold:hover, button.bg-gold:hover {
      display can carry more weight and still hold two lines. */
   font-size: clamp(2.75rem, 6.4vw, 6rem);
 }
-/* ---- The ten-year gap, as a vertical rail ----
-   Dotted and unmarked through the empty years, lit at 2027. Same grammar as
-   the homepage Comeback spine, at a smaller scale. */
-.s2-gap { flex: 0 0 auto; }
-.s2-gap-list {
-  --gap-dot: 0.5rem;
+/* ---- Squeeze layout: copy left, form right, both above the fold ----
+   The ten-year gap rail and the full-bleed brigade triptych that used to live
+   here came out with the redesign: the form now occupies the right column, and
+   at one-screen height the panels could not coexist with it. The three faces
+   survive as .s2-proof below. */
+.s2-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 84rem;
+  margin: 0 auto;
+  /* Top padding clears the fixed EN/FR rail, which sits at the top-left on
+     this page at every width because there is no drawer to hold it. */
+  padding: 5.5rem 1.5rem 3rem;
+}
+@media (min-width: 1024px) {
+  .s2-hero-inner {
+    grid-template-columns: 1fr minmax(26rem, 31rem);
+    gap: 4rem;
+    padding: 4rem 3rem;
+    /* One screen, minus the fixed status strip. Content taller than this is
+       allowed to push the hero down rather than being clipped. */
+    min-height: calc(100svh - var(--status-strip-h));
+  }
+}
+.s2-hero-copy { min-width: 0; }
+
+/* Text link to the long-form case. Deliberately quiet — on a squeeze page the
+   form is the call to action and this is the only other way out. */
+.s2-hero-link {
+  display: inline-block;
+  margin-top: 1.75rem;
+  color: var(--color-gold);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: color 0.2s ease;
+}
+.s2-hero-link:hover { color: var(--color-gold-light); }
+
+/* ---- Compact proof row: the brigade, small ---- */
+.s2-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2rem;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 20%, transparent);
 }
-.s2-gap-node {
-  position: relative;
-  padding-left: 1.5rem;
-  padding-bottom: 2.25rem;
-}
-.s2-gap-node:last-child { padding-bottom: 0; }
-/* The empty run is the longest segment on purpose: the length of the dotted
-   rail is the length of the absence. */
-.s2-gap-node--void { padding-bottom: 3.75rem; }
-/* Each node owns the rail segment running down to the next marker */
-.s2-gap-node::before {
-  content: '';
-  position: absolute;
-  left: calc(var(--gap-dot) / 2);
-  top: 0.45rem;
-  bottom: 0;
-  width: 1px;
-  transform: translateX(-50%);
-  background: repeating-linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--color-gold) 40%, transparent) 0 3px,
-    transparent 3px 8px
-  );
-}
-.s2-gap-node:last-child::before { display: none; }
-/* Marker */
-.s2-gap-node::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.35rem;
-  width: var(--gap-dot);
-  height: var(--gap-dot);
+.s2-proof-item { display: flex; align-items: center; gap: 0.75rem; }
+.s2-proof-img {
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  background: transparent;
-  border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
-}
-/* The empty years get rail but no marker — nothing happened there. */
-.s2-gap-node--void::after { display: none; }
-/* 2027 is the one lit thing in the group. */
-.s2-gap-node--live::after {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 12%, transparent),
-              0 0 14px color-mix(in srgb, var(--color-gold) 55%, transparent);
-}
-.s2-gap-year {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  color: var(--color-muted-gold);
-}
-.s2-gap-year--live { color: var(--color-gold); }
-.s2-gap-span {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  line-height: 1;
-  color: var(--color-text-muted);
-}
-.s2-gap-label {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-  margin-top: 0.45rem;
-  white-space: nowrap;
-}
-
-/* ---- The brigade: three panels, edge to edge, bleeding off the bottom ---- */
-.s2-brigade {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;                      /* the gap is the hairline between panels */
-  background: color-mix(in srgb, var(--color-gold) 30%, transparent);
-  /* Sized so the whole hero, captions included, clears 100svh. */
-  height: clamp(12rem, 33svh, 20rem);
-}
-.sp-face {
-  position: relative;
-  overflow: hidden;
-  margin: 0;
-  background: var(--color-ink);
-}
-.sp-face-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  /* Graded to a common tone. Without this the warm panelled rooms and the
-     bright marble kitchen read as three unrelated photographs. The sepia
-     pass is what actually unifies them — desaturating alone just made the
-     marble frame read as black and white next to two warm ones. */
-  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.76);
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
+  /* Same grading the triptych used, so the three rooms read as one shoot. */
+  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.85);
 }
-/* Per-frame: each was shot at a different distance, so centre each face. */
 .sp-face--donnel  { object-position: 50% 27%; }
 .sp-face--nicolas { object-position: 44% 26%; }
-/* Kevin's frame is high-key marble against two dark panelled rooms, so it
-   needs a heavier hand to sit level with them. */
-.sp-face--kevin {
-  object-position: 50% 36%;
-  filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.5);
-}
-
-/* A shared vignette does more to bind the three frames than the per-image
-   grading does: it gives them one light source regardless of the room. */
-.sp-face::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse at 50% 38%,
-    transparent 30%,
-    color-mix(in srgb, var(--color-ink) 55%, transparent) 100%
-  );
-}
-
-/* Caption sits over a fade from the panel's own bottom edge, the same device
-   the homepage team cards use. */
-.sp-face-cap {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 1;
-  padding: 3.5rem 1.25rem 1.25rem;
-  background: linear-gradient(to top, var(--color-ink) 4%, color-mix(in srgb, var(--color-ink) 70%, transparent) 45%, transparent 100%);
-}
-.sp-face-role {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  margin-bottom: 0.3rem;
-}
-.sp-face-name {
+.sp-face--kevin   { object-position: 50% 36%; filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.62); }
+.s2-proof-name {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(0.95rem, 1.5vw, 1.35rem);
-  line-height: 1.15;
+  font-size: 0.95rem;
+  line-height: 1.2;
   color: var(--color-cream);
 }
-/* Absorbed from the Story filmstrip this hero replaced. Hidden on phones,
-   where the panel is ~130px wide and the line would break to three rows. */
-.sp-face-cred {
-  display: none;
-  margin-top: 0.4rem;
-  font-size: 0.72rem;
-  line-height: 1.4;
-  color: var(--color-text-muted);
-  max-width: 15rem;
-}
-@media (min-width: 768px) {
-  /* Reserve two lines whether or not this credential needs them. The
-     captions are bottom-anchored, so a credential that wrapped pushed its
-     name and role up out of line with the other two panels. */
-  .sp-face-cred { display: block; min-height: 2.02rem; }
-}
-@media (max-width: 640px) {
-  .sp-face-cap { padding: 2.5rem 0.6rem 0.85rem; }
-  .sp-face-role { font-size: 0.5rem; letter-spacing: 0.14em; }
+.s2-proof-role {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-top: 0.15rem;
 }
 
-/* Right-edge scrim, only as wide as the fixed nav rail, so the rail stays
-   legible over whichever panel sits beneath it. */
-.s2-hero-scrim {
-  width: 16rem;
-  background: linear-gradient(
-    to left,
-    var(--color-ink) 0%,
-    color-mix(in srgb, var(--color-ink) 80%, transparent) 22%,
-    transparent 100%
-  );
+/* ---- The form card ---- */
+.s2-form-card {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
+  border-radius: 0.5rem;
+  padding: 1.75rem;
+  box-shadow: 0 20px 50px color-mix(in srgb, #000 35%, transparent);
 }
-@media (max-width: 1023.98px) {
-  /* No rail below lg, so no scrim is needed. */
-  .s2-hero-scrim { display: none; }
+@media (min-width: 1024px) { .s2-form-card { padding: 2.25rem 2.5rem; } }
+.s2-form-eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  margin-bottom: 0.5rem;
 }
+.s2-form-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+.s2-form-sub {
+  color: var(--color-body-alt);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0.6rem 0 1.75rem;
+}
+.s2-form { display: flex; flex-direction: column; gap: 1.4rem; }
+.s2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 420px) { .s2-form-row { grid-template-columns: 1fr; } }
+.s2-form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-body);
+  margin-bottom: 0.5rem;
+}
+.s2-form-input {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--color-border-light);
+  background: #fff;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}
+.s2-form-input:focus { outline: none; }
+.s2-form-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--color-body-alt);
+}
+.s2-form-consent a { color: var(--color-gold-dark); text-decoration: underline; }
+.s2-form-submit {
+  width: 100%;
+  padding: 1.05rem 1.5rem;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  border: none;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.s2-form-submit:hover { background: var(--color-gold-light); }
+.s2-form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.s2-form-note {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-body-alt);
+}
+.s2-form-legal {
+  text-align: center;
+  font-size: 0.625rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+.s2-form-legal a { color: var(--color-gold-dark); text-decoration: underline; }
 
 /* ===== Reading progress hairline (sponsor page) =====
    Replaces the fixed TopBar the sponsor page used to carry. The bar chrome
@@ -2069,4 +2041,8 @@ body.vn-open .vn-menu-btn { opacity: 0; pointer-events: none; }
    so the left language rail hides on mobile (no duplicate switcher) */
 @media (max-width: 1023.98px) {
   .lang-rail { display: none !important; }
+  /* ...unless it is the only switcher on the page. /sponsor has no drawer,
+     so hiding the rail there would leave phones with no way to reach the
+     French copy at all. */
+  .lang-rail--solo { display: flex !important; }
 }

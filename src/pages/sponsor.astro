@@ -1,45 +1,30 @@
 ---
+// A squeeze page: hero with the form in it, the objections answered, footer.
+// The long-form case lives at /sponsor/dossier.
+//
+// No VerticalNav here — there are only two sections to navigate — so the EN/FR
+// rail is rendered directly. It used to be nested inside VerticalNav, which is
+// why LangRail exists.
 import Layout from '../layouts/Layout.astro';
-import VerticalNav from '../components/VerticalNav.astro';
-import ReadingProgress from '../components/sponsor/ReadingProgress.astro';
+import LangRail from '../components/LangRail.astro';
 import Hero from '../components/sponsor/Hero.astro';
-import Story from '../components/sponsor/Story.astro';
-import Ledger from '../components/sponsor/Ledger.astro';
-import Terms from '../components/sponsor/Terms.astro';
 import Faq from '../components/sponsor/Faq.astro';
-import InquiryForm from '../components/InquiryForm.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 ---
 
 <Layout
   ctaHref="#inquiry"
-  title="Sponsorship Dossier · Team Canada · ICC · Lyon 2027"
-  titleEn="Sponsorship Dossier · Team Canada · ICC · Lyon 2027"
-  titleFr="Dossier de commandite · Équipe Canada · ICC · Lyon 2027"
-  descriptionEn="The case for backing Team Canada's return to the International Catering Cup in Lyon: the story, the investment, and the terms."
-  descriptionFr="Le dossier pour soutenir le retour d'Équipe Canada à l'International Catering Cup à Lyon : l'histoire, l'investissement et les modalités."
+  stickyCta={false}
+  title="Partner With Team Canada · ICC · Lyon 2027"
+  titleEn="Partner With Team Canada · ICC · Lyon 2027"
+  titleFr="Devenez partenaire d'Équipe Canada · ICC · Lyon 2027"
+  descriptionEn="Eight founding partner slots are open for Canada's return to the International Catering Cup in Lyon. Tell us which tier interests you and we'll email the partnership package as a PDF."
+  descriptionFr="Huit places de partenaire fondateur sont ouvertes pour le retour du Canada à l'International Catering Cup à Lyon. Dites-nous quel niveau vous intéresse et nous vous enverrons le dossier de partenariat en PDF."
 >
-  <!-- Same nav shell as the homepage: right rail on desktop, hamburger and
-       full-screen drawer below 1024px. The drawer is what carries the EN/FR
-       pills on mobile, so the page needs it to stay bilingual on phones. -->
-  <VerticalNav
-    links={[
-      { href: '#story', en: 'Story', fr: 'Le récit' },
-      { href: '#ledger', en: 'Investment', fr: 'Investissement' },
-      { href: '#terms', en: 'Terms', fr: 'Modalités' },
-      { href: '#faq', en: 'FAQ', fr: 'FAQ' },
-      { href: '#inquiry', en: 'Partner', fr: 'Partenaire' },
-      { href: '/', en: 'Home', fr: 'Accueil' },
-    ]}
-  />
-  <ReadingProgress />
+  <LangRail solo />
   <Hero />
-  <Story />
-  <Ledger />
-  <Terms />
   <Faq />
-  <InquiryForm />
   <Footer ctaHref="#inquiry" />
   <CookieBanner />
 </Layout>

@@ -10,6 +10,9 @@ interface Props {
   /** Where the status strip and the persistent mobile CTA point. Pages that
       already are the sponsor page pass an in-page anchor instead. */
   ctaHref?: string;
+  /** Set false on pages whose own content already carries the ask — /sponsor
+      puts the form in its hero, so a sticky bar would duplicate it. */
+  stickyCta?: boolean;
   title?: string;
   titleEn?: string;
   titleFr?: string;
@@ -20,6 +23,7 @@ interface Props {
 
 const {
   ctaHref = '/sponsor',
+  stickyCta = true,
   title = 'Team Canada · ICC · Lyon 2027',
   titleEn = 'Team Canada · ICC · Lyon 2027',
   titleFr = 'Équipe Canada · ICC · Lyon 2027',
@@ -43,7 +47,7 @@ const {
   <slot />
 
   <!-- Persistent CTA, mobile only -->
-  <StickyCta href={ctaHref} />
+  {stickyCta && <StickyCta href={ctaHref} />}
 
   <!-- Scroll-to-top button -->
   <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
