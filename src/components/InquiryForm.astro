@@ -9,14 +9,18 @@
 //
 // The consent checkbox and the closing privacy paragraph are compliance, not
 // decoration; they move wherever the form moves.
+//
+// Tier is a select rather than chips: eight chips wrapped to three rows and
+// forced the whole card wider than the hero column wanted to be. A select is
+// one row at any width, which is what lets this stay a narrow column.
 const tiers = [
-  { value: 'Lead Partner', en: 'Lead', fr: 'Majeur' },
-  { value: 'Premier Partner', en: 'Premier', fr: 'Premier' },
-  { value: 'Official Partner', en: 'Official', fr: 'Officiel' },
-  { value: 'Supporting Partner', en: 'Supporting', fr: 'Soutien' },
-  { value: 'Team Contributor', en: 'Contributor', fr: 'Contributeur' },
-  { value: 'Team Supporter', en: 'Supporter', fr: 'Supporteur' },
-  { value: 'In-Kind Partnership', en: 'In-kind', fr: 'En nature' },
+  { value: 'Lead Partner', en: 'Lead Partner', fr: 'Partenaire majeur' },
+  { value: 'Premier Partner', en: 'Premier Partner', fr: 'Partenaire Premier' },
+  { value: 'Official Partner', en: 'Official Partner', fr: 'Partenaire Officiel' },
+  { value: 'Supporting Partner', en: 'Supporting Partner', fr: 'Partenaire de soutien' },
+  { value: 'Team Contributor', en: 'Team Contributor', fr: "Contributeur d'équipe" },
+  { value: 'Team Supporter', en: 'Team Supporter', fr: "Supporteur de l'équipe" },
+  { value: 'In-Kind Partnership', en: 'In-kind partnership', fr: 'Partenariat en nature' },
   { value: 'Not sure yet', en: 'Not sure yet', fr: 'Pas encore certain' },
 ];
 ---
@@ -43,19 +47,17 @@ const tiers = [
       <input type="text" id="company" name="company" class="form-input s2-form-input" data-lang-en-placeholder="Your company" data-lang-fr-placeholder="Votre entreprise" placeholder="Your company">
     </div>
 
-    <fieldset>
-      <legend class="s2-form-label" data-lang-en="Tier of interest (optional)" data-lang-fr="Niveau souhaité (optionnel)">Tier of interest (optional)</legend>
-      <div class="tier-chips">
+    <div>
+      <label for="tier" class="s2-form-label" data-lang-en="Tier of interest (optional)" data-lang-fr="Niveau souhaité (optionnel)">Tier of interest (optional)</label>
+      <select id="tier" name="tier" class="form-input s2-form-input s2-form-select">
+        <option value="" data-lang-en="Select a tier" data-lang-fr="Choisir un niveau">Select a tier</option>
         {
-          tiers.map((t, i) => (
-            <div class="tier-chip">
-              <input type="radio" id={`tier-${i}`} name="tier" value={t.value} />
-              <label for={`tier-${i}`} data-lang-en={t.en} data-lang-fr={t.fr}>{t.en}</label>
-            </div>
+          tiers.map((t) => (
+            <option value={t.value} data-lang-en={t.en} data-lang-fr={t.fr}>{t.en}</option>
           ))
         }
-      </div>
-    </fieldset>
+      </select>
+    </div>
 
     <label class="s2-form-consent">
       <input type="checkbox" name="privacy_consent" required class="mt-0.5 w-4 h-4 accent-gold flex-shrink-0">

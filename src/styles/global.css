@@ -719,40 +719,6 @@ header.hero-viewport {
 .form-input { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
 .form-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 15%, transparent); }
 
-/* ---------- Tier chips (inquiry form) ----------
-   Real radios, visually hidden but still focusable, with the <label> doing
-   the drawing — keyboard and screen-reader behaviour comes free that way. */
-.tier-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.tier-chip input {
-  position: absolute;
-  width: 1px; height: 1px;
-  margin: -1px; padding: 0;
-  overflow: hidden; white-space: nowrap;
-  clip: rect(0 0 0 0); clip-path: inset(50%);
-}
-.tier-chip label {
-  display: inline-block;
-  cursor: pointer;
-  padding: 0.65rem 1rem;
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--radius-btn);
-  background: #fff;
-  color: var(--color-body-alt);
-  font-size: 0.8125rem;
-  line-height: 1.2;
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-}
-.tier-chip label:hover { border-color: var(--color-gold); color: var(--color-ink); }
-.tier-chip input:checked + label {
-  background: var(--color-gold);
-  border-color: var(--color-gold);
-  color: var(--color-ink);
-  font-weight: 600;
-}
-.tier-chip input:focus-visible + label {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 2px;
-}
 .lang-btn { transition: all 0.2s ease; }
 .lang-btn.active { background-color: var(--color-gold); color: var(--color-ink); }
 
@@ -1401,7 +1367,8 @@ a.bg-gold:hover, button.bg-gold:hover {
 }
 @media (min-width: 1024px) {
   .s2-hero-inner {
-    grid-template-columns: 1fr minmax(26rem, 31rem);
+    /* Even split: the copy and the ask carry equal weight. */
+    grid-template-columns: 1fr 1fr;
     gap: 4rem;
     padding: 4rem 3rem;
     /* One screen, minus the fixed status strip. Content taller than this is
@@ -1473,7 +1440,7 @@ a.bg-gold:hover, button.bg-gold:hover {
   padding: 1.75rem;
   box-shadow: 0 20px 50px color-mix(in srgb, #000 35%, transparent);
 }
-@media (min-width: 1024px) { .s2-form-card { padding: 2.25rem 2.5rem; } }
+@media (min-width: 1024px) { .s2-form-card { padding: 2rem; } }
 .s2-form-eyebrow {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.625rem;
@@ -1493,11 +1460,11 @@ a.bg-gold:hover, button.bg-gold:hover {
   color: var(--color-body-alt);
   font-size: 0.875rem;
   line-height: 1.5;
-  margin: 0.6rem 0 1.75rem;
+  margin: 0.5rem 0 1.35rem;
 }
-.s2-form { display: flex; flex-direction: column; gap: 1.4rem; }
-.s2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media (max-width: 420px) { .s2-form-row { grid-template-columns: 1fr; } }
+.s2-form { display: flex; flex-direction: column; gap: 1.15rem; }
+.s2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 400px) { .s2-form-row { grid-template-columns: 1fr; } }
 .s2-form-label {
   display: block;
   font-size: 0.8125rem;
@@ -1507,13 +1474,23 @@ a.bg-gold:hover, button.bg-gold:hover {
 }
 .s2-form-input {
   width: 100%;
-  padding: 0.8rem 0.95rem;
+  padding: 0.7rem 0.85rem;
   border: 1px solid var(--color-border-light);
   background: #fff;
   color: var(--color-ink);
   font-size: 0.9375rem;
 }
 .s2-form-input:focus { outline: none; }
+.s2-form-select {
+  appearance: none;
+  padding-right: 2.25rem;
+  cursor: pointer;
+  /* Gold chevron, inlined so the strict CSP on any hosted copy can't strip it */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c2a15c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.1rem;
+}
 .s2-form-consent {
   display: flex;
   align-items: flex-start;
@@ -1526,7 +1503,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 .s2-form-consent a { color: var(--color-gold-dark); text-decoration: underline; }
 .s2-form-submit {
   width: 100%;
-  padding: 1.05rem 1.5rem;
+  padding: 0.95rem 1.5rem;
   background: var(--color-gold);
   color: var(--color-ink);
   border: none;
