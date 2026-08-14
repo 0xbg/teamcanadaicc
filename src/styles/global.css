@@ -1345,9 +1345,19 @@ a.bg-gold:hover, button.bg-gold:hover {
    Fluid display size, capped so the longer headline line always holds a
    single line inside the 55% text column. */
 .s2-hero-title {
-  /* The text block is now full-width rather than a 55% column, so the
-     display can carry more weight and still hold two lines. */
-  font-size: clamp(2.75rem, 6.4vw, 6rem);
+  /* One line on the split layout, so the size is bound by the width of the
+     copy column rather than by taste: "Canada is coming back." has to clear
+     half the grid at 1024px. Below that it wraps and can grow again. */
+  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+}
+@media (min-width: 1024px) {
+  .s2-hero-title {
+    /* Upper bound is not taste: .s2-hero-inner caps at 84rem, so past ~1450px
+       the column stops growing while a vw-based size keeps going. 3rem is the
+       largest that still fits "Canada is coming back." in the 592px column. */
+    font-size: clamp(2.25rem, 3.5vw, 3rem);
+    white-space: nowrap;
+  }
 }
 /* ---- Squeeze layout: copy left, form right, both above the fold ----
    The ten-year gap rail and the full-bleed brigade triptych that used to live
