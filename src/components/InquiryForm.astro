@@ -3,7 +3,7 @@
   <div class="max-w-3xl mx-auto">
     <p class="text-gold-light font-display italic text-lg mb-3 text-center" data-lang-en="Partnership Inquiries" data-lang-fr="Demandes de partenariat">Partnership Inquiries</p>
     <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center font-display" data-lang-en="Join Team Canada" data-lang-fr="Rejoignez Équipe Canada">Join Team Canada</h2>
-    <p class="text-text-muted-alt text-center mb-4" data-lang-en="Partnerships start at $1,000, with custom cash and in-kind opportunities available." data-lang-fr="Les partenariats débutent à 1 000 $, avec des possibilités personnalisées en espèces et en nature.">Partnerships start at $1,000, with custom cash and in-kind opportunities available.</p>
+    <p class="text-text-muted-alt text-center mb-4" data-lang-en="Tell us which tier interests you and we'll email you the partnership package, rates included, as a PDF. Custom cash and in-kind arrangements are available." data-lang-fr="Dites-nous quel niveau vous intéresse et nous vous enverrons le dossier de partenariat par courriel, tarifs inclus, en PDF. Des ententes personnalisées, en argent ou en nature, sont possibles.">Tell us which tier interests you and we'll email you the partnership package, rates included, as a PDF. Custom cash and in-kind arrangements are available.</p>
     <form id="inquiry-form" class="space-y-6 bg-cream text-ink p-8 md:p-10 rounded-md">
       <div class="grid md:grid-cols-2 gap-6">
         <div>
@@ -29,12 +29,12 @@
         <div class="tier-chips">
           {
             [
-              { value: 'Lead Partner · $20,000', en: 'Lead · $20,000', fr: 'Majeur · 20 000 $' },
-              { value: 'Premier Partner · $15,000', en: 'Premier · $15,000', fr: 'Premier · 15 000 $' },
-              { value: 'Official Partner · $10,000', en: 'Official · $10,000', fr: 'Officiel · 10 000 $' },
-              { value: 'Supporting Partner · $5,000', en: 'Supporting · $5,000', fr: 'Soutien · 5 000 $' },
-              { value: 'Team Contributor · $2,500', en: 'Contributor · $2,500', fr: 'Contributeur · 2 500 $' },
-              { value: 'Team Supporter · $1,000', en: 'Supporter · $1,000', fr: 'Supporteur · 1 000 $' },
+              { value: 'Lead Partner', en: 'Lead', fr: 'Majeur' },
+              { value: 'Premier Partner', en: 'Premier', fr: 'Premier' },
+              { value: 'Official Partner', en: 'Official', fr: 'Officiel' },
+              { value: 'Supporting Partner', en: 'Supporting', fr: 'Soutien' },
+              { value: 'Team Contributor', en: 'Contributor', fr: 'Contributeur' },
+              { value: 'Team Supporter', en: 'Supporter', fr: 'Supporteur' },
               { value: 'In-Kind Partnership', en: 'In-kind', fr: 'En nature' },
               { value: 'Not sure yet', en: 'Not sure yet', fr: 'Pas encore certain' },
             ].map((t, i) => (
@@ -63,7 +63,7 @@
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2"></div>
       <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md" role="status" aria-live="polite"></div>
       <button type="submit" class="w-full bg-gold text-ink px-8 py-4 font-bold text-lg hover:bg-gold-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed btn-cta" data-lang-en="Submit Inquiry" data-lang-fr="Envoyer la demande">Submit Inquiry</button>
-      <p class="text-body-alt text-sm text-center font-medium" data-lang-en="Free to enquire · No obligation · A person replies within 2 business days" data-lang-fr="Demande gratuite · Sans engagement · Une personne vous répond en 2 jours ouvrables">Free to enquire · No obligation · A person replies within 2 business days</p>
+      <p class="text-body-alt text-sm text-center font-medium" data-lang-en="No obligation · A person replies within 2 business days with the partnership PDF" data-lang-fr="Sans engagement · Une personne vous répond en 2 jours ouvrables avec le PDF de partenariat">No obligation · A person replies within 2 business days with the partnership PDF</p>
       <p class="text-muted text-xs text-center leading-relaxed" data-lang-en="By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href='/privacy' class='text-gold hover:text-gold-light underline'>Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`En soumettant ce formulaire, vous acceptez qu'Équipe Canada ICC recueille, utilise et conserve vos renseignements personnels tel que décrit dans notre <a href='/privacy' class='text-gold hover:text-gold-light underline'>Avis de confidentialité</a>. Vos données sont conservées de manière sécurisée et ne seront ni vendues, ni louées, ni partagées avec des tiers sans votre consentement. Vous pouvez demander l'accès, la correction ou la suppression de vos données en tout temps en contactant <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold hover:text-gold-light underline'>privacy@teamcanadaicc.ca</a>.`}>
         By submitting this form, you agree to Team Canada ICC collecting, using, and retaining your personal information as described in our <a href="/privacy" class="text-gold hover:text-gold-light underline">Privacy Notice</a>. Your data is stored securely and will not be sold, rented, or shared with third parties without your consent. You may request access, correction, or deletion of your data at any time by contacting <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold hover:text-gold-light underline">privacy@teamcanadaicc.ca</a>.
       </p>
