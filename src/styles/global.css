@@ -1439,20 +1439,27 @@ a.bg-gold:hover, button.bg-gold:hover {
 
 /* A stacked cast list rather than a row: inside the contained panel three
    name-and-role pairs no longer fit on one line, and wrapping left an orphan. */
+/* Three columns, portrait over name. A stacked list read as an afterthought
+   running down the side; abreast they read as a team. */
 .s2-proof {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
   list-style: none;
   margin: 0;
   padding: 1.75rem 0 0;
   max-width: 32rem;
   border-top: 1px solid color-mix(in srgb, var(--color-gold) 25%, transparent);
 }
-.s2-proof-item { display: flex; align-items: center; gap: 0.75rem; }
+.s2-proof-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
 .s2-proof-img {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3.25rem;
+  height: 3.25rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -1465,7 +1472,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 .s2-proof-name {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1.2;
   color: var(--color-cream);
 }
@@ -1507,9 +1514,9 @@ a.bg-gold:hover, button.bg-gold:hover {
   color: var(--color-body-alt);
   font-size: 0.875rem;
   line-height: 1.5;
-  margin: 0.5rem 0 1.35rem;
+  margin: 0.45rem 0 1.1rem;
 }
-.s2-form { display: flex; flex-direction: column; gap: 1.15rem; }
+.s2-form { display: flex; flex-direction: column; gap: 1rem; }
 .s2-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 @media (max-width: 400px) { .s2-form-row { grid-template-columns: 1fr; } }
 .s2-form-label {
@@ -1550,7 +1557,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 .s2-form-consent a { color: var(--color-gold-dark); text-decoration: underline; }
 .s2-form-submit {
   width: 100%;
-  padding: 0.95rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   background: var(--color-gold);
   color: var(--color-ink);
   border: none;
@@ -1561,11 +1568,36 @@ a.bg-gold:hover, button.bg-gold:hover {
 }
 .s2-form-submit:hover { background: var(--color-gold-light); }
 .s2-form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-.s2-form-note {
-  text-align: center;
+/* What actually happens after the button. Three checked lines rather than one
+   sentence: on a lead magnet this is the whole exchange being spelled out. */
+.s2-form-next {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.s2-form-next li {
+  position: relative;
+  padding-left: 1.4rem;
   font-size: 0.75rem;
-  font-weight: 500;
+  line-height: 1.5;
   color: var(--color-body-alt);
+}
+.s2-form-next li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3rem;
+  width: 0.85rem;
+  height: 0.85rem;
+  background-color: var(--color-gold-dark);
+  -webkit-mask: var(--check-mask) no-repeat center / contain;
+  mask: var(--check-mask) no-repeat center / contain;
+}
+:root {
+  --check-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
 }
 .s2-form-legal {
   text-align: center;
