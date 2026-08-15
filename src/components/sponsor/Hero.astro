@@ -5,11 +5,12 @@
 // rather than below a long case, and there is deliberately no second
 // destination anywhere on the page.
 //
-// The left half is a full-bleed photograph with the copy over it. An earlier
-// pass ran the copy on a plain ink field, which left a large dead gap between
-// the standfirst and the proof row once the column stretched to match the
-// card. The photograph is what fills that height with something worth looking
-// at.
+// The photograph is the hero's background, spanning the full width beneath a
+// contained two-column grid: copy on the left, form card on the right. An
+// earlier pass ran the copy on a plain ink field, which left a large dead gap
+// between the standfirst and the proof row once the column stretched to match
+// the card — the picture is what fills that height with something worth
+// looking at.
 import InquiryForm from '../InquiryForm.astro';
 
 const brigade = [
@@ -41,17 +42,17 @@ const brigade = [
 ---
 
 <header class="s2-hero bg-ink text-cream">
-  <div class="s2-hero-inner">
-  <div class="s2-hero-panel">
-    <img
-      src="/assets/hero-chef.jpg"
-      alt="Team Canada training in the kitchen at Bar George, Montréal"
-      class="s2-hero-panel-img"
-      fetchpriority="high"
-    />
-    <!-- Gold dot grid, the same one the homepage hero carries -->
-    <div class="s2-hero-panel-grid" aria-hidden="true"></div>
+  <img
+    src="/assets/hero-chef.jpg"
+    alt="Team Canada training in the kitchen at Bar George, Montréal"
+    class="s2-hero-bg"
+    fetchpriority="high"
+  />
+  <div class="s2-hero-scrim" aria-hidden="true"></div>
+  <!-- Gold dot grid, the same one the homepage hero carries -->
+  <div class="s2-hero-grid" aria-hidden="true"></div>
 
+  <div class="s2-hero-inner">
     <div class="s2-hero-copy">
       <div>
         <p class="text-gold-light font-display italic text-lg mb-5 tracking-wide" data-lang-en="Sponsorship · ICC Lyon 2027" data-lang-fr="Commandite · ICC Lyon 2027">Sponsorship · ICC Lyon 2027</p>
@@ -76,10 +77,9 @@ const brigade = [
         ))}
       </ul>
     </div>
-  </div>
 
-  <div class="s2-hero-form">
-    <InquiryForm />
-  </div>
+    <div class="s2-hero-form">
+      <InquiryForm />
+    </div>
   </div>
 </header>
