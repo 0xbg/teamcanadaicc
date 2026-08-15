@@ -1401,15 +1401,13 @@ a.bg-gold:hover, button.bg-gold:hover {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  /* Top inset clears the fixed EN/FR rail, which sits top-left at every width
-     on this page because there is no drawer to hold it. */
-  padding: 6rem 1.5rem 3rem;
+  padding: 3.5rem 1.5rem 3rem;
 }
 @media (min-width: 1024px) {
   .s2-hero-inner {
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
-    padding: 6rem 3rem 4rem;
+    padding: 4rem 3rem;
     align-items: stretch;
     min-height: calc(100svh - var(--status-strip-h));
   }
@@ -1902,10 +1900,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 
 /* Language switcher — small horizontal chip, top-left corner */
 .lang-rail {
-  position: fixed;
-  top: calc(1.75rem + var(--status-strip-h));
-  left: 1.75rem;
-  z-index: 50;
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2095,10 +2090,11 @@ body.vn-open .vn-menu-btn { opacity: 0; pointer-events: none; }
 
 /* Mobile (<1024px): the drawer is the single language + nav surface,
    so the left language rail hides on mobile (no duplicate switcher) */
+/* On phones the drawer is the language surface, so the footer copy stands
+   down — but only where a drawer actually exists. /sponsor has none, and
+   hiding it there would leave a phone with no way to reach the French copy.
+   If :has() is unsupported the footer switcher simply stays, which is the
+   harmless outcome. */
 @media (max-width: 1023.98px) {
-  .lang-rail { display: none !important; }
-  /* ...unless it is the only switcher on the page. /sponsor has no drawer,
-     so hiding the rail there would leave phones with no way to reach the
-     French copy at all. */
-  .lang-rail--solo { display: flex !important; }
+  body:has(#vn-drawer) .lang-rail--footer { display: none; }
 }

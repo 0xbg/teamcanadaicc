@@ -4,11 +4,10 @@
 // no long-form case anywhere on the site — every detail travels in the
 // attachment, and a second page would only compete with the form.
 //
-// No VerticalNav here — there are only two sections to navigate — so the EN/FR
-// rail is rendered directly. It used to be nested inside VerticalNav, which is
-// why LangRail exists.
+// No VerticalNav: two sections need no section nav. That also means no mobile
+// drawer, so the footer's EN/FR switcher is this page's only one and stays
+// visible at every width.
 import Layout from '../layouts/Layout.astro';
-import LangRail from '../components/LangRail.astro';
 import Hero from '../components/sponsor/Hero.astro';
 import Faq from '../components/sponsor/Faq.astro';
 import Footer from '../components/Footer.astro';
@@ -24,7 +23,6 @@ import CookieBanner from '../components/CookieBanner.astro';
   descriptionEn="Eight founding partner slots are open for Canada's return to the International Catering Cup in Lyon. Tell us which tier interests you and we'll email the partnership package as a PDF."
   descriptionFr="Huit places de partenaire fondateur sont ouvertes pour le retour du Canada à l'International Catering Cup à Lyon. Dites-nous quel niveau vous intéresse et nous vous enverrons le dossier de partenariat en PDF."
 >
-  <LangRail solo />
   <Hero />
   <Faq />
   <Footer ctaHref="#inquiry" />

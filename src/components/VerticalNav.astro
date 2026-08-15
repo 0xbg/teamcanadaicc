@@ -12,12 +12,10 @@ interface Props {
 
 const { links } = Astro.props;
 const num = (i: number) => String(i + 1).padStart(2, '0');
-import LangRail from './LangRail.astro';
 ---
 
-<!-- Vertical language rail (left edge, all viewports). Lives in its own
-     component so pages without a section nav can still render it. -->
-<LangRail />
+<!-- The EN/FR switcher lives in the footer now, plus a copy in the drawer
+     below for mobile. Nothing floats over the page. -->
 
 <nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
   <ul class="vn-list">

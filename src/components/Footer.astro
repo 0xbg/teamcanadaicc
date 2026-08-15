@@ -6,6 +6,7 @@ interface Props {
 
 const { ctaHref = '#inquiry' } = Astro.props;
 import Icon from './Icon.astro';
+import LangRail from './LangRail.astro';
 ---
 <footer class="py-20 md:py-28 px-6 bg-ink text-cream">
   <div class="max-w-3xl mx-auto text-center">
@@ -55,8 +56,9 @@ import Icon from './Icon.astro';
       </div>
     </div>
 
-    <div class="border-t border-border-dark mt-12 pt-6 text-center">
-      <p class="text-text-muted text-xs">© 2026 Team Canada ICC. <span data-lang-en="All rights reserved." data-lang-fr="Tous droits réservés.">All rights reserved.</span></p>
+    <div class="border-t border-border-dark mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-text-muted text-xs order-2 sm:order-1">© 2026 Team Canada ICC. <span data-lang-en="All rights reserved." data-lang-fr="Tous droits réservés.">All rights reserved.</span></p>
+      <LangRail />
     </div>
   </div>
 </footer>
