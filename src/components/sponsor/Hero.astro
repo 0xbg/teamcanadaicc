@@ -82,7 +82,7 @@ const brigade = [
       <ul class="s2-proof" aria-label="Team Canada's competing chefs">
         {brigade.map((c) => (
           <li class="s2-proof-item">
-            <Image src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} width={80} height={80} format="webp" quality={75} loading="lazy" />
+            <Image src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} width={128} height={128} format="webp" quality={75} loading="lazy" />
             <div>
               <p class="s2-proof-name">{c.name}</p>
               <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>

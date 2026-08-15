@@ -1455,32 +1455,39 @@ a.bg-gold:hover, button.bg-gold:hover {
   align-items: flex-start;
   gap: 0.6rem;
 }
+/* These sit on a dark photograph, so they have to be brighter than their
+   source, not graded down into it. The earlier brightness(0.9) matched them
+   to the background and they disappeared. */
 .s2-proof-img {
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
-  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.9);
+  border: 2px solid color-mix(in srgb, var(--color-gold) 70%, transparent);
+  box-shadow: 0 4px 14px color-mix(in srgb, #000 55%, transparent);
+  filter: grayscale(15%) sepia(12%) saturate(1.2) contrast(1.12) brightness(1.2);
 }
 .sp-face--donnel  { object-position: 50% 27%; }
 .sp-face--nicolas { object-position: 44% 26%; }
-.sp-face--kevin   { object-position: 50% 36%; filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.7); }
+/* Kevin's frame is high-key marble against two dim panelled rooms. */
+.sp-face--kevin   { object-position: 50% 36%; filter: grayscale(20%) sepia(18%) saturate(1.1) contrast(1.1) brightness(0.95); }
 .s2-proof-name {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.2;
-  color: var(--color-cream);
+  color: #fff;
+  text-shadow: 0 1px 10px color-mix(in srgb, var(--color-ink) 90%, transparent);
 }
 .s2-proof-role {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.6rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-gold);
-  margin-top: 0.15rem;
+  color: var(--color-gold-light);
+  margin-top: 0.2rem;
+  text-shadow: 0 1px 10px color-mix(in srgb, var(--color-ink) 90%, transparent);
 }
 
 /* ---- The form card ---- */
