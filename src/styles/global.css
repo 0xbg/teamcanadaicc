@@ -1355,19 +1355,30 @@ a.bg-gold:hover, button.bg-gold:hover {
     /* Upper bound is not taste: .s2-hero-inner caps at 84rem, so past ~1450px
        the column stops growing while a vw-based size keeps going. 3rem is the
        largest that still fits "Canada is coming back." in the 592px column. */
-    font-size: clamp(2.25rem, 3.5vw, 3rem);
+    font-size: clamp(1.9rem, 2.9vw, 2.5rem);
     white-space: nowrap;
   }
 }
 /* ---- Squeeze layout: photo panel left, form right ----
-   The left half is a photograph rather than a plain ink field. Stretching the
-   copy to match the card's height left ~390px of dead space between the
-   standfirst and the proof row; the picture is what earns that height. */
+   Contained rather than edge to edge: both halves sit inside the same centred
+   measure, so the photograph reads as a panel paired with the form card
+   rather than as a background bleeding off the viewport. */
 .s2-hero { position: relative; }
+.s2-hero-inner {
+  max-width: 84rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  /* Top inset clears the fixed EN/FR rail, which sits top-left at every width
+     on this page because there is no drawer to hold it. */
+  padding: 6rem 1.5rem 3rem;
+}
 @media (min-width: 1024px) {
-  .s2-hero {
-    display: grid;
+  .s2-hero-inner {
     grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    padding: 6rem 3rem 4rem;
     align-items: stretch;
     min-height: calc(100svh - var(--status-strip-h));
   }
@@ -1378,22 +1389,20 @@ a.bg-gold:hover, button.bg-gold:hover {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  /* Top padding clears the fixed EN/FR rail, which sits top-left at every
-     width on this page because there is no drawer to hold it. */
-  padding: 5.5rem 1.5rem 3rem;
+  border-radius: 0.5rem;
+  /* Same border and radius as the form card, so the two read as a pair. */
+  border: 1px solid color-mix(in srgb, var(--color-gold) 30%, transparent);
+  padding: 2rem 1.75rem;
+  min-height: 26rem;
 }
-@media (min-width: 1024px) {
-  /* Bleeds to the viewport's left edge; the inset matches the form card's own
-     2rem padding so the two columns align on their content boxes. */
-  .s2-hero-panel { padding: 6rem 3rem 4rem; }
-}
+@media (min-width: 1024px) { .s2-hero-panel { padding: 2.5rem; min-height: 0; } }
 .s2-hero-panel-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 40%;
+  object-position: 50% 38%;
   /* Graded to the site's palette and pushed dark enough that display type
      over it clears contrast without a separate scrim layer. */
   filter: grayscale(45%) sepia(30%) saturate(1.15) contrast(1.05) brightness(0.34);
@@ -1406,19 +1415,6 @@ a.bg-gold:hover, button.bg-gold:hover {
   background-image: radial-gradient(circle at 50% 50%, #c2a15c 1px, transparent 1px);
   background-size: 40px 40px;
 }
-/* Feathers the panel into the ink field the form sits on, so the photograph
-   ends in a fade rather than a hard vertical seam. */
-@media (min-width: 1024px) {
-  .s2-hero-panel::after {
-    content: '';
-    position: absolute;
-    inset-block: 0;
-    right: 0;
-    width: 9rem;
-    pointer-events: none;
-    background: linear-gradient(to right, transparent, var(--color-ink));
-  }
-}
 
 .s2-hero-copy {
   position: relative;
@@ -1428,40 +1424,36 @@ a.bg-gold:hover, button.bg-gold:hover {
   flex-direction: column;
   /* Message at the top, proof at the bottom; the photograph carries between. */
   justify-content: space-between;
-  gap: 3rem;
+  gap: 2.5rem;
   flex: 1;
 }
 .s2-hero-standfirst {
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--color-cream);
-  max-width: 34rem;
+  max-width: 32rem;
   text-shadow: 0 1px 12px color-mix(in srgb, var(--color-ink) 80%, transparent);
 }
-@media (min-width: 768px) { .s2-hero-standfirst { font-size: 1.125rem; } }
+@media (min-width: 768px) { .s2-hero-standfirst { font-size: 1.0625rem; } }
 
-.s2-hero-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1.5rem;
-}
-@media (min-width: 1024px) { .s2-hero-form { padding: 4rem 3rem; } }
+.s2-hero-form { display: flex; align-items: center; justify-content: center; }
 
 /* ---- Compact proof row: the brigade, small ---- */
+/* A stacked cast list rather than a row: inside the contained panel three
+   name-and-role pairs no longer fit on one line, and wrapping left an orphan. */
 .s2-proof {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem 2rem;
+  flex-direction: column;
+  gap: 0.85rem;
   list-style: none;
   margin: 0;
-  padding: 1.75rem 0 0;
+  padding: 1.5rem 0 0;
   border-top: 1px solid color-mix(in srgb, var(--color-gold) 25%, transparent);
 }
 .s2-proof-item { display: flex; align-items: center; gap: 0.75rem; }
 .s2-proof-img {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
