@@ -1359,62 +1359,104 @@ a.bg-gold:hover, button.bg-gold:hover {
     white-space: nowrap;
   }
 }
-/* ---- Squeeze layout: copy left, form right, both above the fold ----
-   The ten-year gap rail and the full-bleed brigade triptych that used to live
-   here came out with the redesign: the form now occupies the right column, and
-   at one-screen height the panels could not coexist with it. The three faces
-   survive as .s2-proof below. */
-.s2-hero-inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-  align-items: center;
-  /* Desktop overrides this to `stretch` so the two columns share edges. */
-  max-width: 84rem;
-  margin: 0 auto;
-  /* Top padding clears the fixed EN/FR rail, which sits at the top-left on
-     this page at every width because there is no drawer to hold it. */
-  padding: 5.5rem 1.5rem 3rem;
-}
+/* ---- Squeeze layout: photo panel left, form right ----
+   The left half is a photograph rather than a plain ink field. Stretching the
+   copy to match the card's height left ~390px of dead space between the
+   standfirst and the proof row; the picture is what earns that height. */
+.s2-hero { position: relative; }
 @media (min-width: 1024px) {
-  .s2-hero-inner {
-    /* Even split: the copy and the ask carry equal weight. Stretched rather
-       than centred — centring left the copy as a small cluster floating in
-       the middle of a much taller card, sharing no edge with it. */
+  .s2-hero {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: stretch;
-    gap: 4rem;
-    padding: 4rem 3rem;
-    /* One screen, minus the fixed status strip. Content taller than this is
-       allowed to push the hero down rather than being clipped. */
     min-height: calc(100svh - var(--status-strip-h));
   }
 }
-.s2-hero-copy { min-width: 0; }
-@media (min-width: 1024px) {
-  .s2-hero-copy {
-    display: flex;
-    flex-direction: column;
-    /* Message at the top, proof at the bottom; the gap between them absorbs
-       whatever height the form card dictates. The inset matches the card's
-       own 2rem padding so the two columns align on their content boxes, not
-       just on their outer edges. */
-    padding-block: 2rem;
-  }
-  .s2-hero-foot { margin-top: auto; }
-  /* The card keeps its natural height and centres in the stretched cell. */
-  .s2-hero-form { display: flex; align-items: center; }
+
+.s2-hero-panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Top padding clears the fixed EN/FR rail, which sits top-left at every
+     width on this page because there is no drawer to hold it. */
+  padding: 5.5rem 1.5rem 3rem;
 }
+@media (min-width: 1024px) {
+  /* Bleeds to the viewport's left edge; the inset matches the form card's own
+     2rem padding so the two columns align on their content boxes. */
+  .s2-hero-panel { padding: 6rem 3rem 4rem; }
+}
+.s2-hero-panel-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  /* Graded to the site's palette and pushed dark enough that display type
+     over it clears contrast without a separate scrim layer. */
+  filter: grayscale(45%) sepia(30%) saturate(1.15) contrast(1.05) brightness(0.34);
+}
+.s2-hero-panel-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.1;
+  background-image: radial-gradient(circle at 50% 50%, #c2a15c 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Feathers the panel into the ink field the form sits on, so the photograph
+   ends in a fade rather than a hard vertical seam. */
+@media (min-width: 1024px) {
+  .s2-hero-panel::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    right: 0;
+    width: 9rem;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--color-ink));
+  }
+}
+
+.s2-hero-copy {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* Message at the top, proof at the bottom; the photograph carries between. */
+  justify-content: space-between;
+  gap: 3rem;
+  flex: 1;
+}
+.s2-hero-standfirst {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-cream);
+  max-width: 34rem;
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--color-ink) 80%, transparent);
+}
+@media (min-width: 768px) { .s2-hero-standfirst { font-size: 1.125rem; } }
+
+.s2-hero-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+@media (min-width: 1024px) { .s2-hero-form { padding: 4rem 3rem; } }
 
 /* ---- Compact proof row: the brigade, small ---- */
 .s2-proof {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem 2rem;
+  gap: 1.25rem 2rem;
   list-style: none;
   margin: 0;
   padding: 1.75rem 0 0;
-  border-top: 1px solid color-mix(in srgb, var(--color-gold) 20%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 25%, transparent);
 }
 .s2-proof-item { display: flex; align-items: center; gap: 0.75rem; }
 .s2-proof-img {
@@ -1423,13 +1465,12 @@ a.bg-gold:hover, button.bg-gold:hover {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
-  border: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
-  /* Same grading the triptych used, so the three rooms read as one shoot. */
-  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.85);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
+  filter: grayscale(35%) sepia(30%) saturate(1.25) contrast(1.06) brightness(0.9);
 }
 .sp-face--donnel  { object-position: 50% 27%; }
 .sp-face--nicolas { object-position: 44% 26%; }
-.sp-face--kevin   { object-position: 50% 36%; filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.62); }
+.sp-face--kevin   { object-position: 50% 36%; filter: grayscale(40%) sepia(45%) saturate(1.15) contrast(1.1) brightness(0.7); }
 .s2-proof-name {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;

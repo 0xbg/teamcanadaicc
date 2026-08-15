@@ -1,14 +1,15 @@
 ---
-// ===== SPONSOR HERO: the ask, above the fold =====
-// /sponsor is a squeeze page: its one job is to earn the email, because the
-// rates now travel as a PDF attachment rather than living on the site. So the
-// form sits beside the headline instead of seven screens below it.
+// ===== SPONSOR HERO: photo panel left, the ask right =====
+// /sponsor is a lead magnet: its one job is to earn the email, because every
+// detail travels in the partnership PDF. So the form sits beside the headline
+// rather than below a long case, and there is deliberately no second
+// destination anywhere on the page.
 //
-// The brigade survives as a compact proof row rather than the full-bleed
-// triptych — three real faces is what keeps this from being a bare form, but
-// the panels can't share one screen with a form card. There is deliberately no
-// second destination: the story, the tiers and the budget all travel in the
-// PDF, so any other link here would only leak people out of the funnel.
+// The left half is a full-bleed photograph with the copy over it. An earlier
+// pass ran the copy on a plain ink field, which left a large dead gap between
+// the standfirst and the proof row once the column stretched to match the
+// card. The photograph is what fills that height with something worth looking
+// at.
 import InquiryForm from '../InquiryForm.astro';
 
 const brigade = [
@@ -39,40 +40,44 @@ const brigade = [
 ];
 ---
 
-<header class="s2-hero relative bg-ink text-cream overflow-hidden">
-  <!-- Same gold dot grid the homepage hero uses -->
-  <div class="absolute inset-0 opacity-10 pointer-events-none" aria-hidden="true" style="background-image: radial-gradient(circle at 50% 50%, #c2a15c 1px, transparent 1px); background-size: 40px 40px;"></div>
+<header class="s2-hero bg-ink text-cream">
+  <div class="s2-hero-panel">
+    <img
+      src="/assets/hero-chef.jpg"
+      alt="Team Canada training in the kitchen at Bar George, Montréal"
+      class="s2-hero-panel-img"
+      fetchpriority="high"
+    />
+    <!-- Gold dot grid, the same one the homepage hero carries -->
+    <div class="s2-hero-panel-grid" aria-hidden="true"></div>
 
-  <div class="s2-hero-inner relative z-10">
     <div class="s2-hero-copy">
-      <p class="text-gold-light font-display italic text-lg mb-5 tracking-wide" data-lang-en="Sponsorship · ICC Lyon 2027" data-lang-fr="Commandite · ICC Lyon 2027">Sponsorship · ICC Lyon 2027</p>
-      <h1 class="s2-hero-title font-display font-bold leading-[1.02] mb-6">
-        <span data-lang-en="Canada is" data-lang-fr="Le Canada">Canada is</span>{' '}
-        <span class="text-gold" data-lang-en="coming back." data-lang-fr="revient.">coming back.</span>
-      </h1>
-      <p class="text-text-muted text-lg md:text-xl leading-relaxed mb-6 max-w-xl" data-lang-en="After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed." data-lang-fr="Après dix ans d'absence, trois chefs rebâtissent la place du Canada à l'International Catering Cup à Lyon. Huit places de partenaire fondateur sont ouvertes, et les huit sont encore libres.">After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed.</p>
-
-      <!-- Anchored to the bottom of the column on desktop, so the copy side
-           shares a top and a bottom edge with the form card instead of
-           floating as a cluster in the middle of it. -->
-      <div class="s2-hero-foot">
-        <ul class="s2-proof" aria-label="Team Canada's competing chefs">
-          {brigade.map((c) => (
-            <li class="s2-proof-item">
-              <img src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} loading="lazy" />
-              <div>
-                <p class="s2-proof-name">{c.name}</p>
-                <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-
+      <div>
+        <p class="text-gold-light font-display italic text-lg mb-5 tracking-wide" data-lang-en="Sponsorship · ICC Lyon 2027" data-lang-fr="Commandite · ICC Lyon 2027">Sponsorship · ICC Lyon 2027</p>
+        <h1 class="s2-hero-title font-display font-bold leading-[1.02] mb-6">
+          <span data-lang-en="Canada is" data-lang-fr="Le Canada">Canada is</span>{' '}
+          <span class="text-gold" data-lang-en="coming back." data-lang-fr="revient.">coming back.</span>
+        </h1>
+        <p class="s2-hero-standfirst" data-lang-en="After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed." data-lang-fr="Après dix ans d'absence, trois chefs rebâtissent la place du Canada à l'International Catering Cup à Lyon. Huit places de partenaire fondateur sont ouvertes, et les huit sont encore libres.">After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed.</p>
       </div>
-    </div>
 
-    <div class="s2-hero-form">
-      <InquiryForm />
+      <!-- Anchored to the bottom of the panel, so the copy shares a top and a
+           bottom edge with the form card rather than floating mid-column. -->
+      <ul class="s2-proof" aria-label="Team Canada's competing chefs">
+        {brigade.map((c) => (
+          <li class="s2-proof-item">
+            <img src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} loading="lazy" />
+            <div>
+              <p class="s2-proof-name">{c.name}</p>
+              <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
+  </div>
+
+  <div class="s2-hero-form">
+    <InquiryForm />
   </div>
 </header>
