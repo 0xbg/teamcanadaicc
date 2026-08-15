@@ -6,8 +6,9 @@
 //
 // The brigade survives as a compact proof row rather than the full-bleed
 // triptych — three real faces is what keeps this from being a bare form, but
-// the panels can't share one screen with a form card. The full case, with the
-// story, the ledger and the budget, moved to /sponsor/dossier.
+// the panels can't share one screen with a form card. There is deliberately no
+// second destination: the story, the tiers and the budget all travel in the
+// PDF, so any other link here would only leak people out of the funnel.
 import InquiryForm from '../InquiryForm.astro';
 
 const brigade = [
@@ -51,20 +52,23 @@ const brigade = [
       </h1>
       <p class="text-text-muted text-lg md:text-xl leading-relaxed mb-6 max-w-xl" data-lang-en="After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed." data-lang-fr="Après dix ans d'absence, trois chefs rebâtissent la place du Canada à l'International Catering Cup à Lyon. Huit places de partenaire fondateur sont ouvertes, et les huit sont encore libres.">After ten years away, three chefs are rebuilding Canada's seat at the International Catering Cup in Lyon. Eight founding partner slots are open, and all eight are still unclaimed.</p>
 
-      <!-- Compact proof: the three faces, small. -->
-      <ul class="s2-proof" aria-label="Team Canada's competing chefs">
-        {brigade.map((c) => (
-          <li class="s2-proof-item">
-            <img src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} loading="lazy" />
-            <div>
-              <p class="s2-proof-name">{c.name}</p>
-              <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <!-- Anchored to the bottom of the column on desktop, so the copy side
+           shares a top and a bottom edge with the form card instead of
+           floating as a cluster in the middle of it. -->
+      <div class="s2-hero-foot">
+        <ul class="s2-proof" aria-label="Team Canada's competing chefs">
+          {brigade.map((c) => (
+            <li class="s2-proof-item">
+              <img src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} loading="lazy" />
+              <div>
+                <p class="s2-proof-name">{c.name}</p>
+                <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
 
-      <a href="/sponsor/dossier" class="s2-hero-link" data-lang-en="Read the full case — the story, the tiers, where the money goes →" data-lang-fr="Lire le dossier complet — le récit, les niveaux, l'utilisation des fonds →">Read the full case — the story, the tiers, where the money goes →</a>
+      </div>
     </div>
 
     <div class="s2-hero-form">
