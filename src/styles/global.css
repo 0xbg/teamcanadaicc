@@ -1409,7 +1409,7 @@ a.bg-gold:hover, button.bg-gold:hover {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  padding: 3.5rem 1.5rem 3rem;
+  padding: 3.5rem 0.75rem 3rem;
 }
 @media (min-width: 1024px) {
   .s2-hero-inner {
@@ -1441,7 +1441,7 @@ a.bg-gold:hover, button.bg-gold:hover {
 }
 @media (min-width: 768px) { .s2-hero-standfirst { font-size: 1.0625rem; } }
 
-.s2-hero-form { display: flex; align-items: center; justify-content: center; }
+.s2-hero-form { display: flex; align-items: center; justify-content: center; min-width: 0; }
 
 /* A stacked cast list rather than a row: inside the contained panel three
    name-and-role pairs no longer fit on one line, and wrapping left an orphan. */
@@ -1500,6 +1500,8 @@ a.bg-gold:hover, button.bg-gold:hover {
 
 /* ---- The form card ---- */
 .s2-form-card {
+  min-width: 0;
+  max-width: 100%;
   background: var(--color-cream);
   color: var(--color-ink);
   border: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
@@ -1508,6 +1510,14 @@ a.bg-gold:hover, button.bg-gold:hover {
   box-shadow: 0 20px 50px color-mix(in srgb, #000 35%, transparent);
 }
 @media (min-width: 1024px) { .s2-form-card { padding: 2rem; } }
+@media (max-width: 420px) { .s2-form-card { padding: 1.25rem 1rem; } }
+/* Turnstile will not render below 300px even in flexible mode — narrower than
+   that and its own chrome clips. Fill the card, hold the floor, and only below
+   ~348px, where the card itself cannot offer 300px, fall back to scaling. */
+.cf-turnstile { width: 100%; min-width: 300px; }
+@media (max-width: 347.98px) {
+  .cf-turnstile { transform: scale(0.86); transform-origin: left center; }
+}
 .s2-form-eyebrow {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.625rem;
