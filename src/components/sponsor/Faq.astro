@@ -2,8 +2,9 @@
 // ===== SPONSOR FAQ: the objections, answered before the ask =====
 // Built on the site's existing accordion primitive (.collapse-trigger /
 // .collapsible-content in global.css) rather than a second system.
-// Answers that depend on facts we don't have yet carry a bracketed TBD,
-// the same convention Terms.astro uses for the incorporated entity.
+// Where a term is not settled yet, the answer points at the written agreement
+// rather than stating it. These are read by prospects, so a bracketed "TBD"
+// placeholder does not belong here, and neither does an invented policy.
 interface Item {
   q: { en: string; fr: string };
   a: { en: string; fr: string };
@@ -26,8 +27,8 @@ const items: Item[] = [
       fr: 'Quand et comment le paiement se fait-il ?',
     },
     a: {
-      en: 'Partnerships are confirmed by a written agreement before any invoice is issued. [Payment schedule and instalment options — TBD.] If a specific structure works better for your fiscal year, say so in your enquiry; we would rather fit your calendar than lose the partnership over timing.',
-      fr: "Les partenariats sont confirmés par une entente écrite avant l'émission de toute facture. [Calendrier de paiement et options de versements — à venir.] Si une structure particulière convient mieux à votre exercice financier, mentionnez-le dans votre demande ; nous préférons nous adapter à votre calendrier que perdre le partenariat pour une question d'échéancier.",
+      en: 'Partnerships are confirmed by a written agreement before any invoice is issued; the schedule is set out in that agreement. If instalments or a particular timing work better for your fiscal year, say so in your enquiry — we would rather fit your calendar than lose the partnership over timing.',
+      fr: "Les partenariats sont confirmés par une entente écrite avant l'émission de toute facture, et le calendrier y est précisé. Si des versements ou un échéancier particulier conviennent mieux à votre exercice financier, mentionnez-le dans votre demande — nous préférons nous adapter à votre calendrier que perdre le partenariat pour une question de timing.",
     },
   },
   {
@@ -36,8 +37,8 @@ const items: Item[] = [
       fr: 'La commandite donne-t-elle droit à un reçu fiscal ?',
     },
     a: {
-      en: 'Sponsorship of Team Canada ICC is a marketing expenditure, not a donation: you receive defined promotional benefits in return, so it is normally treated as a business expense rather than a charitable gift. [Receipt format and charitable status — TBD.] Confirm the treatment with your own accountant before you commit.',
-      fr: "La commandite d'Équipe Canada ICC est une dépense de marketing, et non un don : vous recevez des avantages promotionnels définis en contrepartie, elle est donc normalement traitée comme une dépense d'entreprise plutôt que comme un don de bienfaisance. [Format du reçu et statut d'organisme de bienfaisance — à venir.] Validez le traitement fiscal auprès de votre comptable avant de vous engager.",
+      en: 'Sponsorship of Team Canada ICC is a marketing expenditure, not a donation: you receive defined promotional benefits in return, so it is normally treated as a business expense rather than a charitable gift. An invoice is issued for every partnership. Confirm the treatment with your own accountant before you commit.',
+      fr: "La commandite d'Équipe Canada ICC est une dépense de marketing, et non un don : vous recevez des avantages promotionnels définis en contrepartie, elle est donc normalement traitée comme une dépense d'entreprise plutôt que comme un don de bienfaisance. Une facture est émise pour chaque partenariat. Validez le traitement fiscal auprès de votre comptable avant de vous engager.",
     },
   },
   {
@@ -46,8 +47,8 @@ const items: Item[] = [
       fr: "Que se passe-t-il si l'équipe ne se classe pas, ou ne peut pas concourir ?",
     },
     a: {
-      en: 'Your deliverables are visibility-based, not results-based. Logo placement, content, campaign materials and the sponsor wall are delivered across the full campaign regardless of where Canada finishes in Lyon. In the event the team cannot compete at all, remaining unspent funds are returned pro rata, and you receive the same documented recap of everything that did run.',
-      fr: "Vos livrables reposent sur la visibilité, et non sur les résultats. Le placement du logo, le contenu, les supports de campagne et le mur des commanditaires sont livrés sur toute la durée de la campagne, quel que soit le classement du Canada à Lyon. Si l'équipe ne pouvait pas concourir du tout, les fonds non dépensés seraient remboursés au prorata, et vous recevriez le même bilan documenté de tout ce qui a bel et bien eu lieu.",
+      en: 'Your deliverables are visibility-based, not results-based. Logo placement, content, campaign materials and the sponsor wall are delivered across the full campaign regardless of where Canada finishes in Lyon. In the event the team cannot compete at all, we agree the treatment of any unspent funds with each partner directly, and you receive the same documented recap of everything that did run.',
+      fr: "Vos livrables reposent sur la visibilité, et non sur les résultats. Le placement du logo, le contenu, les supports de campagne et le mur des commanditaires sont livrés sur toute la durée de la campagne, quel que soit le classement du Canada à Lyon. Si l'équipe ne pouvait pas concourir du tout, le sort des fonds non dépensés serait convenu directement avec chaque partenaire, et vous recevriez le même bilan documenté de tout ce qui a bel et bien eu lieu.",
     },
   },
   {
@@ -66,8 +67,8 @@ const items: Item[] = [
       fr: 'À qui appartiennent les photos et vidéos, et comment pouvons-nous les utiliser ?',
     },
     a: {
-      en: 'Team Canada ICC produces and owns the campaign media. Partners receive a usage licence covering their own marketing channels for the duration of the campaign and afterwards. [Licence scope, territory and term — TBD.] Assets are delivered as a shared library, not on request one file at a time.',
-      fr: "Équipe Canada ICC produit et détient les contenus de la campagne. Les partenaires reçoivent une licence d'utilisation couvrant leurs propres canaux marketing pendant et après la campagne. [Portée, territoire et durée de la licence — à venir.] Les fichiers sont livrés sous forme de bibliothèque partagée, et non un à la fois sur demande.",
+      en: 'Team Canada ICC produces and owns the campaign media. Partners receive a usage licence for their own marketing channels, with the scope and term set out in the partnership agreement. Assets are delivered as a shared library, not on request one file at a time.',
+      fr: "Équipe Canada ICC produit et détient les contenus de la campagne. Les partenaires reçoivent une licence d'utilisation pour leurs propres canaux marketing, dont la portée et la durée sont précisées dans l'entente de partenariat. Les fichiers sont livrés sous forme de bibliothèque partagée, et non un à la fois sur demande.",
     },
   },
   {

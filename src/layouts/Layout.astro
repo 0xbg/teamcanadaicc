@@ -131,6 +131,11 @@ const {
     var form = document.getElementById('inquiry-form');
     var fstatus = document.getElementById('form-status');
     var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+    /* Read the button's own labels rather than repeating them here — hardcoded
+       copies silently reverted the button to a previous wording after every
+       submission. */
+    var submitLabelEn = submitBtn ? submitBtn.getAttribute('data-lang-en') : '';
+    var submitLabelFr = submitBtn ? submitBtn.getAttribute('data-lang-fr') : '';
     if (form && submitBtn) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -153,7 +158,7 @@ const {
           .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, result: j }; }); })
           .then(function(rr) {
             if (rr.ok && rr.result.success) {
-              showStatus(currentLang === 'fr' ? 'Merci de votre intérêt ! L\'équipe de partenariat d\'Équipe Canada vous contactera sous peu.' : 'Thank you for your interest! The Team Canada partnership team will be in touch shortly.', 'success');
+              showStatus(currentLang === 'fr' ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin.' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive.', 'success');
               form.reset();
             } else {
               showStatus(rr.result.message || (currentLang === 'fr' ? 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Something went wrong. Please try again or contact us directly at 514-573-6758.'), 'error');
@@ -162,7 +167,7 @@ const {
           .catch(function() {
             showStatus(currentLang === 'fr' ? 'Impossible d\'envoyer votre demande. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Unable to send your inquiry. Please try again or contact us directly at 514-573-6758.', 'error');
           })
-          .then(function() { submitBtn.disabled = false; submitBtn.textContent = currentLang === 'fr' ? 'Envoyer la demande' : 'Submit Inquiry'; });
+          .then(function() { submitBtn.disabled = false; submitBtn.textContent = currentLang === 'fr' ? submitLabelFr : submitLabelEn; });
       });
     }
 
