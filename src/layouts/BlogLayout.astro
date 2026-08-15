@@ -28,6 +28,7 @@ import Icon from '../components/Icon.astro';
 // are already per-locale, so they render in one language via `static`.
 import StatusStrip from '../components/StatusStrip.astro';
 import StickyCta from '../components/StickyCta.astro';
+import { Image } from 'astro:assets';
 ---
 
 <!DOCTYPE html>
@@ -78,10 +79,14 @@ import StickyCta from '../components/StickyCta.astro';
 
             {
               post.data.featuredImage && (
-                <img
+                <Image
                   src={post.data.featuredImage}
                   alt={post.data.title}
                   class="w-full h-48 md:h-72 object-cover rounded-lg mb-6"
+                  width={1024} widths={[640, 1024]}
+                  sizes="(min-width: 768px) 768px, 100vw"
+                  format="webp"
+                  quality={78}
                 />
               )
             }

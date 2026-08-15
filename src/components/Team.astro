@@ -1,4 +1,9 @@
 ---
+import { Image } from 'astro:assets';
+import chefDonnel from '../assets/chef-donnel.jpg';
+import chefNicolas from '../assets/chef-nicolas.jpg';
+import chefKevin from '../assets/chef-kevin.jpg';
+
 interface Props {
   eyebrowEn?: string;
   eyebrowFr?: string;
@@ -32,7 +37,7 @@ const {
       <!-- Donnel English -->
       <div class="team-card flex flex-col border border-gold/15 bg-ink-card hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-gold/10 transition-all duration-300 rounded-lg overflow-hidden">
         <div class="team-card-portrait">
-          <img src="/assets/Bio Photo Chef Donnel.JPG" alt="Donnel English, Team Captain and Chef de Cuisine at Bar George" class="team-card-photo" loading="lazy">
+          <Image src={chefDonnel} alt="Donnel English, Team Captain and Chef de Cuisine at Bar George" class="team-card-photo" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
           <div class="team-card-caption">
           <p class="text-gold-light font-display text-xs tracking-widest uppercase mb-1" data-lang-en="Team Captain" data-lang-fr="Capitaine d'équipe">Team Captain</p>
           <h3 class="text-2xl md:text-3xl font-bold text-cream mb-1">Donnel English</h3>
@@ -51,7 +56,7 @@ const {
       <!-- Nicolas Parsy -->
       <div class="team-card flex flex-col border border-gold/15 bg-ink-card hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-gold/10 transition-all duration-300 rounded-lg overflow-hidden">
         <div class="team-card-portrait">
-          <img src="/assets/Bio Photo Chef Nicolas.JPG" alt="Nicolas Parsy, Pastry Chef at Bar George" class="team-card-photo" loading="lazy">
+          <Image src={chefNicolas} alt="Nicolas Parsy, Pastry Chef at Bar George" class="team-card-photo" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
           <div class="team-card-caption">
           <p class="text-gold-light font-display text-xs tracking-widest uppercase mb-1" data-lang-en="Pastry Chef" data-lang-fr="Chef Pâtissier">Pastry Chef</p>
           <h3 class="text-2xl md:text-3xl font-bold text-cream mb-1">Nicolas Parsy</h3>
@@ -70,7 +75,7 @@ const {
       <!-- Kevin Ramasawmy -->
       <div class="team-card flex flex-col border border-gold/15 bg-ink-card hover:border-gold/50 hover:-translate-y-1 hover:shadow-xl hover:shadow-gold/10 transition-all duration-300 rounded-lg overflow-hidden">
         <div class="team-card-portrait">
-          <img src="/assets/Bio Photo Chef Kevin.JPG" alt="Kevin Ramasawmy, Team Coach and Executive Chef at Bar George" class="team-card-photo" loading="lazy">
+          <Image src={chefKevin} alt="Kevin Ramasawmy, Team Coach and Executive Chef at Bar George" class="team-card-photo" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
           <div class="team-card-caption">
           <p class="text-gold-light font-display text-xs tracking-widest uppercase mb-1" data-lang-en="Team Coach" data-lang-fr="Entraîneur">Team Coach</p>
           <h3 class="text-2xl md:text-3xl font-bold text-cream mb-1">Kevin Ramasawmy</h3>

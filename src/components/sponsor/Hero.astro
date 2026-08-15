@@ -11,11 +11,20 @@
 // between the standfirst and the proof row once the column stretched to match
 // the card — the picture is what fills that height with something worth
 // looking at.
+//
+// Images go through astro:assets rather than public/, so each one is resized
+// and re-encoded at build time. The cast portraits are 4000px originals shown
+// at 40px; served raw they cost about 12MB to draw three thumbnails.
+import { Image } from 'astro:assets';
 import InquiryForm from '../InquiryForm.astro';
+import heroChef from '../../assets/hero-chef.jpg';
+import chefDonnel from '../../assets/chef-donnel.jpg';
+import chefNicolas from '../../assets/chef-nicolas.jpg';
+import chefKevin from '../../assets/chef-kevin.jpg';
 
 const brigade = [
   {
-    img: '/assets/Bio Photo Chef Donnel.JPG',
+    img: chefDonnel,
     cls: 'sp-face--donnel',
     name: 'Donnel English',
     alt: 'Donnel English, Team Captain and Chef de Cuisine at Bar George',
@@ -23,7 +32,7 @@ const brigade = [
     roleFr: "Capitaine d'équipe",
   },
   {
-    img: '/assets/Bio Photo Chef Nicolas.JPG',
+    img: chefNicolas,
     cls: 'sp-face--nicolas',
     name: 'Nicolas Parsy',
     alt: 'Nicolas Parsy, Pastry Chef, with his 2025 national pastry trophy',
@@ -31,7 +40,7 @@ const brigade = [
     roleFr: 'Chef pâtissier',
   },
   {
-    img: '/assets/Bio Photo Chef Kevin.JPG',
+    img: chefKevin,
     cls: 'sp-face--kevin',
     name: 'Kevin Ramasawmy',
     alt: 'Kevin Ramasawmy, Team Coach and Executive Chef at Bar George',
@@ -42,10 +51,15 @@ const brigade = [
 ---
 
 <header class="s2-hero bg-ink text-cream">
-  <img
-    src="/assets/hero-chef.jpg"
+  <Image
+    src={heroChef}
     alt="Team Canada training in the kitchen at Bar George, Montréal"
     class="s2-hero-bg"
+    width={1920} widths={[768, 1280, 1920]}
+    sizes="100vw"
+    format="webp"
+    quality={70}
+    loading="eager"
     fetchpriority="high"
   />
   <div class="s2-hero-scrim" aria-hidden="true"></div>
@@ -68,7 +82,7 @@ const brigade = [
       <ul class="s2-proof" aria-label="Team Canada's competing chefs">
         {brigade.map((c) => (
           <li class="s2-proof-item">
-            <img src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} loading="lazy" />
+            <Image src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} width={80} height={80} format="webp" quality={75} loading="lazy" />
             <div>
               <p class="s2-proof-name">{c.name}</p>
               <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>

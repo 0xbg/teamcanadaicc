@@ -4,7 +4,9 @@ import { glob } from 'astro/loaders';
 
 const blogCollection = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/blog' }),
-  schema: z.object({
+  // Function form so `image()` is available: featuredImage is a real asset
+  // reference now, resolved relative to the .mdx file and optimized at build.
+  schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.date(),
@@ -12,7 +14,7 @@ const blogCollection = defineCollection({
     translationId: z.string(),
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    featuredImage: z.string().optional(),
+    featuredImage: image().optional(),
     author: z.string().optional(),
   }),
 });
