@@ -37,6 +37,11 @@ const {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tints the mobile browser chrome to match the status strip, which is the
+       topmost thing on every page. Hardcoded because meta cannot read a custom
+       property — keep in step with --color-olive in global.css. -->
+  <meta name="theme-color" content="#463f31">
+  <meta name="color-scheme" content="dark">
   <title data-lang-en={titleEn} data-lang-fr={titleFr}>{title}</title>
   <meta name="description" content={description} data-lang-en-desc={descriptionEn} data-lang-fr-desc={descriptionFr}>
   <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
