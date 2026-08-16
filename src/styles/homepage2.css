@@ -1,0 +1,666 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,500&display=swap');
+
+/* ============================================================
+   /homepage2 — "the dossier"
+   Alternative homepage. Scoped entirely under .h2x so nothing
+   here can reach the production pages.
+
+   Palette is the existing brand (ink / cream / gold / olive /
+   red). Display face is Bodoni Moda: didone letterforms are the
+   type language of French menus and couture, and they hold up
+   at the sizes this page uses. Inter carries body copy,
+   JetBrains Mono carries every label, index and measurement.
+   ============================================================ */
+
+.h2x {
+  --h2-display: 'Bodoni Moda', 'Playfair Display', Georgia, serif;
+  --h2-body: 'Inter', system-ui, sans-serif;
+  --h2-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --h2-rule: color-mix(in srgb, var(--color-gold) 22%, transparent);
+  --h2-rule-strong: color-mix(in srgb, var(--color-gold) 45%, transparent);
+
+  --h2-gutter: clamp(1.25rem, 4vw, 3rem);
+  /* Sized so the content column always clears the fixed nav rail
+     on the right, which is widest around 1440px. */
+  --h2-measure: 66rem;
+
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--h2-body);
+}
+
+/* ---------- shared shell ---------- */
+
+.h2x .h2-wrap {
+  max-width: var(--h2-measure);
+  margin-inline: auto;
+  padding-inline: var(--h2-gutter);
+}
+/* The nav rail owns the right edge from 1024px up, so content
+   keeps clear of it rather than running underneath. */
+@media (min-width: 1024px) {
+  .h2x .h2-wrap { padding-right: max(var(--h2-gutter), 4.5rem); }
+}
+
+.h2x .h2-sec {
+  padding-block: clamp(4.5rem, 10vw, 9rem);
+  position: relative;
+}
+
+/* The story runs on one unbroken ink field; only the partner
+   handoff flips to cream, so the flip reads as an event. */
+.h2x .h2-sec--ink { background: var(--color-ink); color: var(--color-cream); }
+.h2x .h2-sec--cream { background: var(--color-cream); color: var(--color-body); }
+
+/* No left index column: the fixed nav rail already names and
+   numbers every section, and repeating it in the margin said the
+   same thing twice in the same typeface. Sections run full measure.
+   ---------- type ---------- */
+
+.h2x .h2-h1 {
+  font-family: var(--h2-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6.6vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 0;
+}
+.h2x .h2-h2 {
+  font-family: var(--h2-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0 0 1.5rem;
+}
+.h2x .h2-h3 {
+  font-family: var(--h2-display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  line-height: 1.15;
+  margin: 0;
+}
+.h2x .h2-lede {
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  max-width: 46ch;
+}
+.h2x .h2-sec--cream .h2-lede { color: var(--color-body-alt); }
+.h2x .h2-body-copy p {
+  font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+  line-height: 1.8;
+  color: var(--color-text-light-alt);
+  max-width: 54ch;
+  margin: 0 0 1.25rem;
+}
+.h2x .h2-body-copy p:last-child { margin-bottom: 0; }
+.h2x .h2-body-copy a { color: var(--color-gold); text-decoration: underline; text-underline-offset: 3px; }
+.h2x .h2-body-copy a:hover { color: var(--color-gold-light); }
+
+.h2x .h2-mono {
+  font-family: var(--h2-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   HERO — the dimension line
+   The page's one bold move: the ten-year absence drawn the way
+   a gap gets drawn on a technical drawing, with end ticks, a
+   measured span and the measurement breaking the rule.
+   ============================================================ */
+
+.h2x .h2-hero {
+  background: var(--color-ink);
+  padding-top: clamp(7rem, 14vh, 11rem);
+  padding-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.h2x .h2-hero-eyebrow {
+  font-family: var(--h2-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+.h2x .h2-hero-eyebrow::after {
+  content: '';
+  flex: 1;
+  min-width: 2rem;
+  height: 1px;
+  background: var(--h2-rule);
+}
+
+.h2x .h2-hero-title { max-width: 18ch; }
+.h2x .h2-hero-title em {
+  font-style: italic;
+  color: var(--color-gold-light);
+}
+
+/* --- the dimension line --- */
+.h2x .h2-dim {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  font-family: var(--h2-mono);
+}
+.h2x .h2-dim-end {
+  font-size: clamp(0.85rem, 1.6vw, 1.15rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+.h2x .h2-dim-end--now { color: var(--color-gold); }
+
+.h2x .h2-dim-rule {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* end ticks */
+.h2x .h2-dim-rule::before,
+.h2x .h2-dim-rule::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--h2-rule-strong);
+}
+.h2x .h2-dim-rule::before { left: 0; }
+.h2x .h2-dim-rule::after { right: 0; background: var(--color-gold); }
+
+.h2x .h2-dim-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(to right, var(--h2-rule-strong), var(--color-gold));
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: h2-draw 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s forwards;
+}
+.h2x .h2-dim-label {
+  position: relative;
+  background: var(--color-ink);
+  padding-inline: clamp(0.6rem, 2vw, 1.25rem);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  white-space: nowrap;
+  opacity: 0;
+  animation: h2-fade 0.6s ease 1.35s forwards;
+}
+
+@keyframes h2-draw { to { transform: scaleX(1); } }
+@keyframes h2-fade { to { opacity: 1; } }
+@keyframes h2-rise {
+  from { opacity: 0; transform: translateY(1.25rem); }
+  to { opacity: 1; transform: none; }
+}
+
+.h2x .h2-rise { opacity: 0; animation: h2-rise 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+.h2x .h2-rise-1 { animation-delay: 0.05s; }
+.h2x .h2-rise-2 { animation-delay: 0.2s; }
+.h2x .h2-rise-3 { animation-delay: 1.5s; }
+
+.h2x .h2-hero-sub {
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: end;
+}
+@media (min-width: 900px) {
+  .h2x .h2-hero-sub { grid-template-columns: minmax(0, 1fr) auto; }
+}
+
+/* --- buttons --- */
+.h2x .h2-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.h2x .h2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--h2-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.95rem 1.5rem;
+  border: 1px solid var(--color-gold);
+  text-decoration: none;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+  white-space: nowrap;
+}
+.h2x .h2-btn--solid { background: var(--color-gold); color: var(--color-ink); }
+.h2x .h2-btn--solid:hover { background: var(--color-gold-light); border-color: var(--color-gold-light); transform: translateY(-1px); }
+.h2x .h2-btn--ghost { background: transparent; color: var(--color-gold); }
+.h2x .h2-btn--ghost:hover { background: var(--color-gold); color: var(--color-ink); transform: translateY(-1px); }
+.h2x .h2-sec--cream .h2-btn--ghost { color: var(--color-gold-dark); border-color: var(--color-gold-dark); }
+.h2x .h2-sec--cream .h2-btn--ghost:hover { background: var(--color-gold-dark); color: var(--color-cream); }
+
+/* --- hero plate: photography as a captioned strip, not wallpaper --- */
+.h2x .h2-plate {
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  border-top: 1px solid var(--h2-rule);
+  position: relative;
+}
+.h2x .h2-plate-img {
+  display: block;
+  width: 100%;
+  height: clamp(11rem, 30vh, 20rem);
+  object-fit: cover;
+  object-position: center 35%;
+  filter: grayscale(1) contrast(1.08) brightness(0.72) sepia(0.35);
+}
+.h2x .h2-plate-caption {
+  position: absolute;
+  right: var(--h2-gutter);
+  bottom: 1rem;
+  font-family: var(--h2-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+  background: color-mix(in srgb, var(--color-ink) 78%, transparent);
+  backdrop-filter: blur(4px);
+  padding: 0.4rem 0.7rem;
+}
+
+/* ============================================================
+   ABSENCE — the emotional beat
+   ============================================================ */
+
+.h2x .h2-statement {
+  font-family: var(--h2-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.6vw, 2.9rem);
+  line-height: 1.22;
+  color: var(--color-gold-light);
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+/* ============================================================
+   STAGE — the data plate
+   A definition list with leader dots. This is a reference table,
+   so it is set as one, rather than as six icon cards.
+   ============================================================ */
+
+.h2x .h2-plate-list {
+  margin: 0;
+  border-top: 1px solid var(--h2-rule);
+}
+.h2x .h2-plate-row {
+  display: grid;
+  gap: 0.35rem 1.5rem;
+  padding-block: 1.05rem;
+  border-bottom: 1px solid var(--h2-rule);
+  align-items: baseline;
+}
+@media (min-width: 720px) {
+  .h2x .h2-plate-row { grid-template-columns: 13rem minmax(0, 1fr); gap: 1.5rem; }
+}
+.h2x .h2-plate-row dt {
+  font-family: var(--h2-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: 0;
+}
+.h2x .h2-plate-row dd {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--color-text-light-alt);
+}
+.h2x .h2-plate-row dd a { color: var(--color-gold-light); text-decoration: underline; text-underline-offset: 3px; }
+.h2x .h2-plate-row dd a:hover { color: var(--color-gold); }
+.h2x .h2-plate-row dd .h2-num {
+  font-family: var(--h2-mono);
+  font-weight: 700;
+  color: var(--color-cream);
+  font-variant-numeric: tabular-nums;
+}
+.h2x .h2-plate-row:hover { background: color-mix(in srgb, var(--color-gold) 4%, transparent); }
+
+/* ============================================================
+   BRIGADE — the three chefs, editorial
+   ============================================================ */
+
+.h2x .h2-brigade {
+  display: grid;
+  gap: clamp(2.25rem, 4vw, 2.75rem);
+}
+.h2x .h2-chef { display: flex; flex-direction: column; }
+
+/* Subgrid keeps portrait, role, name, bio and credits on shared
+   baselines across the three columns however the text wraps. */
+@media (min-width: 820px) {
+  .h2x .h2-brigade {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr auto;
+    /* Columns need air; the subgrid rows carry their own margins
+       and rules, so a row gap here would just open voids. */
+    row-gap: 0;
+    column-gap: clamp(2.25rem, 4vw, 2.75rem);
+  }
+  .h2x .h2-chef {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+  }
+}
+.h2x .h2-chef-frame {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-ink-card);
+  border: 1px solid var(--h2-rule);
+}
+.h2x .h2-chef-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  /* Portraits read as one set by default, and come to life on
+     approach — the only decorative motion on the page. */
+  filter: grayscale(1) contrast(1.05) brightness(0.85) sepia(0.3);
+  transition: filter 550ms ease, transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.h2x .h2-chef:hover .h2-chef-frame img,
+.h2x .h2-chef:focus-within .h2-chef-frame img {
+  filter: none;
+  transform: scale(1.03);
+}
+.h2x .h2-chef-role {
+  font-family: var(--h2-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: 1.25rem 0 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--h2-rule-strong);
+}
+/* Sized so the longest name still sets on one line at the narrowest
+   column, which keeps the subgrid rows tight. */
+.h2x .h2-chef-name {
+  font-size: clamp(1.2rem, 1.7vw, 1.5rem);
+  margin-bottom: 0.75rem;
+}
+.h2x .h2-chef p {
+  font-size: 0.93rem;
+  line-height: 1.72;
+  color: var(--color-text-muted);
+  margin: 0 0 1rem;
+}
+.h2x .h2-chef-credits {
+  font-family: var(--h2-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  line-height: 1.9;
+  color: var(--color-muted);
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--h2-rule);
+}
+
+/* ============================================================
+   ROAD — three phases on one rule
+   Numbered because the content genuinely is a sequence.
+   ============================================================ */
+
+.h2x .h2-road {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--h2-rule-strong);
+}
+@media (min-width: 860px) {
+  .h2x .h2-road { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.h2x .h2-phase {
+  position: relative;
+  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
+  border-bottom: 1px solid var(--h2-rule);
+}
+@media (min-width: 860px) {
+  .h2x .h2-phase {
+    padding: clamp(2rem, 3vw, 2.75rem) clamp(1.25rem, 2.5vw, 2rem);
+    border-bottom: none;
+  }
+  .h2x .h2-phase + .h2-phase { border-left: 1px solid var(--h2-rule); }
+  .h2x .h2-phase:first-child { padding-left: 0; }
+  .h2x .h2-phase:last-child { padding-right: 0; }
+}
+/* tick on the rule above each phase — same vocabulary as the hero */
+.h2x .h2-phase::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: clamp(2rem, 5vw, 3.5rem);
+  height: 3px;
+  background: var(--color-gold);
+}
+@media (min-width: 860px) {
+  .h2x .h2-phase:not(:first-child)::before { left: clamp(1.25rem, 2.5vw, 2rem); }
+}
+.h2x .h2-phase-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--h2-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+}
+.h2x .h2-phase-idx { color: var(--color-gold); font-variant-numeric: tabular-nums; font-weight: 700; }
+.h2x .h2-phase-where { color: var(--color-muted); }
+.h2x .h2-phase p {
+  font-size: 0.93rem;
+  line-height: 1.72;
+  color: var(--color-text-muted);
+  margin: 0.75rem 0 0;
+}
+
+/* ============================================================
+   HANDOFF — the flip to cream, and the slot board
+   ============================================================ */
+
+.h2x .h2-sec--cream { border-top: 3px solid var(--color-gold); }
+
+.h2x .h2-sec--cream .h2-h2 { color: var(--color-ink); }
+.h2x .h2-sec--cream .h2-body-copy p { color: var(--color-body-alt); }
+
+.h2x .h2-board {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  display: grid;
+  gap: 1.5rem;
+}
+.h2x .h2-band-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--h2-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold-dark);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gold-dark) 30%, transparent);
+}
+.h2x .h2-band-count { color: var(--color-muted); }
+.h2x .h2-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.85rem;
+}
+/* One six-column grid across all three bands, so slot width tracks
+   tier weight: Lead takes a half, Premier and Official a third. */
+@media (min-width: 720px) {
+  .h2x .h2-slots { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .h2x .h2-slot--lead { grid-column: span 3; min-height: 9.5rem; }
+  .h2x .h2-slot--premier,
+  .h2x .h2-slot--official { grid-column: span 2; }
+}
+.h2x .h2-slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.75rem;
+  min-height: 7.5rem;
+  padding: 1rem;
+  border: 1px dashed color-mix(in srgb, var(--color-gold-dark) 45%, transparent);
+  background: color-mix(in srgb, var(--color-gold) 5%, transparent);
+  text-decoration: none;
+  transition: background 220ms ease, border-color 220ms ease, transform 220ms ease;
+}
+.h2x .h2-slot:hover {
+  border-color: var(--color-gold-dark);
+  border-style: solid;
+  background: color-mix(in srgb, var(--color-gold) 14%, transparent);
+  transform: translateY(-2px);
+}
+.h2x .h2-slot-tier {
+  font-family: var(--h2-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-gold-dark);
+}
+.h2x .h2-slot-state {
+  font-family: var(--h2-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.h2x .h2-slot-state::before {
+  content: '';
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-red);
+  flex-shrink: 0;
+}
+.h2x .h2-slot:hover .h2-slot-state { color: var(--color-ink); }
+
+.h2x .h2-reasons {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  display: grid;
+  gap: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-gold-dark) 25%, transparent);
+}
+@media (min-width: 860px) {
+  .h2x .h2-reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.h2x .h2-reason {
+  padding: clamp(1.5rem, 3vw, 2rem) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gold-dark) 18%, transparent);
+}
+@media (min-width: 860px) {
+  .h2x .h2-reason { padding: 2rem clamp(1.25rem, 2.5vw, 2rem); border-bottom: none; }
+  .h2x .h2-reason + .h2-reason { border-left: 1px solid color-mix(in srgb, var(--color-gold-dark) 18%, transparent); }
+  .h2x .h2-reason:first-child { padding-left: 0; }
+  .h2x .h2-reason:last-child { padding-right: 0; }
+}
+.h2x .h2-reason h3 {
+  font-family: var(--h2-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: var(--color-ink);
+  margin: 0 0 0.6rem;
+}
+.h2x .h2-reason p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-body-alt);
+  margin: 0;
+}
+
+.h2x .h2-handoff-cta {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+.h2x .h2-handoff-note {
+  font-family: var(--h2-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  max-width: 30ch;
+  line-height: 1.8;
+}
+
+/* ============================================================
+   Guards — global.css ships mobile rules with !important that
+   would otherwise reset this page's type and padding.
+   ============================================================ */
+
+@media (max-width: 640px) {
+  .h2x .h2-sec,
+  .h2x .h2-hero { padding-left: 0; padding-right: 0; }
+  .h2x section[id].h2-sec {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: clamp(4rem, 12vw, 5.5rem);
+    padding-bottom: clamp(4rem, 12vw, 5.5rem);
+  }
+  .h2x .h2-h1 { font-size: clamp(2.1rem, 9vw, 2.9rem) !important; }
+  .h2x .h2-h2 { font-size: clamp(1.65rem, 7vw, 2.2rem) !important; }
+  .h2x .h2-hero-title { max-width: none; }
+  /* Tier name and its note each need a full line at this width. */
+  .h2x .h2-band-head { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+}
+
+@media (max-width: 380px) {
+  .h2x .h2-h1 { font-size: 2rem !important; }
+  .h2x .h2-h2 { font-size: 1.55rem !important; }
+  .h2x .h2-statement { font-size: 1.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h2x .h2-dim-track { animation: none; transform: scaleX(1); }
+  .h2x .h2-dim-label { animation: none; opacity: 1; }
+  .h2x .h2-rise { animation: none; opacity: 1; transform: none; }
+  .h2x .h2-chef-frame img { transition: none; }
+}

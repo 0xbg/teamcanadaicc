@@ -1,0 +1,40 @@
+---
+// Alternative homepage — "the dossier".
+// Same palette and subject as /, everything else rethought:
+// one unbroken ink field for the story, a single flip to cream
+// for the partner handoff, Bodoni Moda display type, and no
+// icon-card grids anywhere.
+import Layout from '../layouts/Layout.astro';
+import VerticalNav from '../components/VerticalNav.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import Hero from '../components/homepage2/Hero.astro';
+import Absence from '../components/homepage2/Absence.astro';
+import Stage from '../components/homepage2/Stage.astro';
+import Brigade from '../components/homepage2/Brigade.astro';
+import Road from '../components/homepage2/Road.astro';
+import Handoff from '../components/homepage2/Handoff.astro';
+import '../styles/homepage2.css';
+---
+
+<Layout>
+  <div class="h2x">
+    <VerticalNav
+      links={[
+        { href: '#absence', en: 'Absence', fr: 'Absence' },
+        { href: '#stage', en: 'The Stage', fr: 'La scène' },
+        { href: '#brigade', en: 'Brigade', fr: 'Brigade' },
+        { href: '#road', en: 'The Road', fr: 'La route' },
+        { href: '#partners', en: 'Partners', fr: 'Partenaires' },
+      ]}
+    />
+    <Hero />
+    <Absence />
+    <Stage />
+    <Brigade />
+    <Road />
+    <Handoff />
+    <Footer ctaHref="/sponsor" />
+  </div>
+  <CookieBanner />
+</Layout>

@@ -1,0 +1,42 @@
+---
+// Hero — the thesis of the page is the gap itself, drawn as a
+// dimension line: two end ticks, a measured span, the measurement
+// breaking the rule. No headline over a darkened photo.
+import { Image } from 'astro:assets';
+import heroChef from '../../assets/hero-chef.jpg';
+---
+
+<header class="h2-hero">
+  <div class="h2-wrap">
+    <p class="h2-hero-eyebrow h2-rise h2-rise-1">
+      <span data-lang-en="Team Canada" data-lang-fr="Équipe Canada">Team Canada</span>
+      <span aria-hidden="true">·</span>
+      <span data-lang-en="International Catering Cup" data-lang-fr="International Catering Cup">International Catering Cup</span>
+    </p>
+
+    <h1 class="h2-h1 h2-hero-title h2-rise h2-rise-2" data-lang-en="Canada has not cooked in Lyon for <em>ten years</em>." data-lang-fr="Le Canada n'a pas cuisiné à Lyon depuis <em>dix ans</em>.">Canada has not cooked in Lyon for <em>ten years</em>.</h1>
+
+    <div class="h2-dim" role="img" aria-label="A ten-year gap, from 2017 to 2027">
+      <span class="h2-dim-end">2017</span>
+      <span class="h2-dim-rule">
+        <span class="h2-dim-track" aria-hidden="true"></span>
+        <span class="h2-dim-label" data-lang-en="Ten years off the stage" data-lang-fr="Dix ans hors de la scène">Ten years off the stage</span>
+      </span>
+      <span class="h2-dim-end h2-dim-end--now">2027</span>
+    </div>
+
+    <div class="h2-hero-sub h2-rise h2-rise-3">
+      <p class="h2-lede" data-lang-en="In 2027 three chefs from Bar George in Montréal carry the maple leaf back onto the competition floor in Lyon. This is what it takes to get them there." data-lang-fr="En 2027, trois chefs du Bar George à Montréal ramènent la feuille d'érable sur le parquet de compétition à Lyon. Voici ce qu'il faut pour les y conduire.">In 2027 three chefs from Bar George in Montréal carry the maple leaf back onto the competition floor in Lyon. This is what it takes to get them there.</p>
+
+      <div class="h2-cta-row">
+        <a href="#absence" class="h2-btn h2-btn--solid" data-lang-en="Read the comeback" data-lang-fr="Lire le retour">Read the comeback</a>
+        <a href="#partners" class="h2-btn h2-btn--ghost" data-lang-en="Partner with the team" data-lang-fr="Devenir partenaire">Partner with the team</a>
+      </div>
+    </div>
+  </div>
+
+  <figure class="h2-plate">
+    <Image class="h2-plate-img" src={heroChef} alt="Chef Kevin Ramasawmy at work in the kitchen at Bar George in Montréal" width={1600} widths={[640, 1024, 1600]} sizes="(min-width: 1024px) 50vw, 100vw" format="webp" quality={75} loading="eager" fetchpriority="high" />
+    <figcaption class="h2-plate-caption" data-lang-en="Kevin Ramasawmy · Bar George, Montréal" data-lang-fr="Kevin Ramasawmy · Bar George, Montréal">Kevin Ramasawmy · Bar George, Montréal</figcaption>
+  </figure>
+</header>

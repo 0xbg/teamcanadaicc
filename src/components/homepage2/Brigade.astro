@@ -1,0 +1,50 @@
+---
+// The three real portraits are the only photography on the page
+// besides the hero plate, so they get full height and room to
+// breathe rather than sitting inside bordered cards.
+import { Image } from 'astro:assets';
+import chefDonnel from '../../assets/chef-donnel.jpg';
+import chefNicolas from '../../assets/chef-nicolas.jpg';
+import chefKevin from '../../assets/chef-kevin.jpg';
+---
+
+<section id="brigade" class="h2-sec h2-sec--ink">
+  <div class="h2-wrap">
+      <h2 class="h2-h2" data-lang-en="Three chefs, one entry" data-lang-fr="Trois chefs, une délégation">Three chefs, one entry</h2>
+      <p class="h2-lede" data-lang-en="A captain, a pastry chef and a coach — all three out of the same Montréal kitchen, which is rarer at this level than it sounds." data-lang-fr="Un capitaine, un chef pâtissier et un entraîneur — tous les trois issus de la même cuisine montréalaise, ce qui est plus rare à ce niveau qu'il n'y paraît.">A captain, a pastry chef and a coach — all three out of the same Montréal kitchen, which is rarer at this level than it sounds.</p>
+
+      <div class="h2-brigade" style="margin-top: clamp(2.5rem, 5vw, 3.5rem);">
+
+        <article class="h2-chef">
+          <div class="h2-chef-frame">
+            <Image src={chefDonnel} alt="Donnel English, team captain and chef de cuisine at Bar George" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+          </div>
+          <p class="h2-chef-role" data-lang-en="Team captain · Chef de cuisine" data-lang-fr="Capitaine · Chef de cuisine">Team captain · Chef de cuisine</p>
+          <h3 class="h2-h3 h2-chef-name">Donnel English</h3>
+          <p data-lang-en="From his grandparents' farm and produce shop in Grenada to the Ritz-Carlton, Maison Boulud and New York's NoMad. He came back to Montréal to join Kevin Ramasawmy at Bar George and rose from sous chef to chef de cuisine." data-lang-fr="De la ferme et du commerce de produits maraîchers de ses grands-parents à la Grenade jusqu'au Ritz-Carlton, au Maison Boulud et au NoMad de New York. Il est revenu à Montréal rejoindre Kevin Ramasawmy au Bar George, passant de sous-chef à chef de cuisine.">From his grandparents' farm and produce shop in Grenada to the Ritz-Carlton, Maison Boulud and New York's NoMad. He came back to Montréal to join Kevin Ramasawmy at Bar George and rose from sous chef to chef de cuisine.</p>
+          <p class="h2-chef-credits" data-lang-en="Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York · Pearson School of Culinary Arts" data-lang-fr="Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York · Pearson School of Culinary Arts">Bar George · Ritz-Carlton · Maison Boulud · NoMad, New York · Pearson School of Culinary Arts</p>
+        </article>
+
+        <article class="h2-chef">
+          <div class="h2-chef-frame">
+            <Image src={chefNicolas} alt="Nicolas Parsy, pastry chef at Bar George" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+          </div>
+          <p class="h2-chef-role" data-lang-en="Pastry chef" data-lang-fr="Chef pâtissier">Pastry chef</p>
+          <h3 class="h2-h3 h2-chef-name">Nicolas Parsy</h3>
+          <p data-lang-en="Raised in Pas-de-Calais, trained in France and Switzerland, in Montréal since 2018. He works French tradition forward: flavour first, held up by precise technique and contrasting texture." data-lang-fr="Élevé dans le Pas-de-Calais, formé en France et en Suisse, à Montréal depuis 2018. Il fait avancer la tradition française : la saveur d'abord, soutenue par une technique précise et des textures contrastantes.">Raised in Pas-de-Calais, trained in France and Switzerland, in Montréal since 2018. He works French tradition forward: flavour first, held up by precise technique and contrasting texture.</p>
+          <p class="h2-chef-credits" data-lang-en="2025 National Pastry Chef, Société des chefs du Québec · 2nd, Roland Mesnier North America Pastry Trophy · One to Watch, Canada's 100 Best" data-lang-fr="Chef pâtissier national 2025, Société des chefs du Québec · 2e, Trophée Roland Mesnier Amérique du Nord · One to Watch, Canada's 100 Best">2025 National Pastry Chef, Société des chefs du Québec · 2nd, Roland Mesnier North America Pastry Trophy · One to Watch, Canada's 100 Best</p>
+        </article>
+
+        <article class="h2-chef">
+          <div class="h2-chef-frame">
+            <Image src={chefKevin} alt="Kevin Ramasawmy, team coach and executive chef at Bar George" width={800} widths={[400, 800]} sizes="(min-width: 768px) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+          </div>
+          <p class="h2-chef-role" data-lang-en="Team coach · Executive chef" data-lang-fr="Entraîneur · Chef exécutif">Team coach · Executive chef</p>
+          <h3 class="h2-h3 h2-chef-name">Kevin Ramasawmy</h3>
+          <p data-lang-en="Mauritius to Montréal at nineteen, then Canoe, Splendido, Daniel and Maison Boulud. He opened Bar George in 2017 and brings the international kitchen experience the team runs on." data-lang-fr="De l'île Maurice à Montréal à dix-neuf ans, puis Canoe, Splendido, Daniel et Maison Boulud. Il a ouvert le Bar George en 2017 et apporte l'expérience internationale sur laquelle l'équipe s'appuie.">Mauritius to Montréal at nineteen, then Canoe, Splendido, Daniel and Maison Boulud. He opened Bar George in 2017 and brings the international kitchen experience the team runs on.</p>
+          <p class="h2-chef-credits" data-lang-en="Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team, Canadian Grand Prix" data-lang-fr="Bar George · Canoe · Splendido · Daniel · Maison Boulud · Écurie TGR Haas F1, Grand Prix du Canada">Bar George · Canoe · Splendido · Daniel · Maison Boulud · TGR Haas F1 Team, Canadian Grand Prix</p>
+        </article>
+
+      </div>
+  </div>
+</section>

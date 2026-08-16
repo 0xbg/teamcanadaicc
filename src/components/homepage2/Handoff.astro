@@ -1,0 +1,83 @@
+---
+// The surface flips to cream here and stays there. This is the
+// only break in the ink field, so the handoff from story to
+// sponsor pitch is something the reader feels rather than reads.
+
+const bands = [
+  {
+    key: 'lead',
+    tierEn: 'Lead partner', tierFr: 'Partenaire majeur',
+    slugEn: 'Lead', slugFr: 'Majeur',
+    count: 2,
+    noteEn: 'Category exclusivity · top billing', noteFr: 'Exclusivité de catégorie · placement principal',
+  },
+  {
+    key: 'premier',
+    tierEn: 'Premier partner', tierFr: 'Partenaire Premier',
+    slugEn: 'Premier', slugFr: 'Premier',
+    count: 3,
+    noteEn: 'Category exclusivity', noteFr: 'Exclusivité de catégorie',
+  },
+  {
+    key: 'official',
+    tierEn: 'Official partner', tierFr: 'Partenaire officiel',
+    slugEn: 'Official', slugFr: 'Officiel',
+    count: 3,
+    noteEn: 'Category exclusivity', noteFr: 'Exclusivité de catégorie',
+  },
+];
+---
+
+<section id="partners" class="h2-sec h2-sec--cream">
+  <div class="h2-wrap">
+      <h2 class="h2-h2" data-lang-en="Where partners come in" data-lang-fr="Là où les partenaires entrent en jeu">Where partners come in</h2>
+
+      <div class="h2-body-copy">
+        <p data-lang-en="Getting a national team to Lyon costs money that doesn't come from anywhere else. Eight flagship slots carry the 2027 campaign. Every one of them is open, and the first partner into each tier is named a Founding Partner." data-lang-fr="Amener une équipe nationale à Lyon coûte de l'argent qui ne vient de nulle part ailleurs. Huit places phares portent la campagne 2027. Toutes sont disponibles, et le premier partenaire de chaque niveau est nommé partenaire fondateur.">Getting a national team to Lyon costs money that doesn't come from anywhere else. Eight flagship slots carry the 2027 campaign. Every one of them is open, and the first partner into each tier is named a Founding Partner.</p>
+      </div>
+
+      <div class="h2-board">
+        {bands.map((band) => (
+          <div>
+            <p class="h2-band-head">
+              <span data-lang-en={band.tierEn} data-lang-fr={band.tierFr}>{band.tierEn}</span>
+              <span class="h2-band-count" data-lang-en={`${band.count} open · ${band.noteEn}`} data-lang-fr={`${band.count} disponibles · ${band.noteFr}`}>{band.count} open · {band.noteEn}</span>
+            </p>
+            <div class="h2-slots">
+              {Array.from({ length: band.count }).map((_, i) => (
+                <a
+                  class={`h2-slot h2-slot--${band.key}`}
+                  href="/sponsor#inquiry"
+                  aria-label={`Claim open ${band.tierEn} slot ${i + 1} of ${band.count}`}
+                >
+                  <span class="h2-slot-tier" data-lang-en={band.slugEn} data-lang-fr={band.slugFr}>{band.slugEn}</span>
+                  <span class="h2-slot-state" data-lang-en="Open" data-lang-fr="Disponible">Open</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="h2-reasons">
+        <div class="h2-reason">
+          <h3 data-lang-en="Own your category" data-lang-fr="Votre catégorie, à vous">Own your category</h3>
+          <p data-lang-en="Lead, Premier and Official partners lock exclusive placement in their industry for the full campaign. No competitor sits beside you." data-lang-fr="Les partenaires majeurs, Premier et officiels verrouillent un placement exclusif dans leur secteur pour toute la campagne. Aucun concurrent à vos côtés.">Lead, Premier and Official partners lock exclusive placement in their industry for the full campaign. No competitor sits beside you.</p>
+        </div>
+        <div class="h2-reason">
+          <h3 data-lang-en="Twelve months of it" data-lang-fr="Pendant douze mois">Twelve months of it</h3>
+          <p data-lang-en="Chef jackets, team apparel, campaign materials and the partner wall — in front of guests, media and industry leaders from now through Lyon." data-lang-fr="Vestes de chef, tenues d'équipe, supports de campagne et mur des partenaires — devant les invités, les médias et les leaders de l'industrie d'ici Lyon.">Chef jackets, team apparel, campaign materials and the partner wall — in front of guests, media and industry leaders from now through Lyon.</p>
+        </div>
+        <div class="h2-reason">
+          <h3 data-lang-en="Content you can't shoot yourself" data-lang-fr="Un contenu que vous ne pouvez pas tourner seul">Content you can't shoot yourself</h3>
+          <p data-lang-en="Training kitchens in Montréal, the competition floor in Lyon, chefs telling their own story. Your marketing team cannot manufacture this." data-lang-fr="Les cuisines d'entraînement à Montréal, le parquet de compétition à Lyon, des chefs qui racontent leur propre histoire. Votre équipe marketing ne peut pas fabriquer cela.">Training kitchens in Montréal, the competition floor in Lyon, chefs telling their own story. Your marketing team cannot manufacture this.</p>
+        </div>
+      </div>
+
+      <div class="h2-handoff-cta">
+        <a href="/sponsor" class="h2-btn h2-btn--solid" data-lang-en="See the tiers" data-lang-fr="Voir les niveaux">See the tiers</a>
+        <a href="/sponsor#inquiry" class="h2-btn h2-btn--ghost" data-lang-en="Start a conversation" data-lang-fr="Entamer la discussion">Start a conversation</a>
+        <p class="h2-handoff-note" data-lang-en="After 2027, the next International Catering Cup is 2029." data-lang-fr="Après 2027, la prochaine International Catering Cup aura lieu en 2029.">After 2027, the next International Catering Cup is 2029.</p>
+      </div>
+  </div>
+</section>
