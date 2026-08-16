@@ -37,9 +37,13 @@ const {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Tints the mobile browser chrome to match the status strip, which is the
-       topmost thing on every page. Hardcoded because meta cannot read a custom
+  <!-- Tints the mobile browser chrome to match the status strip, the topmost
+       thing on every page. Both schemes are declared explicitly: with only a
+       bare theme-color, Chrome on Android keeps its own toolbar colour when the
+       browser is in dark theme. Hardcoded because meta cannot read a custom
        property — keep in step with --color-olive in global.css. -->
+  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#463f31">
   <meta name="color-scheme" content="dark">
   <title data-lang-en={titleEn} data-lang-fr={titleFr}>{title}</title>
