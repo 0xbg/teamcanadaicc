@@ -12,6 +12,35 @@
 /** Public path of the partnership package, served straight out of `public/`. */
 const PDF_PATH = '/partnership-package.pdf';
 
+/** Where the package lives when nothing else is known. */
+const PRODUCTION_ORIGIN = 'https://teamcanadaicc.ca';
+
+/**
+ * The download link must not be built from the Host header alone. `request.url`
+ * reflects whatever Host arrived, so a forged one would put an attacker's URL
+ * inside an email carrying our own DKIM signature. Preview deploys and local
+ * dev still need to link to their own copy of the PDF, so those hosts are
+ * allowed to self-reference and everything else falls back to production.
+ */
+const resolveOrigin = (env: Env, request: Request): string => {
+  if (env.SITE_ORIGIN) return env.SITE_ORIGIN.replace(/\/+$/, '');
+
+  const { origin, hostname, protocol } = new URL(request.url);
+  const selfReferencing =
+    (protocol === 'https:' && hostname.endsWith('.pages.dev')) ||
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1';
+
+  return selfReferencing ? origin : PRODUCTION_ORIGIN;
+};
+
+/**
+ * Deliberately strict about shape rather than clever about RFC 5322: the value
+ * is handed to Resend as a recipient, so a comma, semicolon or space slipping
+ * through could fan one submission out to several addresses.
+ */
+const EMAIL_RE = /^[^\s@,;<>"]+@[^\s@,;<>"]+\.[A-Za-z]{2,}$/;
+
 /** Overridable so a preview deploy can send from a throwaway sender. */
 const DEFAULT_FROM = 'Team Canada ICC <partnerships@send.teamcanadaicc.ca>';
 const DEFAULT_REPLY_TO = 'partnerships@teamcanadaicc.ca';
@@ -31,6 +60,7 @@ interface Env {
   WEB3FORMS_API_KEY: string;
   TURNSTILE_SECRET: string;
   RESEND_API_KEY: string;
+  SITE_ORIGIN?: string;
   RESEND_FROM?: string;
   RESEND_REPLY_TO?: string;
 }
@@ -247,7 +277,8 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       );
     }
 
-    if (!email || typeof email !== 'string' || !email.includes('@')) {
+    // Length is checked first so a pathological value never reaches the regex.
+    if (!email || typeof email !== 'string' || email.length > 320 || !EMAIL_RE.test(email.trim())) {
       return new Response(
         JSON.stringify({ success: false, message: 'A valid email address is required.' }),
         { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
@@ -263,9 +294,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     const safeMessage = message ? sanitize(message) : '';
     const lang = body.lang && sanitize(body.lang) === 'fr' ? 'fr' : 'en';
 
-    // Built off the request origin so a preview deploy links to its own copy of
-    // the PDF rather than reaching across to production.
-    const pdfUrl = new URL(PDF_PATH, request.url).toString();
+    const pdfUrl = resolveOrigin(env, request) + PDF_PATH;
 
     const [teamOutcome, packageOutcome] = await Promise.allSettled([
       notifyTeam(env, {
