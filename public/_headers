@@ -1,0 +1,6 @@
+# Cloudflare Pages reads this from the build output; Astro copies public/ to dist/.
+
+# The rates were deliberately taken off the site and moved into this PDF, so the
+# file is reachable by link but kept out of search results.
+/partnership-package.pdf
+  X-Robots-Tag: noindex

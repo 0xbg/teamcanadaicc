@@ -163,11 +163,19 @@ const {
         fstatus.className = 'hidden';
         var fd = new FormData(form);
         var data = Object.fromEntries(fd.entries());
+        /* The form has no language field of its own — the endpoint needs this
+           to pick which of the two email templates to send. */
+        data.lang = currentLang;
         fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
           .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, result: j }; }); })
           .then(function(rr) {
             if (rr.ok && rr.result.success) {
-              showStatus(currentLang === 'fr' ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin.' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive.', 'success');
+              /* Never promise an inbox the endpoint could not reach — emailed
+                 tells us whether the package actually went out. */
+              var msg = rr.result.emailed
+                ? (currentLang === 'fr' ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin, ou téléchargez-le dès maintenant :' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive, or download it right now:')
+                : (currentLang === 'fr' ? 'Merci ! Téléchargez le dossier de partenariat ci-dessous. Nous revenons vers vous par courriel.' : 'Thank you! Download the partnership package below. We will follow up by email.');
+              showStatus(msg, 'success', rr.result.download);
               form.reset();
             } else {
               showStatus(rr.result.message || (currentLang === 'fr' ? 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Something went wrong. Please try again or contact us directly at 514-573-6758.'), 'error');
@@ -180,10 +188,23 @@ const {
       });
     }
 
-    function showStatus(msg, type) {
+    function showStatus(msg, type, downloadHref) {
       if (!fstatus) return;
+      /* Assigning textContent also clears the link left by a previous submit. */
       fstatus.textContent = msg;
       fstatus.className = 'text-sm font-semibold p-3 mb-4 rounded-md ' + (type === 'success' ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300');
+      /* Built as a node, never as markup — nothing from a response payload goes
+         through innerHTML. It is also a link the visitor clicks rather than an
+         automatic window.open(), which pop-up blockers eat once the original
+         click gesture has expired during the fetch. */
+      if (downloadHref) {
+        var dl = document.createElement('a');
+        dl.href = downloadHref;
+        dl.setAttribute('download', '');
+        dl.className = 'block mt-2 underline';
+        dl.textContent = currentLang === 'fr' ? 'Télécharger le dossier de partenariat (PDF)' : 'Download the partnership package (PDF)';
+        fstatus.appendChild(dl);
+      }
       fstatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
