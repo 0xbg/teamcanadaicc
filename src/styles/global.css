@@ -654,6 +654,33 @@ header.hero-viewport {
      on short screens. */
   padding-bottom: 7rem;
 }
+/* ---------- Hero photograph ----------
+   Desaturated and dimmed so the headline carries the section rather than
+   competing with three faces. The source is a ~2:1 group shot, so a
+   full-bleed object-cover crop on a phone keeps only the middle third of the
+   frame — one chef out of three. On narrow or portrait viewports the photo runs as a band across the
+   top and fades into the ink instead, which keeps all three in shot.
+   The switch is keyed to aspect ratio, not width: a portrait tablet at 768px
+   crops just as hard as a phone does. */
+header.hero-viewport .hero-photo {
+  filter: grayscale(1) brightness(0.65) contrast(1.08);
+  opacity: 0.38;
+  height: auto;
+  aspect-ratio: 16 / 9;  /* track the source's own proportions, so the band
+                            stays wide enough to hold all three at any width */
+  bottom: auto;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+@media (min-aspect-ratio: 4/3) {
+  header.hero-viewport .hero-photo {
+    height: 100%;
+    aspect-ratio: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
 /* Short viewports (landscape phones): the content no longer fits a single
    screen, so let the hero grow and unpin the scroll cue, which would
    otherwise sit on top of the stats row. */
