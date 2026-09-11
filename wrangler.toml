@@ -2,4 +2,19 @@ name = "teamcanadaicc"
 compatibility_date = "2026-07-22"
 pages_build_output_dir = "dist"
 
+# Pages ne connait que deux environnements, et depuis qu'un wrangler.toml
+# existe, les variables en clair se declarent ici et non plus dans le tableau
+# de bord (qui ne gere plus que les secrets).
+
 [env.production]
+# Aucune variable : MOCK_INTEGRATIONS doit rester absent en production.
+# C'est la garantie principale -- le mock ne s'active que sur la valeur exacte
+# "true", et cette valeur n'existe nulle part dans cette section.
+
+[env.production.vars]
+
+[env.preview.vars]
+# Simule Web3Forms et Resend sur les deploiements preview : rien n'est envoye,
+# tout est journalise, et la reponse porte mocked:true pour que le bandeau
+# "MODE TEST" s'affiche. Turnstile n'est jamais simule ici.
+MOCK_INTEGRATIONS = "true"
