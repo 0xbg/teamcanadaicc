@@ -175,6 +175,13 @@ const {
               var msg = rr.result.emailed
                 ? (currentLang === 'fr' ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin, ou téléchargez-le dès maintenant :' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive, or download it right now:')
                 : (currentLang === 'fr' ? 'Merci ! Téléchargez le dossier de partenariat ci-dessous. Nous revenons vers vous par courriel.' : 'Thank you! Download the partnership package below. We will follow up by email.');
+              /* A mocked run must never read as a real one -- the tester would
+                 sit waiting for an email that was only ever logged. */
+              if (rr.result.mocked) {
+                msg = (currentLang === 'fr'
+                  ? "MODE TEST — aucun courriel n'a été envoyé. "
+                  : 'TEST MODE — no email was sent. ') + msg;
+              }
               showStatus(msg, 'success', rr.result.download);
               form.reset();
             } else {

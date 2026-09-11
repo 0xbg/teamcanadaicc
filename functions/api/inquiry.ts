@@ -61,9 +61,25 @@ interface Env {
   TURNSTILE_SECRET: string;
   RESEND_API_KEY: string;
   SITE_ORIGIN?: string;
+  MOCK_INTEGRATIONS?: string;
   RESEND_FROM?: string;
   RESEND_REPLY_TO?: string;
 }
+
+/**
+ * Preview-only stand-in for the two mail providers, so the funnel can be walked
+ * end to end without third-party keys and without mailing real people.
+ *
+ * Opt-in and fail-closed: it takes effect only when MOCK_INTEGRATIONS is
+ * exactly 'true', set by hand in the Pages *Preview* environment. Deliberately
+ * not inferred from the hostname -- production is served from *.pages.dev too,
+ * so host sniffing is the one heuristic guaranteed to eventually misfire in
+ * production.
+ *
+ * Turnstile is never mocked. The bot check is the last thing worth faking, and
+ * its secret costs nothing to set.
+ */
+const isMocking = (env: Env) => env.MOCK_INTEGRATIONS === 'true';
 
 /** The prospect's name is the only user input echoed into the email body. */
 const escapeHtml = (val: string) =>
@@ -152,6 +168,13 @@ const notifyTeam = async (
   env: Env,
   fields: { name: string; email: string; company: string; tier: string; message: string }
 ): Promise<boolean> => {
+  if (isMocking(env)) {
+    console.log('[mock] team notification not sent:', JSON.stringify({
+      name: fields.name, email: fields.email, company: fields.company, tier: fields.tier,
+    }));
+    return true;
+  }
+
   if (!env.WEB3FORMS_API_KEY) {
     console.error('WEB3FORMS_API_KEY is not configured — team notification skipped');
     return false;
@@ -189,6 +212,13 @@ const sendPackage = async (
   env: Env,
   opts: { name: string; email: string; lang: 'en' | 'fr'; pdfUrl: string }
 ): Promise<boolean> => {
+  if (isMocking(env)) {
+    console.log('[mock] package email not sent:', JSON.stringify({
+      to: opts.email, lang: opts.lang, subject: copy[opts.lang].subject, pdfUrl: opts.pdfUrl,
+    }));
+    return true;
+  }
+
   if (!env.RESEND_API_KEY) {
     console.error('RESEND_API_KEY is not configured — package email skipped');
     return false;
@@ -343,7 +373,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     }
 
     return new Response(
-      JSON.stringify({ success: true, emailed, download: PDF_PATH }),
+      JSON.stringify({ success: true, emailed, mocked: isMocking(env), download: PDF_PATH }),
       { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } }
     );
   } catch (err) {

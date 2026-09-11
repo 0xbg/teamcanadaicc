@@ -1,0 +1,12 @@
+# Binary assets must not go through line-ending conversion. Git sniffed the
+# placeholder PDF as text and warned it would rewrite LF to CRLF on checkout,
+# which corrupts the byte offsets in a PDF's xref table.
+*.pdf   binary
+*.jpg   binary
+*.jpeg  binary
+*.JPG   binary
+*.png   binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
