@@ -184,8 +184,23 @@ const {
           .catch(function() {
             showStatus(currentLang === 'fr' ? 'Impossible d\'envoyer votre demande. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Unable to send your inquiry. Please try again or contact us directly at 514-573-6758.', 'error');
           })
-          .then(function() { submitBtn.disabled = false; submitBtn.textContent = currentLang === 'fr' ? submitLabelFr : submitLabelEn; });
+          .then(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = currentLang === 'fr' ? submitLabelFr : submitLabelEn;
+            resetTurnstile();
+          });
       });
+    }
+
+    /* Turnstile tokens are single-use and expire after five minutes. Without a
+       reset the widget keeps handing back the token it already spent, so every
+       attempt after the first fails siteverify with timeout-or-duplicate --
+       which surfaces as "Security check failed" no matter what the visitor does. */
+    function resetTurnstile() {
+      try {
+        var widget = document.querySelector('.cf-turnstile');
+        if (widget && window.turnstile) window.turnstile.reset(widget);
+      } catch (e) { /* the widget may not have rendered; nothing to reset */ }
     }
 
     function showStatus(msg, type, downloadHref) {

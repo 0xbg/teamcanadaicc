@@ -243,6 +243,16 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       );
     }
 
+    // Guarded like the other two credentials: without it every submission
+    // fails the security check with no indication of why.
+    if (!env.TURNSTILE_SECRET) {
+      console.error('TURNSTILE_SECRET is not configured -- every submission will fail the security check');
+      return new Response(
+        JSON.stringify({ success: false, message: 'Form service is not configured. Please contact the team directly at 514-573-6758.' }),
+        { status: 500, headers: { ...headers, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const turnstileResult = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -253,8 +263,14 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
       }),
     });
 
-    const turnstileData: { success: boolean } = await turnstileResult.json();
+    const turnstileData: { success: boolean; 'error-codes'?: string[] } = await turnstileResult.json();
     if (!turnstileData.success) {
+      // siteverify names the cause -- invalid-input-secret, timeout-or-duplicate,
+      // invalid-input-response -- and without it a 403 is undiagnosable.
+      console.error(
+        'turnstile rejected:',
+        turnstileData['error-codes']?.join(', ') || 'no error codes returned'
+      );
       return new Response(
         JSON.stringify({ success: false, message: 'Security check failed. Please try again.' }),
         { status: 403, headers: { ...headers, 'Content-Type': 'application/json' } }
