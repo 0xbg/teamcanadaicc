@@ -110,6 +110,23 @@ describe('inquiry endpoint', () => {
     expect((await res.json()).message).toMatch(/avis de confidentialité/);
   });
 
+  it.each([
+    ['an empty body', ''],
+    ['malformed JSON', '{"name":'],
+    ['JSON null', 'null'],
+    ['a JSON array', '[]'],
+    ['a JSON string', '"hello"'],
+  ])('rejects %s as a bad request', async (_, raw) => {
+    const calls = mockProviders();
+    const res = await onRequestPost({
+      request: new Request('https://teamcanadaicc.ca/api/inquiry', { method: 'POST', body: raw }),
+      env: baseEnv,
+    });
+    expect(res.status).toBe(400);
+    expect((await res.json()).success).toBe(false);
+    expect(calls).toHaveLength(0);
+  });
+
   it('rejects a missing Turnstile token before calling siteverify', async () => {
     const calls = mockProviders();
     const res = await post({ ...validBody, 'cf-turnstile-response': '' });

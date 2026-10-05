@@ -1,0 +1,4 @@
+# English lives at the root; /fr is the only locale prefix. Visitors who swap
+# /fr for /en by hand land on the English twin instead of a 404.
+/en       /     301
+/en/      /     301

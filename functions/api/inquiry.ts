@@ -291,6 +291,7 @@ const messages = {
     rateLimited: `Too many requests. Please try again later or contact us directly at ${PHONE}.`,
     failed: `Your inquiry could not be sent. Please try again or contact us directly at ${PHONE}.`,
     unexpected: `An unexpected error occurred. Please try again or contact us directly at ${PHONE}.`,
+    invalid: 'The request could not be read. Please reload the page and try again.',
   },
   fr: {
     security: 'Veuillez compléter la vérification de sécurité.',
@@ -302,6 +303,7 @@ const messages = {
     rateLimited: `Trop de demandes. Veuillez réessayer plus tard ou nous joindre directement au ${PHONE}.`,
     failed: `Votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous joindre directement au ${PHONE}.`,
     unexpected: `Une erreur inattendue est survenue. Veuillez réessayer ou nous joindre directement au ${PHONE}.`,
+    invalid: "La demande n'a pas pu être lue. Veuillez recharger la page et réessayer.",
   },
 } as const;
 
@@ -355,9 +357,21 @@ const withinLimit = async (
  * response, and its preflight finds nothing to approve.
  */
 export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
+  // A body that is not a JSON object is the client's fault, not ours: answer
+  // 400 here rather than letting it surface as a 500 from the catch below.
+  let parsed: unknown = null;
+  try {
+    parsed = await request.json();
+  } catch {
+    // Falls through to the shape check below.
+  }
+  if (!parsed || typeof parsed !== 'object') {
+    return json({ success: false, message: messages.en.invalid }, 400);
+  }
+  const body = parsed as InquiryBody;
+
   let lang: Lang = 'en';
   try {
-    const body: InquiryBody = await request.json();
     lang = body.lang === 'fr' ? 'fr' : 'en';
     const t = messages[lang];
     const { origin, hostname } = new URL(request.url);
