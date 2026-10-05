@@ -14,6 +14,10 @@ export const ui = {
     sharePost: 'Share this post',
     relatedPosts: 'Related Posts',
     langLabel: 'Read this article in',
+    privacy: 'Privacy Notice',
+    terms: 'Terms of Service',
+    accessibility: 'Accessibility',
+    skipToContent: 'Skip to content',
   },
   fr: {
     blog: 'Blogue',
@@ -30,6 +34,10 @@ export const ui = {
     sharePost: 'Partager cet article',
     relatedPosts: 'Articles connexes',
     langLabel: 'Lire cet article en',
+    privacy: 'Avis de confidentialité',
+    terms: "Conditions d'utilisation",
+    accessibility: 'Accessibilité',
+    skipToContent: 'Aller au contenu',
   },
 } as const;
 

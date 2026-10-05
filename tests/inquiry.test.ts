@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { onRequestPost } from '../functions/api/inquiry';
 
@@ -137,6 +138,16 @@ describe('inquiry endpoint', () => {
   it('rejects a token issued for another widget action', async () => {
     mockProviders({ turnstile: { success: true, action: 'other', hostname: 'teamcanadaicc.ca' } });
     expect((await post(validBody)).status).toBe(403);
+  });
+
+  // The widget's data-action and the endpoint's expected action are written in
+  // two files; if they drift apart, every real submission fails with a 403.
+  it('accepts the action the form widget actually declares', async () => {
+    const form = readFileSync(new URL('../src/components/InquiryForm.astro', import.meta.url), 'utf8');
+    const action = form.match(/class="cf-turnstile"[^>]*data-action="([^"]+)"/)?.[1];
+    expect(action).toBeTruthy();
+    mockProviders({ turnstile: { success: true, action, hostname: 'teamcanadaicc.ca' } });
+    expect((await post(validBody)).status).toBe(200);
   });
 
   it('rejects a token issued on another hostname', async () => {

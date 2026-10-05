@@ -20,11 +20,13 @@ import CookieBanner from '../components/CookieBanner.astro';
       { href: '/en/blog', en: 'Blog', fr: 'Blogue' },
     ]}
   />
-  <Hero />
-  <About />
-  <Team />
-  <Timeline />
-  <Opportunity />
+  <main id="main" tabindex="-1" class="focus:outline-none">
+    <Hero />
+    <About />
+    <Team />
+    <Timeline />
+    <Opportunity />
+  </main>
   <Footer ctaHref="/sponsor" />
   <CookieBanner />
 </Layout>

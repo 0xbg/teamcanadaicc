@@ -31,8 +31,10 @@ import CookieBanner from '../components/CookieBanner.astro';
       { href: '/en/blog', en: 'Blog', fr: 'Blogue' },
     ]}
   />
-  <Hero />
-  <Faq />
+  <main id="main" tabindex="-1" class="focus:outline-none">
+    <Hero />
+    <Faq />
+  </main>
   <Footer ctaHref="#inquiry" />
   <CookieBanner />
 </Layout>

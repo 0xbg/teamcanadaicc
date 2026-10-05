@@ -94,6 +94,9 @@ const ogImage = new URL(og.src, site).href;
   )}
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
+  {/* Every page wraps its content in <main id="main" tabindex="-1">, so
+      keyboard users can jump past the strip and the nav (WCAG 2.4.1). */}
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[200] focus:bg-gold focus:text-ink focus:px-4 focus:py-2 focus:font-semibold" data-lang-en="Skip to content" data-lang-fr="Aller au contenu">Skip to content</a>
   <StatusStrip href={ctaHref} />
 
   <slot />
@@ -148,6 +151,9 @@ const ogImage = new URL(og.src, site).href;
       if (!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      /* Scrolling alone leaves keyboard focus behind; a focusable target
+         (the skip link's <main tabindex="-1">) has to receive it too. */
+      if (target.hasAttribute('tabindex')) target.focus({ preventScroll: true });
     });
 
     /* Form handling */

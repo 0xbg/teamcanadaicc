@@ -54,7 +54,7 @@ import { Image } from 'astro:assets';
                 </p>
                 <div class="flex items-center justify-between mt-auto pt-3 border-t border-border-light">
                   <span class="text-xs text-muted-dark">
-                    {post.data.pubDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    {post.data.pubDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })}
                   </span>
                   <span class="text-xs text-gold font-semibold hover:underline">
                     {t.readMore} →
