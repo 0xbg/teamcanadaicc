@@ -1,0 +1,33 @@
+# Secret scanning for this repo. Runs in CI (.github/workflows/ci.yml) over the
+# full history, and before every commit via .githooks/pre-commit.
+#
+# The built-in ruleset stays on; the rules below add the three credentials the
+# inquiry function actually uses, whose shapes the generic rules can miss.
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "resend-api-key"
+description = "Resend API key"
+regex = '''\bre_[A-Za-z0-9]{6,}_[A-Za-z0-9]{16,}\b'''
+entropy = 3.0
+keywords = ["re_"]
+
+# Web3Forms access keys are bare UUIDs, which only look secret next to their name.
+[[rules]]
+id = "web3forms-access-key"
+description = "Web3Forms access key"
+regex = '''(?i)(?:web3forms_api_key|access_key)["']?\s*[:=]\s*["']?([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'''
+secretGroup = 1
+keywords = ["web3forms_api_key", "access_key"]
+
+# Real secret keys start with 0x. Cloudflare's published test secrets start with
+# 1x/2x/3x, and the public site key in InquiryForm.astro is not assigned to a
+# *secret* name, so neither is flagged.
+[[rules]]
+id = "turnstile-secret-key"
+description = "Cloudflare Turnstile secret key"
+regex = '''(?i)turnstile_secret["']?\s*[:=]\s*["']?(0x[A-Za-z0-9_-]{20,})'''
+secretGroup = 1
+keywords = ["turnstile_secret"]

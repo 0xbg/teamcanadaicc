@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "wrangler pages dev dist",
     "check": "astro check && tsc -p functions",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepare": "git config core.hooksPath .githooks || exit 0",
+    "scan:secrets": "gitleaks git . --redact --no-banner"
   },
   "license": "UNLICENSED",
   "dependencies": {

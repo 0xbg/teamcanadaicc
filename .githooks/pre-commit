@@ -1,0 +1,15 @@
+#!/bin/sh
+# Refuses a commit whose staged changes contain a secret. Enabled for every
+# clone by the "prepare" script in package.json (core.hooksPath=.githooks).
+# Rules live in .gitleaks.toml; CI runs the same scan over the full history.
+#
+# A false positive can be silenced with a trailing "gitleaks:allow" comment on
+# the line, or bypassed once with `git commit --no-verify`.
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed, so staged changes were not scanned for secrets." >&2
+  echo "  Install it (winget install Gitleaks.Gitleaks | brew install gitleaks); CI scans regardless." >&2
+  exit 0
+fi
+
+exec gitleaks git --pre-commit --staged --redact --no-banner --verbose
