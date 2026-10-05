@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { EMAIL_PRIVACY } from '../consts';
 ---
 <Layout
   titleEn="Terms of Service · Team Canada ICC · Lyon 2027"
@@ -55,7 +56,7 @@ import Layout from '../layouts/Layout.astro';
 
         <div>
           <h2 class="font-bold text-ink mb-1 text-base" data-lang-en="9. Contact" data-lang-fr="9. Contact">9. Contact</h2>
-          <p data-lang-en="For questions about these Terms, contact us at &lt;a href=&quot;mailto:privacy@teamcanadaicc.ca&quot; class=&quot;text-gold-dark hover:text-red-dark underline&quot;&gt;privacy@teamcanadaicc.ca&lt;/a&gt;." data-lang-fr={`Pour toute question concernant les présentes Conditions, contactez-nous à <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold-dark hover:text-red-dark underline'>privacy@teamcanadaicc.ca</a>.`}>For questions about these Terms, contact us at <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold-dark hover:text-red-dark underline">privacy@teamcanadaicc.ca</a>.</p>
+          <p data-lang-en={`For questions about these Terms, contact us at <a href="mailto:${EMAIL_PRIVACY}" class="text-gold-dark hover:text-red-dark underline">${EMAIL_PRIVACY}</a>.`} data-lang-fr={`Pour toute question concernant les présentes Conditions, contactez-nous à <a href='mailto:${EMAIL_PRIVACY}' class='text-gold-dark hover:text-red-dark underline'>${EMAIL_PRIVACY}</a>.`}>For questions about these Terms, contact us at <a href={`mailto:${EMAIL_PRIVACY}`} class="text-gold-dark hover:text-red-dark underline">{EMAIL_PRIVACY}</a>.</p>
         </div>
 
         <div class="mt-6 pt-4 border-t border-border-light">

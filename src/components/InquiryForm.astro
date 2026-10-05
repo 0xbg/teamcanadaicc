@@ -18,6 +18,8 @@
 // Tier is a select rather than chips: eight chips wrapped to three rows and
 // forced the whole card wider than the hero column wanted to be. A select is
 // one row at any width, which is what lets this stay a narrow column.
+import { EMAIL_PRIVACY } from '../consts';
+
 const tiers = [
   { value: 'Lead Partner', en: 'Lead Partner', fr: 'Partenaire majeur' },
   { value: 'Premier Partner', en: 'Premier Partner', fr: 'Partenaire Premier' },
@@ -71,8 +73,8 @@ const tiers = [
 
     <label class="s2-form-consent">
       <input type="checkbox" name="privacy_consent" required class="mt-0.5 w-4 h-4 accent-gold flex-shrink-0">
-      <span data-lang-en="I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC utilise mon nom, mon courriel, mon entreprise et mon message pour répondre à cette demande et faire le suivi au sujet d'un partenariat. Je peux retirer mon consentement en tout temps à <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>.`}>
-        I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href="mailto:privacy@teamcanadaicc.ca">privacy@teamcanadaicc.ca</a>.
+      <span data-lang-en={`I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href='mailto:${EMAIL_PRIVACY}'>${EMAIL_PRIVACY}</a>.`} data-lang-fr={`Je consens à ce qu'Équipe Canada ICC utilise mon nom, mon courriel, mon entreprise et mon message pour répondre à cette demande et faire le suivi au sujet d'un partenariat. Je peux retirer mon consentement en tout temps à <a href='mailto:${EMAIL_PRIVACY}'>${EMAIL_PRIVACY}</a>.`}>
+        I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href={`mailto:${EMAIL_PRIVACY}`}>{EMAIL_PRIVACY}</a>.
       </span>
     </label>
 

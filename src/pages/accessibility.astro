@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { EMAIL_PRIVACY } from '../consts';
 ---
 <Layout
   titleEn="Accessibility Statement · Team Canada ICC · Lyon 2027"
@@ -46,7 +47,7 @@ import Layout from '../layouts/Layout.astro';
 
         <div>
           <h2 class="font-bold text-ink mb-1 text-base" data-lang-en="Feedback &amp; Contact" data-lang-fr="Rétroaction et contact">Feedback &amp; Contact</h2>
-          <p data-lang-en='We welcome feedback on the accessibility of this Site. If you encounter any barriers or have suggestions for improvement, please contact us at &lt;a href=&quot;mailto:privacy@teamcanadaicc.ca&quot; class=&quot;text-gold-dark hover:text-red-dark underline&quot;&gt;privacy@teamcanadaicc.ca&lt;/a&gt;. We aim to respond to accessibility inquiries within 5 business days.' data-lang-fr={`Nous accueillons favorablement vos commentaires sur l'accessibilité de ce Site. Si vous rencontrez des obstacles ou avez des suggestions d'amélioration, veuillez nous contacter à <a href='mailto:privacy@teamcanadaicc.ca' class='text-gold-dark hover:text-red-dark underline'>privacy@teamcanadaicc.ca</a>. Nous visons à répondre aux demandes d'accessibilité dans un délai de 5 jours ouvrables.`}>We welcome feedback on the accessibility of this Site. If you encounter any barriers or have suggestions for improvement, please contact us at <a href="mailto:privacy@teamcanadaicc.ca" class="text-gold-dark hover:text-red-dark underline">privacy@teamcanadaicc.ca</a>. We aim to respond to accessibility inquiries within 5 business days.</p>
+          <p data-lang-en={`We welcome feedback on the accessibility of this Site. If you encounter any barriers or have suggestions for improvement, please contact us at <a href="mailto:${EMAIL_PRIVACY}" class="text-gold-dark hover:text-red-dark underline">${EMAIL_PRIVACY}</a>. We aim to respond to accessibility inquiries within 5 business days.`} data-lang-fr={`Nous accueillons favorablement vos commentaires sur l'accessibilité de ce Site. Si vous rencontrez des obstacles ou avez des suggestions d'amélioration, veuillez nous contacter à <a href='mailto:${EMAIL_PRIVACY}' class='text-gold-dark hover:text-red-dark underline'>${EMAIL_PRIVACY}</a>. Nous visons à répondre aux demandes d'accessibilité dans un délai de 5 jours ouvrables.`}>We welcome feedback on the accessibility of this Site. If you encounter any barriers or have suggestions for improvement, please contact us at <a href={`mailto:${EMAIL_PRIVACY}`} class="text-gold-dark hover:text-red-dark underline">{EMAIL_PRIVACY}</a>. We aim to respond to accessibility inquiries within 5 business days.</p>
         </div>
 
         <div class="mt-6 pt-4 border-t border-border-light">
