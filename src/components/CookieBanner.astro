@@ -25,9 +25,25 @@
 
     if (!acknowledged) {
       banner.style.display = 'block';
+      // The banner is fixed over the bottom of the page; on a phone it covers
+      // about a third of the screen. Pad the page by its height so the footer
+      // can be scrolled clear of it, and set scroll-padding so the browser
+      // keeps a focused field or button (the sponsor form's submit, say)
+      // above it rather than under it (WCAG 2.4.11).
+      const root = document.documentElement;
+      const pad = () => {
+        const h = banner.offsetHeight + 'px';
+        document.body.style.paddingBottom = h;
+        root.style.scrollPaddingBottom = h;
+      };
+      pad();
+      window.addEventListener('resize', pad);
 
       btn.addEventListener('click', function() {
         banner.style.display = 'none';
+        window.removeEventListener('resize', pad);
+        document.body.style.paddingBottom = '';
+        root.style.scrollPaddingBottom = '';
         try { localStorage.setItem(KEY, '1'); } catch (_) {}
       });
     }

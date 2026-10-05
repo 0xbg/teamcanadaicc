@@ -278,6 +278,14 @@ const ogImage = new URL(og.src, site).href;
         var lr = document.querySelector('.lang-rail');
         if (lr) lr.style.display = isOpen ? 'none' : '';
         if (isOpen) positionLangThumbs(true);
+        /* Keyboard focus follows the drawer: into it on open, and back to the
+           button on close if it was inside, so it never sits on an inert node. */
+        if (isOpen) {
+          var closeEl = document.getElementById('vn-close-btn');
+          if (closeEl) closeEl.focus();
+        } else if (drawer.contains(document.activeElement)) {
+          btn.focus();
+        }
       }
       btn.addEventListener('click', function(e) { e.stopPropagation(); toggle(); });
       var closeBtn = document.getElementById('vn-close-btn');

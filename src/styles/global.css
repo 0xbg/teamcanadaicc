@@ -166,8 +166,11 @@ html { scroll-behavior: smooth; }
 .collapse-trigger:hover { background: color-mix(in srgb, var(--color-gold) 8%, transparent); border-color: var(--color-gold); }
 .collapse-trigger svg { width: 0.875rem; height: 0.875rem; transition: transform 0.3s ease; }
 .collapse-trigger.expanded svg { transform: rotate(180deg); }
-.collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-.collapsible-content.open { max-height: 2000px; }
+/* max-height alone only squashes a closed panel: screen readers still read
+   every collapsed answer. visibility hides it from them too, flipping only
+   after the close animation has run so the collapse still looks the same. */
+.collapsible-content { max-height: 0; overflow: hidden; visibility: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.5s; }
+.collapsible-content.open { max-height: 2000px; visibility: visible; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s; }
 .team-card { border-radius: 0.5rem; }
 
 /* ---------- Sponsor FAQ ----------
