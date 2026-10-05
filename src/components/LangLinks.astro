@@ -1,0 +1,33 @@
+---
+// The EN / FR pair shared by the footer rail and the mobile drawer. The
+// active language is a plain marker; the other is a link to this page's twin.
+import { alternatePath, publicPath } from '../consts';
+
+const path = publicPath(Astro.url.pathname);
+const isFr = path === '/fr' || path.startsWith('/fr/');
+const enHref = alternatePath(path, 'en') ?? '/';
+const frHref = alternatePath(path, 'fr') ?? '/fr';
+---
+
+<span class="lang-thumb" aria-hidden="true"></span>
+<a
+  class:list={['lang-btn', { active: !isFr }]}
+  href={enHref}
+  hreflang="en"
+  lang="en"
+  title="English"
+  aria-current={!isFr ? 'true' : undefined}
+  data-set-lang="en"
+  data-keep-href
+>EN</a>
+<span class="lang-rail-sep" aria-hidden="true"></span>
+<a
+  class:list={['lang-btn', { active: isFr }]}
+  href={frHref}
+  hreflang="fr"
+  lang="fr"
+  title="Français"
+  aria-current={isFr ? 'true' : undefined}
+  data-set-lang="fr"
+  data-keep-href
+>FR</a>

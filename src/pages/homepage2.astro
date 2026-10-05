@@ -4,6 +4,9 @@
 // one unbroken ink field for the story, a single flip to cream
 // for the partner handoff, Bodoni Moda display type, and no
 // icon-card grids anywhere.
+//
+// A design experiment, not a second homepage: noindex, left out of the
+// sitemap, and English only.
 import Layout from '../layouts/Layout.astro';
 import VerticalNav from '../components/VerticalNav.astro';
 import Footer from '../components/Footer.astro';
@@ -14,10 +17,11 @@ import Stage from '../components/homepage2/Stage.astro';
 import Brigade from '../components/homepage2/Brigade.astro';
 import Road from '../components/homepage2/Road.astro';
 import Handoff from '../components/homepage2/Handoff.astro';
+import '../styles/fonts-homepage2.css';
 import '../styles/homepage2.css';
 ---
 
-<Layout>
+<Layout noindex>
   <div class="h2x">
     <VerticalNav
       links={[

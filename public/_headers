@@ -1,6 +1,24 @@
 # Cloudflare Pages reads this from the build output; Astro copies public/ to dist/.
 
+# Every page. The CSP allows Cloudflare Turnstile (script + challenge iframe)
+# and nothing else off-site; fonts and images are self-hosted (Vite inlines
+# the smallest font subsets as data: URIs, hence data: on font-src). 'unsafe-inline'
+# stays on script-src because the layouts rely on inline scripts (is:inline)
+# and Astro emits inline hoisted scripts; the policy still blocks foreign
+# script origins, plugins, framing, <base> hijacking and off-site form posts.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Strict-Transport-Security: max-age=31536000
+
+# Fingerprinted build assets never change under the same name.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
 # The rates were deliberately taken off the site and moved into this PDF, so the
-# file is reachable by link but kept out of search results.
+# file is reachable by link but kept out of search results. (Not disallowed in
+# robots.txt on purpose: a crawler has to fetch it to see this header.)
 /partnership-package.pdf
   X-Robots-Tag: noindex

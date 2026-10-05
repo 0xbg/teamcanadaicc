@@ -1,7 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations } from '../i18n/ui';
+import '../styles/fonts.css';
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import { COPYRIGHT_YEAR, SITE_URL, publicPath } from '../consts';
+import ogFallback from '../assets/team.jpg';
 
 interface Props {
   post?: CollectionEntry<'blog'>;
@@ -22,6 +26,17 @@ const otherLangLabel = lang === 'en' ? 'FR' : 'EN';
 
 // Translated URL: if a translated slug is provided, use it; otherwise fall back to the other language's blog listing
 const translatedUrl = translatedSlug ? `/${otherLang}/blog/${translatedSlug}` : `/${otherLang}/blog`;
+const selfUrl = publicPath(Astro.url.pathname);
+const enUrl = lang === 'en' ? selfUrl : translatedUrl;
+const frUrl = lang === 'fr' ? selfUrl : translatedUrl;
+
+const site = Astro.site ?? new URL(SITE_URL);
+const abs = (p: string) => new URL(publicPath(p), site).href;
+const canonical = abs(selfUrl);
+// A post with no translation only has a listing on the other side, which is
+// not the same page — hreflang pairs only real equivalents.
+const hasTwin = !post || !!translatedSlug;
+const og = await getImage({ src: post?.data.featuredImage ?? ogFallback, width: 1200, format: 'jpg', quality: 80 });
 // This layout is standalone — it never wraps Layout.astro — so the two
 // persistent conversion bands have to be mounted here as well. Blog routes
 // are already per-locale, so they render in one language via `static`.
@@ -35,27 +50,39 @@ import { Image } from 'astro:assets';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Tints the mobile browser chrome to match the status strip, the topmost
-       thing on every page. Both schemes are declared explicitly: with only a
-       bare theme-color, Chrome on Android keeps its own toolbar colour when the
-       browser is in dark theme. Hardcoded because meta cannot read a custom
-       property — keep in step with --color-olive in global.css. -->
-  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: dark)">
+  <!-- Tints the mobile browser chrome to match the status strip — keep in
+       step with --color-olive in global.css. -->
   <meta name="theme-color" content="#463f31">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="light">
   <title>{pageTitle}</title>
   <meta name="description" content={pageDesc}>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href={canonical}>
+  {hasTwin && (
+    <>
+      <link rel="alternate" hreflang="en" href={abs(enUrl)}>
+      <link rel="alternate" hreflang="fr" href={abs(frUrl)}>
+      <link rel="alternate" hreflang="x-default" href={abs(enUrl)}>
+    </>
+  )}
+  <meta property="og:type" content={post ? 'article' : 'website'}>
+  <meta property="og:site_name" content="Team Canada ICC">
+  <meta property="og:locale" content={lang === 'fr' ? 'fr_CA' : 'en_CA'}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={pageDesc}>
+  <meta property="og:image" content={new URL(og.src, site).href}>
+  <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="bg-cream text-body font-sans antialiased">
 
-  <StatusStrip static={lang} />
+  <StatusStrip static={lang} href={lang === 'fr' ? '/fr/sponsor' : '/sponsor'} />
 
   <!-- Blog Header Nav — sticks below the status strip, not under it -->
   <nav class="bg-white/80 backdrop-blur-sm border-b border-border-light sticky z-40" style="top: var(--status-strip-h)">
     <div class="max-w-5xl mx-auto px-4 md:px-6">
       <div class="flex items-center justify-between h-14 md:h-16">
-        <a href="/" class="flex items-center gap-2 group">
+        <a href={lang === 'fr' ? '/fr' : '/'} class="flex items-center gap-2 group">
           <div class="w-7 h-7 rounded-full border-2 border-gold flex items-center justify-center group-hover:bg-gold/10 transition-colors">
             <span class="text-gold text-xs font-bold">TC</span>
           </div>
@@ -66,8 +93,8 @@ import { Image } from 'astro:assets';
             {t.blog}
           </a>
           <div class="flex items-center gap-1">
-            <a href="/en/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'en' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>EN</a>
-            <a href="/fr/blog" class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'fr' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>FR</a>
+            <a href={enUrl} data-set-lang="en" hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined} class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'en' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>EN</a>
+            <a href={frUrl} data-set-lang="fr" hreflang="fr" lang="fr" aria-current={lang === 'fr' ? 'true' : undefined} class={`text-xs px-2 py-0.5 border border-gold font-semibold btn-cta transition-colors ${lang === 'fr' ? 'bg-gold text-ink' : 'text-gold hover:bg-gold hover:text-ink'}`}>FR</a>
           </div>
         </div>
       </div>
@@ -89,7 +116,7 @@ import { Image } from 'astro:assets';
               post.data.featuredImage && (
                 <Image
                   src={post.data.featuredImage}
-                  alt={post.data.title}
+                  alt=""
                   class="w-full h-48 md:h-72 object-cover rounded-lg mb-6"
                   width={1024} widths={[640, 1024]}
                   sizes="(min-width: 768px) 768px, 100vw"
@@ -141,7 +168,7 @@ import { Image } from 'astro:assets';
             {/* Language Switcher for individual post */}
             <div class="mt-6 pt-4 border-t border-border-light">
               <span class="text-xs text-muted mr-2">{t.langLabel}:</span>
-              <a href={translatedUrl} class="lang-switch-btn">
+              <a href={translatedUrl} class="lang-switch-btn" data-set-lang={otherLang} hreflang={otherLang} lang={otherLang}>
                 {otherLangLabel}
               </a>
             </div>
@@ -175,12 +202,21 @@ import { Image } from 'astro:assets';
   <footer class="bg-ink text-cream py-10 px-6 text-center mt-12">
     <div class="max-w-3xl mx-auto">
       <p class="text-gold text-sm font-bold mb-2">TEAM CANADA · ICC 2027 · LYON</p>
-      <p class="text-text-muted text-xs">© 2026 Team Canada ICC. <span>{lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span></p>
+      <p class="text-text-muted text-xs">© {COPYRIGHT_YEAR} Team Canada ICC. <span>{lang === 'fr' ? 'Tous droits réservés.' : 'All rights reserved.'}</span></p>
     </div>
   </footer>
 
   <!-- Persistent CTA, mobile only -->
-  <StickyCta href="/sponsor" static={lang} />
+  <StickyCta href={lang === 'fr' ? '/fr/sponsor' : '/sponsor'} static={lang} />
+
+  <!-- Remember an explicit language choice; see the redirect in Layout.astro. -->
+  <script is:inline>
+    document.addEventListener('click', function (e) {
+      var link = e.target.closest('[data-set-lang]');
+      if (!link) return;
+      try { localStorage.setItem('tc-lang', link.getAttribute('data-set-lang')); } catch (err) {}
+    });
+  </script>
 
 </body>
 </html>

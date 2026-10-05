@@ -3,16 +3,16 @@
 // Lives in the footer rather than floating over the page. Pages with a mobile
 // drawer also carry a copy inside it (VerticalNav's .vn-lang row), which is
 // the mobile route; the footer copy hides under that on small screens so the
-// two never both appear. /sponsor has no drawer, so there the footer copy is
-// the only switcher and stays visible at every width.
+// two never both appear.
 //
-// Behaviour lives in Layout.astro — setLang/positionLangThumbs query
-// `.lang-rail, .vn-lang`. Nothing here owns state.
+// The buttons are links to the same page in the other language — each
+// language is its own built page (see src/middleware.ts). Pages without a
+// twin link to the other language's homepage. data-set-lang lets the
+// Layout script remember the choice; data-keep-href stops the French build
+// from rewriting the EN link.
+import LangLinks from './LangLinks.astro';
 ---
 
 <div class="lang-rail lang-rail--footer" role="group" aria-label="Language">
-  <span class="lang-thumb" aria-hidden="true"></span>
-  <button id="lang-en" class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
-  <span class="lang-rail-sep" aria-hidden="true"></span>
-  <button id="lang-fr" class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
+  <LangLinks />
 </div>

@@ -8,7 +8,12 @@
 // silently breaks submission.
 //
 // The consent checkbox and the closing privacy paragraph are compliance, not
-// decoration; they move wherever the form moves.
+// decoration; they move wherever the form moves. Their wording has to stay
+// true to what the endpoint does: the details go to the providers named in
+// the Privacy Notice (Cloudflare, Web3Forms, Resend) and nowhere else.
+//
+// The Turnstile loader lives here rather than in the layout so the challenge
+// script is fetched only on the page that has a form.
 //
 // Tier is a select rather than chips: eight chips wrapped to three rows and
 // forced the whole card wider than the hero column wanted to be. A select is
@@ -34,17 +39,17 @@ const tiers = [
     <div class="s2-form-row">
       <div>
         <label for="name" class="s2-form-label"><span data-lang-en="Full name" data-lang-fr="Nom complet">Full name</span> *</label>
-        <input type="text" id="name" name="name" required class="form-input s2-form-input" data-lang-en-placeholder="Your full name" data-lang-fr-placeholder="Votre nom complet" placeholder="Your full name">
+        <input type="text" id="name" name="name" required maxlength="100" autocomplete="name" class="form-input s2-form-input" data-lang-en-placeholder="Your full name" data-lang-fr-placeholder="Votre nom complet" placeholder="Your full name">
       </div>
       <div>
         <label for="email" class="s2-form-label"><span data-lang-en="Email" data-lang-fr="Courriel">Email</span> *</label>
-        <input type="email" id="email" name="email" required class="form-input s2-form-input" placeholder="you@example.com">
+        <input type="email" id="email" name="email" required maxlength="320" autocomplete="email" class="form-input s2-form-input" placeholder="you@example.com">
       </div>
     </div>
 
     <div>
       <label for="company" class="s2-form-label" data-lang-en="Company / organization" data-lang-fr="Entreprise / organisation">Company / organization</label>
-      <input type="text" id="company" name="company" class="form-input s2-form-input" data-lang-en-placeholder="Your company" data-lang-fr-placeholder="Votre entreprise" placeholder="Your company">
+      <input type="text" id="company" name="company" maxlength="200" autocomplete="organization" class="form-input s2-form-input" data-lang-en-placeholder="Your company" data-lang-fr-placeholder="Votre entreprise" placeholder="Your company">
     </div>
 
     <div>
@@ -59,22 +64,28 @@ const tiers = [
       </select>
     </div>
 
+    <div>
+      <label for="message" class="s2-form-label" data-lang-en="Message (optional)" data-lang-fr="Message (optionnel)">Message (optional)</label>
+      <textarea id="message" name="message" rows="3" maxlength="2000" class="form-input s2-form-input s2-form-textarea" data-lang-en-placeholder="In-kind ideas, timing, questions…" data-lang-fr-placeholder="Idées en nature, échéancier, questions…" placeholder="In-kind ideas, timing, questions…"></textarea>
+    </div>
+
     <label class="s2-form-consent">
       <input type="checkbox" name="privacy_consent" required class="mt-0.5 w-4 h-4 accent-gold flex-shrink-0">
-      <span data-lang-en="I consent to Team Canada ICC using my name, email and company to answer this enquiry and send partnership communications. I can withdraw at any time via <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC utilise mon nom, mon courriel et mon entreprise pour répondre à cette demande et m'envoyer des communications liées au partenariat. Je peux retirer mon consentement en tout temps à <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>.`}>
-        I consent to Team Canada ICC using my name, email and company to answer this enquiry and send partnership communications. I can withdraw at any time via <a href="mailto:privacy@teamcanadaicc.ca">privacy@teamcanadaicc.ca</a>.
+      <span data-lang-en="I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>." data-lang-fr={`Je consens à ce qu'Équipe Canada ICC utilise mon nom, mon courriel, mon entreprise et mon message pour répondre à cette demande et faire le suivi au sujet d'un partenariat. Je peux retirer mon consentement en tout temps à <a href='mailto:privacy@teamcanadaicc.ca'>privacy@teamcanadaicc.ca</a>.`}>
+        I consent to Team Canada ICC using my name, email, company and message to answer this enquiry and follow up with me about a partnership. I can withdraw at any time via <a href="mailto:privacy@teamcanadaicc.ca">privacy@teamcanadaicc.ca</a>.
       </span>
     </label>
 
     <div class="cf-turnstile" data-sitekey="0x4AAAAAAD7dywzp4fMuCq9h" data-action="turnstile-spin-v2" data-size="flexible"></div>
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <div id="form-status" class="hidden text-sm font-semibold p-3 rounded-md" role="status" aria-live="polite"></div>
 
     <button type="submit" class="s2-form-submit btn-cta" data-lang-en="Send me the package" data-lang-fr="Envoyez-moi le dossier">Send me the package</button>
     <ul class="s2-form-next">
-      <li data-lang-en="No obligation, no mailing list, and your details are never shared." data-lang-fr="Aucun engagement, aucune infolettre, et vos coordonnées ne sont jamais partagées.">No obligation, no mailing list, and your details are never shared.</li>
+      <li data-lang-en="No obligation and no mailing list. We follow up about this enquiry only." data-lang-fr="Aucun engagement et aucune infolettre. Nous faisons uniquement le suivi de cette demande.">No obligation and no mailing list. We follow up about this enquiry only.</li>
     </ul>
-    <p class="s2-form-legal" data-lang-en="Your data is stored securely and is never sold, rented or shared. See our <a href='/privacy'>Privacy Notice</a>." data-lang-fr={`Vos données sont conservées de façon sécurisée et ne sont jamais vendues, louées ni partagées. Consultez notre <a href='/privacy'>Avis de confidentialité</a>.`}>
-      Your data is stored securely and is never sold, rented or shared. See our <a href="/privacy">Privacy Notice</a>.
+    <p class="s2-form-legal" data-lang-en="Your details are never sold or rented. They are shared only with the service providers that run this form, as listed in our <a href='/privacy'>Privacy Notice</a>." data-lang-fr={`Vos coordonnées ne sont jamais vendues ni louées. Elles sont transmises uniquement aux fournisseurs qui font fonctionner ce formulaire, énumérés dans notre <a href='/fr/privacy'>Avis de confidentialité</a>.`}>
+      Your details are never sold or rented. They are shared only with the service providers that run this form, as listed in our <a href="/privacy">Privacy Notice</a>.
     </p>
   </form>
 </div>

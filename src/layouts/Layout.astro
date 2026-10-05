@@ -1,10 +1,17 @@
 ---
-// Production layout: vertical-nav rail + EN/FR language toggle,
-// scroll-to-top, and all interactive page scripts (form handling,
-// scroll spy, tier/comparison collapse, impact dashboard).
+// Production layout: status strip, persistent mobile CTA, scroll-to-top, and
+// the page scripts (form handling, scroll spy, mobile drawer, FAQ accordion).
+//
+// Pages render in English with data-lang-fr alternates; the /fr/* twins of
+// each page get their French copy swapped in at build time by
+// src/middleware.ts. Nothing here translates at runtime.
+import '../styles/fonts.css';
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
 import StatusStrip from '../components/StatusStrip.astro';
 import StickyCta from '../components/StickyCta.astro';
+import ogSource from '../assets/team.jpg';
+import { SITE_URL, alternatePath, publicPath, PHONE_DISPLAY } from '../consts';
 
 interface Props {
   /** Where the status strip and the persistent mobile CTA point. Pages that
@@ -13,42 +20,78 @@ interface Props {
   /** Set false on pages whose own content already carries the ask — /sponsor
       puts the form in its hero, so a sticky bar would duplicate it. */
   stickyCta?: boolean;
-  title?: string;
   titleEn?: string;
   titleFr?: string;
-  description?: string;
   descriptionEn?: string;
   descriptionFr?: string;
+  /** Keep the page out of search results (design experiments, 404). */
+  noindex?: boolean;
 }
 
 const {
   ctaHref = '/sponsor',
   stickyCta = true,
-  title = 'Team Canada · ICC · Lyon 2027',
   titleEn = 'Team Canada · ICC · Lyon 2027',
   titleFr = 'Équipe Canada · ICC · Lyon 2027',
-  description = 'After a ten-year absence, Canada returns to the International Catering Cup in Lyon. Become a partner and help bring Canada back to the world stage.',
-  descriptionEn = description,
+  descriptionEn = 'After a ten-year absence, Canada returns to the International Catering Cup in Lyon. Become a partner and help bring Canada back to the world stage.',
   descriptionFr = "Après dix ans d'absence, le Canada revient à l'International Catering Cup à Lyon. Devenez partenaire et aidez à ramener le Canada sur la scène mondiale.",
+  noindex = false,
 } = Astro.props;
+
+const site = Astro.site ?? new URL(SITE_URL);
+const path = publicPath(Astro.url.pathname);
+const isFr = path === '/fr' || path.startsWith('/fr/');
+const lang = isFr ? 'fr' : 'en';
+const enPath = alternatePath(path, 'en');
+const frPath = alternatePath(path, 'fr');
+const canonical = new URL(path, site).href;
+
+const og = await getImage({ src: ogSource, width: 1200, format: 'jpg', quality: 80 });
+const ogImage = new URL(og.src, site).href;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Tints the mobile browser chrome to match the status strip, the topmost
-       thing on every page. Both schemes are declared explicitly: with only a
-       bare theme-color, Chrome on Android keeps its own toolbar colour when the
-       browser is in dark theme. Hardcoded because meta cannot read a custom
+       thing on every page. Hardcoded because meta cannot read a custom
        property — keep in step with --color-olive in global.css. -->
-  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#463f31" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#463f31">
-  <meta name="color-scheme" content="dark">
-  <title data-lang-en={titleEn} data-lang-fr={titleFr}>{title}</title>
-  <meta name="description" content={description} data-lang-en-desc={descriptionEn} data-lang-fr-desc={descriptionFr}>
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <meta name="color-scheme" content="light">
+  <title data-lang-en={titleEn} data-lang-fr={titleFr}>{titleEn}</title>
+  <meta name="description" content={descriptionEn} data-lang-fr-desc={descriptionFr}>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  {noindex
+    ? <meta name="robots" content="noindex">
+    : <link rel="canonical" href={canonical}>}
+  {enPath && frPath && (
+    <>
+      <link rel="alternate" hreflang="en" href={new URL(enPath, site).href}>
+      <link rel="alternate" hreflang="fr" href={new URL(frPath, site).href}>
+      <link rel="alternate" hreflang="x-default" href={new URL(enPath, site).href}>
+    </>
+  )}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Team Canada ICC">
+  <meta property="og:locale" content={isFr ? 'fr_CA' : 'en_CA'}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:title" content={titleEn} data-lang-fr-desc={titleFr}>
+  <meta property="og:description" content={descriptionEn} data-lang-fr-desc={descriptionFr}>
+  <meta property="og:image" content={ogImage}>
+  <meta name="twitter:card" content="summary_large_image">
+  {/* First visit with a French browser and no stored choice: go to the
+      French twin before anything paints. An explicit choice made with the
+      language toggle is remembered and always wins. */}
+  {lang === 'en' && frPath && (
+    <script is:inline define:vars={{ frPath }}>
+      try {
+        if (!localStorage.getItem('tc-lang') && (navigator.language || '').toLowerCase().startsWith('fr')) {
+          location.replace(frPath + location.hash);
+        }
+      } catch (e) {}
+    </script>
+  )}
 </head>
 <body class="bg-cream text-body font-sans antialiased overflow-x-hidden">
   <StatusStrip href={ctaHref} />
@@ -59,13 +102,13 @@ const {
   {stickyCta && <StickyCta href={ctaHref} />}
 
   <!-- Scroll-to-top button -->
-  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
+  <button id="scroll-top-btn" class="scroll-top-btn" aria-label="Scroll to top" data-lang-fr-aria="Retour en haut">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"/></svg>
   </button>
 
   <!-- Global Scripts -->
-  <script is:inline>
-    var currentLang = 'en';
+  <script is:inline define:vars={{ phone: PHONE_DISPLAY }}>
+    var currentLang = document.documentElement.lang === 'fr' ? 'fr' : 'en';
 
     function positionLangThumbs(skipTransition) {
       document.querySelectorAll('.lang-rail, .vn-lang').forEach(function(group) {
@@ -83,46 +126,17 @@ const {
         }
       });
     }
+    positionLangThumbs(true);
+    window.addEventListener('load', function() { positionLangThumbs(true); });
+    window.addEventListener('resize', function() { positionLangThumbs(true); });
 
-    function setLang(lang, skipThumbTransition) {
-      currentLang = lang;
-      document.documentElement.lang = lang;
-      document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        var isActive = btn.textContent.trim().toLowerCase() === lang;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-      positionLangThumbs(skipThumbTransition);
-      document.querySelectorAll('[data-lang-en]').forEach(function(el) {
-        var fr = el.getAttribute('data-lang-fr'), en = el.getAttribute('data-lang-en');
-        if (lang === 'fr' && fr) el.innerHTML = fr;
-        else if (lang === 'en' && en) el.innerHTML = en;
-      });
-      document.querySelectorAll('[data-lang-en-placeholder]').forEach(function(el) {
-        var fr = el.getAttribute('data-lang-fr-placeholder'), en = el.getAttribute('data-lang-en-placeholder');
-        el.placeholder = (lang === 'fr' && fr) ? fr : en;
-      });
-      var md = document.querySelector('meta[name="description"]');
-      var de = md.getAttribute('data-lang-en-desc') || md.getAttribute('content');
-      if (!md.getAttribute('data-lang-en-desc')) md.setAttribute('data-lang-en-desc', de);
-      var df = md.getAttribute('data-lang-fr-desc') || "Après dix ans d'absence, le Canada revient à l'International Catering Cup à Lyon. Devenez partenaire et aidez à ramener le Canada sur la scène mondiale.";
-      if (!md.getAttribute('data-lang-fr-desc')) md.setAttribute('data-lang-fr-desc', df);
-      md.content = lang === 'fr' ? df : de;
-      var te = document.querySelector('title');
-      var tEn = te.getAttribute('data-lang-en') || 'Team Canada · ICC · Lyon 2027';
-      var tFr = te.getAttribute('data-lang-fr') || 'Équipe Canada · ICC · Lyon 2027';
-      document.title = lang === 'fr' ? tFr : tEn;
-      try { localStorage.setItem('tc-lang', lang); } catch(e) {}
-    }
-
-    (function() {
-      var sv; try { sv = localStorage.getItem('tc-lang'); } catch(e) {}
-      if (!sv && navigator.language && navigator.language.startsWith('fr')) sv = 'fr';
-      if (sv === 'fr' || sv === 'en') setLang(sv, true);
-      else positionLangThumbs(true);
-      window.addEventListener('load', function() { positionLangThumbs(true); });
-      window.addEventListener('resize', function() { positionLangThumbs(true); });
-    })();
+    /* The toggles are plain links to the other language's page; remember the
+       choice so the first-visit redirect in <head> never overrides it. */
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('[data-set-lang]');
+      if (!link) return;
+      try { localStorage.setItem('tc-lang', link.getAttribute('data-set-lang')); } catch (err) {}
+    });
 
     /* In-page anchor links scroll smoothly without ever touching the URL bar/hash */
     document.addEventListener('click', function(e) {
@@ -140,31 +154,30 @@ const {
     var form = document.getElementById('inquiry-form');
     var fstatus = document.getElementById('form-status');
     var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
-    /* Read the button's own labels rather than repeating them here — hardcoded
-       copies silently reverted the button to a previous wording after every
-       submission. */
-    var submitLabelEn = submitBtn ? submitBtn.getAttribute('data-lang-en') : '';
-    var submitLabelFr = submitBtn ? submitBtn.getAttribute('data-lang-fr') : '';
+    /* Read the button's own (already localized) label rather than repeating
+       it here — hardcoded copies silently reverted the button to a previous
+       wording after every submission. */
+    var submitLabel = submitBtn ? submitBtn.textContent : '';
+    var fr = currentLang === 'fr';
     if (form && submitBtn) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
         var nm = document.getElementById('name').value.trim();
         var em = document.getElementById('email').value.trim();
-        var errEn = 'Please fill in all required fields.';
-        var errFr = 'Veuillez remplir tous les champs obligatoires.';
-        if (!nm || !em) { showStatus(currentLang === 'fr' ? errFr : errEn, 'error'); return; }
+        if (!nm || !em) {
+          showStatus(fr ? 'Veuillez remplir tous les champs obligatoires.' : 'Please fill in all required fields.', 'error');
+          return;
+        }
         var consentEl = form.querySelector('input[name="privacy_consent"]');
         if (consentEl && !consentEl.checked) {
-          showStatus(currentLang === 'fr' ? 'Vous devez accepter l\'avis de confidentialité avant de soumettre votre demande.' : 'You must agree to the Privacy Notice before submitting your inquiry.', 'error');
+          showStatus(fr ? 'Vous devez accepter l\'avis de confidentialité avant de soumettre votre demande.' : 'You must agree to the Privacy Notice before submitting your inquiry.', 'error');
           return;
         }
         submitBtn.disabled = true;
-        submitBtn.textContent = currentLang === 'fr' ? 'Envoi en cours...' : 'Sending...';
+        submitBtn.textContent = fr ? 'Envoi en cours...' : 'Sending...';
         fstatus.className = 'hidden';
-        var fd = new FormData(form);
-        var data = Object.fromEntries(fd.entries());
-        /* The form has no language field of its own — the endpoint needs this
-           to pick which of the two email templates to send. */
+        var data = Object.fromEntries(new FormData(form).entries());
+        /* The endpoint picks the email template and its error language from this. */
         data.lang = currentLang;
         fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
           .then(function(r) { return r.json().then(function(j) { return { ok: r.ok, result: j }; }); })
@@ -173,27 +186,25 @@ const {
               /* Never promise an inbox the endpoint could not reach — emailed
                  tells us whether the package actually went out. */
               var msg = rr.result.emailed
-                ? (currentLang === 'fr' ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin, ou téléchargez-le dès maintenant :' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive, or download it right now:')
-                : (currentLang === 'fr' ? 'Merci ! Téléchargez le dossier de partenariat ci-dessous. Nous revenons vers vous par courriel.' : 'Thank you! Download the partnership package below. We will follow up by email.');
+                ? (fr ? 'Merci ! Le dossier de partenariat est en route vers votre boîte de réception. Vérifiez vos indésirables au besoin, ou téléchargez-le dès maintenant :' : 'Thank you! The partnership package is on its way to your inbox. Check your spam folder if it does not arrive, or download it right now:')
+                : (fr ? 'Merci ! Téléchargez le dossier de partenariat ci-dessous. Nous revenons vers vous par courriel.' : 'Thank you! Download the partnership package below. We will follow up by email.');
               /* A mocked run must never read as a real one -- the tester would
                  sit waiting for an email that was only ever logged. */
               if (rr.result.mocked) {
-                msg = (currentLang === 'fr'
-                  ? "MODE TEST — aucun courriel n'a été envoyé. "
-                  : 'TEST MODE — no email was sent. ') + msg;
+                msg = (fr ? "MODE TEST — aucun courriel n'a été envoyé. " : 'TEST MODE — no email was sent. ') + msg;
               }
               showStatus(msg, 'success', rr.result.download);
               form.reset();
             } else {
-              showStatus(rr.result.message || (currentLang === 'fr' ? 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Something went wrong. Please try again or contact us directly at 514-573-6758.'), 'error');
+              showStatus(rr.result.message || (fr ? 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement au ' + phone + '.' : 'Something went wrong. Please try again or contact us directly at ' + phone + '.'), 'error');
             }
           })
           .catch(function() {
-            showStatus(currentLang === 'fr' ? 'Impossible d\'envoyer votre demande. Veuillez réessayer ou nous contacter directement au 514-573-6758.' : 'Unable to send your inquiry. Please try again or contact us directly at 514-573-6758.', 'error');
+            showStatus(fr ? 'Impossible d\'envoyer votre demande. Veuillez réessayer ou nous contacter directement au ' + phone + '.' : 'Unable to send your inquiry. Please try again or contact us directly at ' + phone + '.', 'error');
           })
           .then(function() {
             submitBtn.disabled = false;
-            submitBtn.textContent = currentLang === 'fr' ? submitLabelFr : submitLabelEn;
+            submitBtn.textContent = submitLabel;
             resetTurnstile();
           });
       });
@@ -224,7 +235,7 @@ const {
         dl.href = downloadHref;
         dl.setAttribute('download', '');
         dl.className = 'block mt-2 underline';
-        dl.textContent = currentLang === 'fr' ? 'Télécharger le dossier de partenariat (PDF)' : 'Download the partnership package (PDF)';
+        dl.textContent = fr ? 'Télécharger le dossier de partenariat (PDF)' : 'Download the partnership package (PDF)';
         fstatus.appendChild(dl);
       }
       fstatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -233,17 +244,16 @@ const {
     /* Scroll spy + scroll-to-top toggle */
     var secs = document.querySelectorAll('section[id]');
     var nls = document.querySelectorAll('.nav-link');
+    var stb = document.getElementById('scroll-top-btn');
     window.addEventListener('scroll', function() {
       var cur = '', sy = window.scrollY + 120;
       secs.forEach(function(s) { var t = s.offsetTop, h = s.offsetHeight; if (sy >= t && sy < (t + h)) cur = s.getAttribute('id'); });
       nls.forEach(function(l) { l.classList.toggle('text-gold', l.getAttribute('href') === '#' + cur); l.classList.toggle('text-text-muted', l.getAttribute('href') !== '#' + cur); });
-      var stb = document.getElementById('scroll-top-btn');
       if (stb) stb.classList.toggle('visible', window.scrollY > 500);
-    });
+    }, { passive: true });
 
     /* Scroll-to-top click */
-    var stbEl = document.getElementById('scroll-top-btn');
-    if (stbEl) stbEl.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    if (stb) stb.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
     /* Vertical nav mobile drawer */
     (function() {
@@ -261,6 +271,7 @@ const {
         // hide the left language rail while the drawer is open (narrow screens)
         var lr = document.querySelector('.lang-rail');
         if (lr) lr.style.display = isOpen ? 'none' : '';
+        if (isOpen) positionLangThumbs(true);
       }
       btn.addEventListener('click', function(e) { e.stopPropagation(); toggle(); });
       var closeBtn = document.getElementById('vn-close-btn');
@@ -273,51 +284,6 @@ const {
         if (e.key === 'Escape' && drawer.classList.contains('open')) toggle(false);
       });
     })();
-
-    /* 🇨🇦 */
-    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c· Team Canada %c🇨🇦',
-      'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
-    console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
-
-    /* ===== Tier Benefit Expand/Collapse ===== */
-    function toggleBenefits(listId, btn) {
-      var list = document.getElementById(listId);
-      if (!list) return;
-      var hidden = list.querySelectorAll('.benefit-hidden');
-      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        hidden.forEach(function(li) { li.classList.add('benefit-hidden'); li.classList.remove('benefit-visible'); });
-        btn.setAttribute('aria-expanded', 'false');
-        btn.classList.remove('expanded');
-        var showText = btn.querySelector('span');
-        var enPhrases = { 'lead': 'Show all 11 benefits', 'premier': 'Show all 10 benefits', 'official': 'Show all 8 benefits', 'supporting': 'Show all 6 benefits' };
-        var frPhrases = { 'lead': 'Afficher les 11 avantages', 'premier': 'Afficher les 10 avantages', 'official': 'Afficher les 8 avantages', 'supporting': 'Afficher les 6 avantages' };
-        var key = listId.replace('-benefits', '');
-        if (showText) showText.textContent = currentLang === 'fr' ? (frPhrases[key] || 'Afficher tout') : (enPhrases[key] || 'Show all');
-      } else {
-        hidden.forEach(function(li) { li.classList.remove('benefit-hidden'); li.classList.add('benefit-visible'); });
-        btn.setAttribute('aria-expanded', 'true');
-        btn.classList.add('expanded');
-        var hideText = btn.querySelector('span');
-        if (hideText) hideText.textContent = currentLang === 'fr' ? 'Réduire' : 'Show less';
-      }
-    }
-
-    /* ===== Comparison Table Collapse ===== */
-    function toggleComparison(btn) {
-      var wrap = document.getElementById('comparison-table-wrap');
-      if (!wrap) return;
-      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
-      if (isExpanded) {
-        wrap.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-        btn.classList.remove('expanded');
-      } else {
-        wrap.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-        btn.classList.add('expanded');
-      }
-    }
 
     /* ===== Sponsor FAQ accordion =====
        Delegated so it costs nothing on pages without a FAQ. Each trigger
@@ -333,135 +299,10 @@ const {
       panel.classList.toggle('open', !isOpen);
     });
 
-    /* ═══════════════════════════════════════════════════════
-       IMPACT DASHBOARD - Interactive JavaScript
-       ═══════════════════════════════════════════════════════ */
-
-    /* --- 1. Budget Bar Fill Animations (Intersection Observer) --- */
-    (function() {
-      var bars = document.querySelectorAll('.budget-bar-fill');
-      if (!bars.length) return;
-
-      var barObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var bar = entry.target;
-            var targetWidth = bar.getAttribute('data-width') || '0%';
-            var scale = parseFloat(targetWidth) / 100;
-            bar.style.transform = 'scaleX(' + scale + ')';
-            barObserver.unobserve(bar);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      bars.forEach(function(bar) { barObserver.observe(bar); });
-    })();
-
-    /* --- 2. Budget Category Hover/Click → Detail Card Update --- */
-    (function() {
-      var categories = document.querySelectorAll('.budget-category');
-      var detailDefault = document.getElementById('budget-detail-default');
-      var detailContent = document.getElementById('budget-detail-content');
-      var detailIcon = document.getElementById('budget-detail-icon');
-      var detailTitle = document.getElementById('budget-detail-title');
-      var detailPct = document.getElementById('budget-detail-pct');
-      var detailDesc = document.getElementById('budget-detail-desc');
-
-      if (!categories.length || !detailContent) return;
-
-      var categoryData = {
-        training: {
-          icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 10.8h12.2v1.9a6.1 6.1 0 0 1-12.2 0v-1.9Z"/><path d="m15.6 11.6 5.2-2.4"/><circle cx="9.5" cy="14.4" r="1.9"/></svg>',
-          titleEn: "Training & Ingredients",
-          titleFr: "Entraînement et ingrédients",
-          descEn: "Kitchen access, premium ingredients, specialized products, recipe testing, and repeated rehearsal sessions that refine every element of the competition program.",
-          descFr: "Accès aux cuisines, ingrédients haut de gamme, produits spécialisés, tests de recettes et séances de répétition qui peaufine chaque élément du programme de compétition."
-        },
-        equipment: {
-          icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3 12 6l3-3 4.4 1.8a1.8 1.8 0 0 1 1.1 1.9l-.5 3.2h-2.6v10.9H6.6V9.9H4l-.5-3.2A1.8 1.8 0 0 1 4.6 4.8L9 3Z"/><path d="M12 6v14.8"/><circle cx="14.7" cy="11.4" r=".85"/><circle cx="14.7" cy="15.4" r=".85"/></svg>',
-          titleEn: "Equipment & Uniforms",
-          titleFr: "Équipement et uniformes",
-          descEn: "Professional-grade cookware, serving pieces, chef jackets, team apparel, and presentation materials that represent Canada on the world stage.",
-          descFr: "Ustensiles de cuisine professionnels, pièces de service, vestes de chef, tenues d’équipe et matériel de présentation qui représentent le Canada sur la scène mondiale."
-        },
-        travel: {
-          icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15.4 13.4 11V5.1a1.7 1.7 0 0 0-3.4 0V11L2.4 15.4v2.2l7.6-2.2v3.5l-2.2 1.5v1.4l3.9-1 3.9 1v-1.4l-2.2-1.5v-3.5l7.6 2.2v-2.2Z"/></svg>',
-          titleEn: "Travel & Logistics",
-          titleFr: "Voyage et logistique",
-          descEn: "Flights, hotels, ground transportation, equipment freight, and essential travel expenses for the team’s journey from Montréal to Lyon.",
-          descFr: "Vols, hôtels, transport terrestre, fret d’équipement et dépenses de voyage essentielles pour le parcours de l’équipe de Montréal à Lyon."
-        },
-        mentorship: {
-          icon: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3.3 2.7 5.5 6 .9-4.3 4.2 1 6-5.4-2.8-5.4 2.8 1-6-4.3-4.2 6-.9L12 3.3Z"/></svg>',
-          titleEn: "Youth Mentorship",
-          titleFr: "Mentorat jeunesse",
-          descEn: "Apprentice and junior cook development, culinary education outreach, and building the next generation of Canadian culinary talent alongside the national team.",
-          descFr: "Développement des apprentis et jeunes cuisiniers, sensibilisation culinaire éducative et construction de la prochaine génération de talents culinaires canadiens aux côtés de l’équipe nationale."
-        }
-      };
-
-      function updateDetailCard(category, pct) {
-        var data = categoryData[category];
-        if (!data) return;
-
-        var isFr = (typeof currentLang !== 'undefined' && currentLang === 'fr');
-
-        if (detailDefault) detailDefault.classList.add('hidden');
-        detailContent.classList.remove('hidden');
-
-        detailIcon.innerHTML = data.icon;
-        detailTitle.textContent = isFr ? data.titleFr : data.titleEn;
-        detailPct.textContent = pct + '%';
-        detailDesc.textContent = isFr ? data.descFr : data.descEn;
-      }
-
-      function resetDetailCard() {
-        if (detailDefault) detailDefault.classList.remove('hidden');
-        detailContent.classList.add('hidden');
-      }
-
-      function setActive(catEl) {
-        categories.forEach(function(c) { c.classList.remove('active'); });
-        catEl.classList.add('active');
-      }
-
-      function clearActive() {
-        categories.forEach(function(c) { c.classList.remove('active'); });
-      }
-
-      categories.forEach(function(cat) {
-        cat.addEventListener('mouseenter', function() {
-          var catKey = cat.getAttribute('data-category');
-          var pct = cat.getAttribute('data-pct');
-          updateDetailCard(catKey, pct);
-          setActive(cat);
-        });
-        cat.addEventListener('mouseleave', function() {
-          resetDetailCard();
-          clearActive();
-        });
-
-        cat.addEventListener('click', function(e) {
-          var catKey = cat.getAttribute('data-category');
-          var pct = cat.getAttribute('data-pct');
-          if (cat.classList.contains('active')) {
-            resetDetailCard();
-            clearActive();
-          } else {
-            updateDetailCard(catKey, pct);
-            setActive(cat);
-          }
-        });
-
-        cat.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            cat.click();
-          }
-        });
-      });
-    })();
-
+    /* 🇨🇦 */
+    console.log('%c🍁 %cEh! Thanks for checking under the hood, friend. %c· Team Canada %c🇨🇦',
+      'font-size:1.5em;', 'color:#cc1f2d;font-weight:bold;font-size:1.1em;', 'color:#c2a15c;', 'font-size:1.5em;');
+    console.log('%cProudly crafted in Montréal · Allez Canada! 🏒', 'color:#7a7461;font-style:italic;');
   </script>
 </body>
 </html>

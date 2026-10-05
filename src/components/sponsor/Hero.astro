@@ -28,6 +28,7 @@ const brigade = [
     cls: 'sp-face--donnel',
     name: 'Donnel English',
     alt: 'Donnel English, Team Captain and Chef de Cuisine at Bar George',
+    altFr: "Donnel English, capitaine d'équipe et chef de cuisine au Bar George",
     roleEn: 'Team Captain',
     roleFr: "Capitaine d'équipe",
   },
@@ -36,6 +37,7 @@ const brigade = [
     cls: 'sp-face--nicolas',
     name: 'Nicolas Parsy',
     alt: 'Nicolas Parsy, Pastry Chef, with his 2025 national pastry trophy',
+    altFr: 'Nicolas Parsy, chef pâtissier, avec son trophée national de pâtisserie 2025',
     roleEn: 'Pastry Chef',
     roleFr: 'Chef pâtissier',
   },
@@ -44,6 +46,7 @@ const brigade = [
     cls: 'sp-face--kevin',
     name: 'Kevin Ramasawmy',
     alt: 'Kevin Ramasawmy, Team Coach and Executive Chef at Bar George',
+    altFr: 'Kevin Ramasawmy, entraîneur et chef exécutif au Bar George',
     roleEn: 'Team Coach',
     roleFr: 'Entraîneur',
   },
@@ -54,6 +57,7 @@ const brigade = [
   <Image
     src={heroChef}
     alt="Team Canada's three chefs at Bar George, Montréal"
+    data-lang-fr-alt="Les trois chefs d'Équipe Canada au Bar George, à Montréal"
     class="s2-hero-bg"
     width={1920} widths={[768, 1280, 1920]}
     sizes="100vw"
@@ -79,10 +83,10 @@ const brigade = [
 
       <!-- Anchored to the bottom of the panel, so the copy shares a top and a
            bottom edge with the form card rather than floating mid-column. -->
-      <ul class="s2-proof" aria-label="Team Canada's competing chefs">
+      <ul class="s2-proof" aria-label="Team Canada's competing chefs" data-lang-fr-aria="Les chefs d'Équipe Canada">
         {brigade.map((c) => (
           <li class="s2-proof-item">
-            <Image src={c.img} alt={c.alt} class={`s2-proof-img ${c.cls}`} width={128} height={128} format="webp" quality={75} loading="lazy" />
+            <Image src={c.img} alt={c.alt} data-lang-fr-alt={c.altFr} class={`s2-proof-img ${c.cls}`} width={128} height={128} format="webp" quality={75} loading="eager" />
             <div>
               <p class="s2-proof-name">{c.name}</p>
               <p class="s2-proof-role" data-lang-en={c.roleEn} data-lang-fr={c.roleFr}>{c.roleEn}</p>

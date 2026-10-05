@@ -45,15 +45,16 @@ const EMAIL_RE = /^[^\s@,;<>"]+@[^\s@,;<>"]+\.[A-Za-z]{2,}$/;
 const DEFAULT_FROM = 'Team Canada ICC <partnerships@send.teamcanadaicc.ca>';
 const DEFAULT_REPLY_TO = 'partnerships@teamcanadaicc.ca';
 
+/** Everything arrives from the client, so nothing is trusted to be a string. */
 interface InquiryBody {
-  name: string;
-  email: string;
-  company?: string;
-  tier?: string;
-  message?: string;
-  lang?: string;
-  'cf-turnstile-response'?: string;
-  privacy_consent?: string | boolean;
+  name?: unknown;
+  email?: unknown;
+  company?: unknown;
+  tier?: unknown;
+  message?: unknown;
+  lang?: unknown;
+  'cf-turnstile-response'?: unknown;
+  privacy_consent?: unknown;
 }
 
 interface Env {
@@ -249,108 +250,203 @@ const sendPackage = async (
   return true;
 };
 
+/** Shown to visitors when something fails; kept in step with src/consts.ts. */
+const PHONE = '514-573-6758';
+
+/** Must match data-action on the widget in src/components/InquiryForm.astro. */
+const TURNSTILE_ACTION = 'turnstile-spin-v2';
+
+/** Cloudflare's always-pass test secret reports this hostname. */
+const TURNSTILE_TEST_HOSTNAME = 'example.com';
+
+const LIMITS = {
+  name: 100,
+  company: 200,
+  tier: 100,
+  message: 2000,
+} as const;
+
+/**
+ * Submissions per window. The form mails a DKIM-signed message to whatever
+ * address it is given, so without a ceiling it is a free relay for mail
+ * bombing a third party from our domain — Turnstile alone only proves a
+ * human solved one challenge.
+ */
+const RATE_LIMITS = {
+  perIp: { limit: 5, windowSeconds: 60 * 60 },
+  perRecipient: { limit: 3, windowSeconds: 24 * 60 * 60 },
+} as const;
+
+/** A name is echoed into the email, so it must not be able to carry a link. */
+const LINK_RE = /https?:|www\.|\/\//i;
+
+const messages = {
+  en: {
+    security: 'Please complete the security check.',
+    securityFailed: 'Security check failed. Please try again.',
+    notConfigured: `Form service is not configured. Please contact the team directly at ${PHONE}.`,
+    consent: 'You must agree to the Privacy Notice before submitting your inquiry.',
+    name: 'Please enter your full name (100 characters at most, no links).',
+    email: 'A valid email address is required.',
+    rateLimited: `Too many requests. Please try again later or contact us directly at ${PHONE}.`,
+    failed: `Your inquiry could not be sent. Please try again or contact us directly at ${PHONE}.`,
+    unexpected: `An unexpected error occurred. Please try again or contact us directly at ${PHONE}.`,
+  },
+  fr: {
+    security: 'Veuillez compléter la vérification de sécurité.',
+    securityFailed: 'La vérification de sécurité a échoué. Veuillez réessayer.',
+    notConfigured: `Le formulaire n'est pas configuré. Veuillez joindre l'équipe directement au ${PHONE}.`,
+    consent: "Vous devez accepter l'avis de confidentialité avant de soumettre votre demande.",
+    name: 'Veuillez entrer votre nom complet (100 caractères au plus, sans lien).',
+    email: 'Une adresse courriel valide est requise.',
+    rateLimited: `Trop de demandes. Veuillez réessayer plus tard ou nous joindre directement au ${PHONE}.`,
+    failed: `Votre demande n'a pas pu être envoyée. Veuillez réessayer ou nous joindre directement au ${PHONE}.`,
+    unexpected: `Une erreur inattendue est survenue. Veuillez réessayer ou nous joindre directement au ${PHONE}.`,
+  },
+} as const;
+
+type Lang = keyof typeof messages;
+
+const json = (body: unknown, status: number) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+  });
+
+/** Control characters out (a newline in a name could split a mail header), trimmed, capped. */
+const clean = (val: unknown, max: number): string =>
+  typeof val === 'string' ? val.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max) : '';
+
+const sha256 = async (val: string) => {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+};
+
+/**
+ * Counts a hit against `key` and reports whether it is still within `limit`.
+ * Backed by the Workers Cache API: it needs no binding, but counts are per
+ * data centre and best-effort, which is enough to stop a script hammering one
+ * address. Keys are hashed so no IP or email address sits in the cache. Where
+ * no cache exists (unit tests, some local runs) it allows.
+ */
+const withinLimit = async (
+  origin: string,
+  key: string,
+  { limit, windowSeconds }: { limit: number; windowSeconds: number }
+): Promise<boolean> => {
+  const cache = (globalThis as { caches?: { default?: Cache } }).caches?.default;
+  if (!cache) return true;
+
+  const slot = new Request(`${origin}/__rate-limit/${await sha256(key)}`);
+  const hit = await cache.match(slot);
+  const count = hit ? Number.parseInt(await hit.text(), 10) || 0 : 0;
+  if (count >= limit) return false;
+
+  await cache.put(
+    slot,
+    new Response(String(count + 1), { headers: { 'Cache-Control': `max-age=${windowSeconds}` } })
+  );
+  return true;
+};
+
+/**
+ * Same-origin only: the form posts from this site, so there are no CORS
+ * headers and no OPTIONS handler — a cross-origin page cannot read the
+ * response, and its preflight finds nothing to approve.
+ */
 export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers });
-  }
-
+  let lang: Lang = 'en';
   try {
     const body: InquiryBody = await request.json();
-    const { name, email, company, tier, message } = body;
+    lang = body.lang === 'fr' ? 'fr' : 'en';
+    const t = messages[lang];
+    const { origin, hostname } = new URL(request.url);
+    const ip = request.headers.get('CF-Connecting-IP') || '';
 
-    // Validate Turnstile token
+    if (ip && !(await withinLimit(origin, `ip:${ip}`, RATE_LIMITS.perIp))) {
+      return json({ success: false, message: t.rateLimited }, 429);
+    }
+
     const turnstileToken = body['cf-turnstile-response'];
-    if (!turnstileToken) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Please complete the security check.' }),
-        { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+    if (typeof turnstileToken !== 'string' || !turnstileToken) {
+      return json({ success: false, message: t.security }, 400);
     }
 
     // Guarded like the other two credentials: without it every submission
     // fails the security check with no indication of why.
     if (!env.TURNSTILE_SECRET) {
       console.error('TURNSTILE_SECRET is not configured -- every submission will fail the security check');
-      return new Response(
-        JSON.stringify({ success: false, message: 'Form service is not configured. Please contact the team directly at 514-573-6758.' }),
-        { status: 500, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+      return json({ success: false, message: t.notConfigured }, 500);
     }
 
     const turnstileResult = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        secret: env.TURNSTILE_SECRET,
-        response: turnstileToken,
-        remoteip: request.headers.get('CF-Connecting-IP') || '',
-      }),
+      body: new URLSearchParams({ secret: env.TURNSTILE_SECRET, response: turnstileToken, remoteip: ip }),
     });
 
-    const turnstileData: { success: boolean; 'error-codes'?: string[] } = await turnstileResult.json();
-    if (!turnstileData.success) {
+    const turnstileData: {
+      success: boolean;
+      action?: string;
+      hostname?: string;
+      'error-codes'?: string[];
+    } = await turnstileResult.json();
+
+    // A token only vouches for the widget and site it was issued to: one minted
+    // by another widget on the same key, or on another host, is not ours.
+    const wrongAction = !!turnstileData.action && turnstileData.action !== TURNSTILE_ACTION;
+    const wrongHost =
+      !!turnstileData.hostname &&
+      turnstileData.hostname !== hostname &&
+      turnstileData.hostname !== TURNSTILE_TEST_HOSTNAME;
+
+    if (!turnstileData.success || wrongAction || wrongHost) {
       // siteverify names the cause -- invalid-input-secret, timeout-or-duplicate,
       // invalid-input-response -- and without it a 403 is undiagnosable.
       console.error(
         'turnstile rejected:',
-        turnstileData['error-codes']?.join(', ') || 'no error codes returned'
+        turnstileData['error-codes']?.join(', ') || 'no error codes returned',
+        wrongAction ? `action=${turnstileData.action}` : '',
+        wrongHost ? `hostname=${turnstileData.hostname}` : ''
       );
-      return new Response(
-        JSON.stringify({ success: false, message: 'Security check failed. Please try again.' }),
-        { status: 403, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+      return json({ success: false, message: t.securityFailed }, 403);
     }
 
-    // Validate consent (required under PIPEDA / Quebec Law 25)
-    if (!body.privacy_consent || body.privacy_consent !== 'on') {
-      return new Response(
-        JSON.stringify({ success: false, message: 'You must agree to the Privacy Notice before submitting your inquiry.' }),
-        { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+    // Consent is required under PIPEDA / Quebec Law 25.
+    if (body.privacy_consent !== 'on') {
+      return json({ success: false, message: t.consent }, 400);
     }
 
-    // Validate required fields
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Full name is required.' }),
-        { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+    // Over-long names are refused rather than silently cut.
+    const rawName = typeof body.name === 'string' ? body.name : '';
+    const name = clean(rawName, LIMITS.name);
+    if (!name || rawName.trim().length > LIMITS.name || LINK_RE.test(name)) {
+      return json({ success: false, message: t.name }, 400);
     }
 
     // Length is checked first so a pathological value never reaches the regex.
-    if (!email || typeof email !== 'string' || email.length > 320 || !EMAIL_RE.test(email.trim())) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'A valid email address is required.' }),
-        { status: 400, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+    const email = typeof body.email === 'string' ? body.email.trim() : '';
+    if (!email || email.length > 320 || !EMAIL_RE.test(email)) {
+      return json({ success: false, message: t.email }, 400);
     }
 
-    // Sanitize inputs
-    const sanitize = (val: string) => val.trim().slice(0, 1000);
-    const safeName = sanitize(name);
-    const safeEmail = sanitize(email);
-    const safeCompany = company ? sanitize(company) : '';
-    const safeTier = tier ? sanitize(tier) : '';
-    const safeMessage = message ? sanitize(message) : '';
-    const lang = body.lang && sanitize(body.lang) === 'fr' ? 'fr' : 'en';
+    if (!(await withinLimit(origin, `to:${email.toLowerCase()}`, RATE_LIMITS.perRecipient))) {
+      return json({ success: false, message: t.rateLimited }, 429);
+    }
+
+    const company = clean(body.company, LIMITS.company);
+    const tier = clean(body.tier, LIMITS.tier);
+    // The message keeps its line breaks; it only ever goes to the team.
+    const message =
+      typeof body.message === 'string'
+        ? body.message.replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, ' ').trim().slice(0, LIMITS.message)
+        : '';
 
     const pdfUrl = resolveOrigin(env, request) + PDF_PATH;
 
     const [teamOutcome, packageOutcome] = await Promise.allSettled([
-      notifyTeam(env, {
-        name: safeName,
-        email: safeEmail,
-        company: safeCompany,
-        tier: safeTier,
-        message: safeMessage,
-      }),
-      sendPackage(env, { name: safeName, email: safeEmail, lang, pdfUrl }),
+      notifyTeam(env, { name, email, company, tier, message }),
+      sendPackage(env, { name, email, lang, pdfUrl }),
     ]);
 
     if (teamOutcome.status === 'rejected') {
@@ -366,21 +462,12 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     // The page always offers the download, so a failed email is not a failed
     // submission — only losing both recipients is.
     if (!notified && !emailed) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Your inquiry could not be sent. Please try again or contact us directly at 514-573-6758.' }),
-        { status: 502, headers: { ...headers, 'Content-Type': 'application/json' } }
-      );
+      return json({ success: false, message: t.failed }, 502);
     }
 
-    return new Response(
-      JSON.stringify({ success: true, emailed, mocked: isMocking(env), download: PDF_PATH }),
-      { status: 200, headers: { ...headers, 'Content-Type': 'application/json' } }
-    );
+    return json({ success: true, emailed, mocked: isMocking(env), download: PDF_PATH }, 200);
   } catch (err) {
     console.error('Inquiry handler error:', err);
-    return new Response(
-      JSON.stringify({ success: false, message: 'An unexpected error occurred. Please try again or contact us directly at 514-573-6758.' }),
-      { status: 500, headers: { ...headers, 'Content-Type': 'application/json' } }
-    );
+    return json({ success: false, message: messages[lang].unexpected }, 500);
   }
 };

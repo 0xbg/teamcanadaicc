@@ -60,3 +60,12 @@ Desktop.ini
 # Local working files (source material, transfers, exports)
 wetransfer_*
 *.zip
+
+# Original photo shoots and source documents. The site uses the resized copies
+# in src/assets/ and public/partnership-package.pdf; keep originals out of git.
+/assets/
+/content.pdf
+
+# Agent skill installs are per-machine (see skills-lock.json for sources).
+.agents/skills/
+.continue/skills/

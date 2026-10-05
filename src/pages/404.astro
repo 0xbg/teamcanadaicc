@@ -1,0 +1,27 @@
+---
+// Cloudflare Pages serves dist/404.html for any path it cannot match.
+// Bilingual on one page: a 404 has no French twin to link to.
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+<Layout
+  noindex
+  titleEn="Page not found · Team Canada ICC"
+  titleFr="Page introuvable · Équipe Canada ICC"
+  descriptionEn="This page does not exist."
+  descriptionFr="Cette page n'existe pas."
+>
+  <main class="py-28 md:py-36 px-6 bg-cream text-ink text-center">
+    <div class="max-w-xl mx-auto">
+      <p class="font-mono text-gold text-sm tracking-[0.3em] mb-4">404</p>
+      <h1 class="text-3xl md:text-5xl font-bold font-display mb-4">Page not found</h1>
+      <p class="text-muted mb-2">The page you were looking for has moved or never existed.</p>
+      <p class="text-muted mb-10" lang="fr">La page que vous cherchez a été déplacée ou n'a jamais existé.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="inline-block bg-gold text-ink px-8 py-4 font-semibold btn-cta">Home</a>
+        <a href="/fr" lang="fr" class="inline-block border border-gold-dark text-gold-dark px-8 py-4 font-semibold btn-cta hover:bg-gold-dark hover:text-cream transition-colors">Accueil</a>
+      </div>
+    </div>
+  </main>
+  <Footer ctaHref="/sponsor" />
+</Layout>

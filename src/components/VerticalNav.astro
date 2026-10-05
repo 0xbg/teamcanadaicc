@@ -14,6 +14,8 @@ interface Props {
   mobileOnly?: boolean;
 }
 
+import LangLinks from './LangLinks.astro';
+
 const { links, mobileOnly = false } = Astro.props;
 const num = (i: number) => String(i + 1).padStart(2, '0');
 ---
@@ -22,7 +24,7 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
      below for mobile. Nothing floats over the page. -->
 
 {!mobileOnly && (
-<nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation">
+<nav id="vertical-nav" class="vertical-nav" aria-label="Section navigation" data-lang-fr-aria="Navigation des sections">
   <ul class="vn-list">
     {
       links.map((l, i) => (
@@ -38,15 +40,15 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 )}
 
 <!-- Mobile menu button (shown below 1024px) -->
-<button id="vn-menu-btn" class="vn-menu-btn" aria-label="Open menu" aria-expanded="false">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+<button id="vn-menu-btn" class="vn-menu-btn" aria-label="Open menu" data-lang-fr-aria="Ouvrir le menu" aria-expanded="false">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
 </button>
 
 <!-- Mobile drawer -->
 <div id="vn-drawer" class="vn-drawer" aria-hidden="true" inert>
   <div class="vn-drawer-head">
     <span class="vn-drawer-wordmark">TEAM CANADA <span class="vn-drawer-sub">ICC · LYON 2027</span></span>
-    <button id="vn-close-btn" class="vn-close-btn" aria-label="Close menu">
+    <button id="vn-close-btn" class="vn-close-btn" aria-label="Close menu" data-lang-fr-aria="Fermer le menu">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
@@ -62,9 +64,6 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
     }
   </ul>
   <div class="vn-lang" role="group" aria-label="Language">
-    <span class="lang-thumb" aria-hidden="true"></span>
-    <button class="lang-btn active" data-lang="en" aria-pressed="true" title="English" onclick="setLang('en')">EN</button>
-    <span class="lang-rail-sep" aria-hidden="true"></span>
-    <button class="lang-btn" data-lang="fr" aria-pressed="false" title="Français" onclick="setLang('fr')">FR</button>
+    <LangLinks />
   </div>
 </div>

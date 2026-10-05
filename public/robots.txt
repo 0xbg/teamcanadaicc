@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /partnership-package.pdf
 
-Sitemap: https://teamcanadaicc.ca/sitemap.xml
+Sitemap: https://teamcanadaicc.ca/sitemap-index.xml

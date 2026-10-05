@@ -1,0 +1,14 @@
+/* Self-hosted through Fontsource rather than Google Fonts: no visitor IP goes
+   to a third party, and the files ship from our own origin with the page.
+   Each weight file carries unicode-range subsets, so a browser downloads only
+   the scripts a page actually uses. Add a weight here before using it. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/700-italic.css';
+@import '@fontsource/playfair-display/900.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';

@@ -25,12 +25,12 @@ import { Image } from 'astro:assets';
       <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {
           posts.map((post) => (
-            <a href={`/fr/blog/${post.id.replace(/^fr\//, '')}`} class="blog-card flex flex-col">
+            <a href={`/fr/blog/${post.id.replace(/^fr\//, '')}`} class="blog-card group flex flex-col">
               {
                 post.data.featuredImage && (
                   <Image
                     src={post.data.featuredImage}
-                    alt={post.data.title}
+                    alt=""
                     class="w-full h-44 object-cover"
                     width={800} widths={[400, 800]}
                     sizes="(min-width: 768px) 33vw, 100vw"
